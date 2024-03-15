@@ -3,15 +3,12 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   userName: { type: String, unique: true , required: true},
+  firstName: { type: String, required: true},
+  lastName: { type: String, required: true},
   email: { type: String, unique: true },
-  events: { type: Array},
-  likes: { type: Array},
-  followers: {type: Array},
-  following: {type: Array},
   messages: {type:Array},
   password: {type: String, required: true},
   bio: {type: String, default: ''} ,
-  websiteLink: {type: String,  default: ''},
   img: {type: String,  default: 'https://s-media-cache-ak0.pinimg.com/736x/dd/6f/40/dd6f403a57b73215b5be860bd397ec34.jpg'}
 });
 

@@ -1,10 +1,14 @@
 import React from 'react';
 import './App.css';
-
+import RegisterPages from './pages/RegisterPages';
+import { Routes, Route } from 'react-router-dom'
 function App() {
-  const [array, setArray] = React.useState<any>([])
   return (
-    <div>sneaker app turned tutor app. lets update this backend</div>
+    <Routes>
+      <Route 
+          path="/"
+          element={ <RegisterPages />  } />
+    </Routes>
   );
 }
 

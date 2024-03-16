@@ -23,20 +23,19 @@ function Register() {
     const handleSubmit = async(e: any) => {
        e.preventDefault()
        console.log(userInfo)
-        // try {
-        // const reg = await fetch('http://localhost:2020/createaccount',{
-        //     method: 'POST',
-        //     headers: {'Content-Type': 'application/json'},
-        //     body: JSON.stringify(userInfo),
-        // })
-        // const data = await reg.json()
-        // console.log(data)
-        // setEmail('')
-        // localStorage.setItem('token', data.token)
-        // window.location.href = "/"
-        // } catch(err) {
-        //     console.error(err)
-        // }
+        try {
+        const reg = await fetch('http://localhost:2020/createaccount',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userInfo),
+        })
+        const data = await reg.json()
+        console.log(data)
+        localStorage.setItem('token', data.token)
+        window.location.href = "/login"
+        } catch(err) {
+            console.error(err)
+        }
     }
   return (
     <div className="h-screen md:flex">

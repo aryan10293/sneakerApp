@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   messages: {type:Array},
   password: {type: String, required: true},
-  Tutor:{type: Boolean, required: true},
+  tutor:{type: Boolean, required: true},
   bio: {type: String, default: ''} ,
   img: {type: String,  default: 'https://s-media-cache-ak0.pinimg.com/736x/dd/6f/40/dd6f403a57b73215b5be860bd397ec34.jpg'}
 });
@@ -45,5 +45,5 @@ UserSchema.methods.comparePassword = function comparePassword(
   });
 };
 
-// module.exports = mongoose.model("User", UserSchema);
-export default UserSchema
+const User = mongoose.model('User', UserSchema);
+export default User

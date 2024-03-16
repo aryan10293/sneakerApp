@@ -34,6 +34,9 @@ let auth = {
           userName: req.body.userName,
           email: req.body.email,
           password: req.body.password,
+          tutor: req.body.tutor,
+          lastName: req.body.fullName,
+          firstName:req.body.fullName,
         });
         User.findOne(
           { $or: [{ email: req.body.email }, { userName: req.body.userName }] },

@@ -2,8 +2,7 @@ import React from 'react';
 import './App.css';
 import RegisterPages from './pages/RegisterPages';
 import LoginPages from './pages/LoginPages';
-import DashboardTutor from './compnents/DashboardTutor';
-import DashboardStudent from './compnents/DashboardStudent';
+import Dashboard from './pages/Dashboard';
 import { Routes, Route, Navigate } from 'react-router-dom'
 function App() {
   const [userData,setUserData] = React.useState<any[]>([])
@@ -44,7 +43,7 @@ function App() {
           element={ <LoginPages />  } />
       <Route 
         path="/dashboard"
-          element={ userLogin ? <DashboardTutor /> : <Navigate to='/login'/>} />
+          element={ userLogin ? <Dashboard /> : <Navigate to='/login'/>} />
     </Routes>
   );
 }

@@ -75,18 +75,54 @@ function DashboardStudent() {
               <path d="M201.694 387.105C231.686 417.098 280.312 417.098 310.305 387.105C325.301 372.109 332.8 352.456 332.8 332.8C332.8 313.144 325.301 293.491 310.305 278.495C295.309 263.498 288 256 275.2 230.4C256 243.2 243.201 320 243.201 345.6C201.694 345.6 179.2 332.8 179.2 332.8C179.2 352.456 186.698 372.109 201.694 387.105Z" fill="white" />
             </svg>
 
-            <span className="mx-2 text-2xl font-semibold text-white">V-Dashboard</span>
+            <span className="mx-2 text-2xl font-semibold text-white">LearnLeap</span>
           </div>
         </div>
-
+        
         <nav className="mt-10">
-          <NavLink className={`flex items-center px-6 py-2 mt-4 duration-200 border-l-4 ${"Dashboard" === 'Dashboard' ? activeClass : inactiveClass}`} to="/dashboard">
+          <NavLink className={`flex items-center px-6 py-2 mt-4 duration-200 border-l-4 border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100`} to="/dashboard">
             <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2 10C2 5.58172 5.58172 2 10 2V10H18C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10Z" fill="currentColor" />
               <path d="M12 2.25195C14.8113 2.97552 17.0245 5.18877 17.748 8.00004H12V2.25195Z" fill="currentColor" />
             </svg>
 
-            <span className="mx-4">Dashboard</span>
+            <span className="mx-4">lol</span>
+          </NavLink>
+
+          {/* Repeat for other NavLink items */}
+        </nav>
+        <nav className="mt-10">
+          <NavLink className={`flex items-center px-6 py-2 mt-4 duration-200 border-l-4 border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100`} to="/dashboard">
+            <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 10C2 5.58172 5.58172 2 10 2V10H18C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10Z" fill="currentColor" />
+              <path d="M12 2.25195C14.8113 2.97552 17.0245 5.18877 17.748 8.00004H12V2.25195Z" fill="currentColor" />
+            </svg>
+
+            <span className="mx-4">lol</span>
+          </NavLink>
+
+          {/* Repeat for other NavLink items */}
+        </nav>
+        <nav className="mt-10">
+          <NavLink className={`flex items-center px-6 py-2 mt-4 duration-200 border-l-4 border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100`} to="/dashboard">
+            <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 10C2 5.58172 5.58172 2 10 2V10H18C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10Z" fill="currentColor" />
+              <path d="M12 2.25195C14.8113 2.97552 17.0245 5.18877 17.748 8.00004H12V2.25195Z" fill="currentColor" />
+            </svg>
+
+            <span className="mx-4">lol</span>
+          </NavLink>
+
+          {/* Repeat for other NavLink items */}
+        </nav>
+        <nav className="mt-10">
+          <NavLink className={`flex items-center px-6 py-2 mt-4 duration-200 border-l-4 border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100`} to="/dashboard">
+            <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 10C2 5.58172 5.58172 2 10 2V10H18C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10Z" fill="currentColor" />
+              <path d="M12 2.25195C14.8113 2.97552 17.0245 5.18877 17.748 8.00004H12V2.25195Z" fill="currentColor" />
+            </svg>
+
+            <span className="mx-4">lol</span>
           </NavLink>
 
           {/* Repeat for other NavLink items */}

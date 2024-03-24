@@ -32,7 +32,7 @@ function Register() {
         const data = await reg.json()
         console.log(data)
         localStorage.setItem('token', data.token)
-        window.location.href = "/"
+        window.location.href = "/dashboard"
         } catch(err) {
             console.error(err)
         }

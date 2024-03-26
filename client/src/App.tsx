@@ -3,6 +3,7 @@ import './App.css';
 import RegisterPages from './pages/RegisterPages';
 import LoginPages from './pages/LoginPages';
 import Dashboard from './pages/Dashboard';
+import SchedulePage from './pages/SchedulePage';
 import { Routes, Route, Navigate } from 'react-router-dom'
 function App() {
   const [userData,setUserData] = React.useState<any[]>([])
@@ -42,7 +43,10 @@ function App() {
           element={ <LoginPages />  } />
       <Route 
         path="/home"
-          element={ userLogin ? <Dashboard /> : <Navigate to='/login'/>} />
+        element={ userLogin ? <Dashboard /> : <Navigate to='/login'/>} />
+        <Route 
+        path="/schedule"
+        element={ userLogin ? <SchedulePage /> : <Navigate to='/login'/>} />
     </Routes>
   );
 }

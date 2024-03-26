@@ -13,6 +13,23 @@ function Header(props:any) {
     };
     const activeClass = "bg-gray-800"; // Define your active class
     const inactiveClass = "bg-gray-900"; 
+        const [okay,setOkay] = React.useState<any>('')
+    const fetchData = async() => {
+        try {
+            const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
+                method: 'GET',
+                headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+            })
+            const data = await reg.json()
+        //    console.log(data)
+            if(data.success){
+            setOkay(data.userinfo[0])
+            }
+            } catch(err) {
+                console.error(err)
+            }
+        }
+      React.useEffect(() => {fetchData()}, [])
   return (
           <header className="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-indigo-600 header">
         <div className="flex items-center">
@@ -42,7 +59,7 @@ function Header(props:any) {
 
           <div className="relative">
             <button className="relative z-10 block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none" onClick={toggleDropdown}>
-              <img className="object-cover w-full h-full" src={props.img} alt="Your avatar" />
+              <img className="object-cover w-full h-full" src={okay.img} alt="Your avatar" />
             </button>
 
             {dropdownOpen && (

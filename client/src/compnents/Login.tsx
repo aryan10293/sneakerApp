@@ -27,7 +27,7 @@ function Login() {
         const data = await reg.json()
         console.log(data)
         localStorage.setItem('token', data.token)
-        window.location.href = "/dashboard"
+        window.location.href = "/home"
         } catch(err) {
             console.error(err)
         }

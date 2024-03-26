@@ -19,7 +19,6 @@ function App() {
         const data = await reg.json()
     //    console.log(data)
         if(data.success){
-          console.log(data)
           setTutor(data.userinfo[0].tutor)
           setUserData(data.userinfo)
           setUser(true)
@@ -42,7 +41,7 @@ function App() {
           path="/login"
           element={ <LoginPages />  } />
       <Route 
-        path="/dashboard"
+        path="/home"
           element={ userLogin ? <Dashboard /> : <Navigate to='/login'/>} />
     </Routes>
   );

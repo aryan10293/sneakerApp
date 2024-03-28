@@ -4,7 +4,12 @@ import jwt from "jsonwebtoken";
 import User from "../model/User.js";
 let teacher = {
     findTutors: async (req,res) => {
-        res.send(req.params)
+        try {
+            const tutorAvaible = await User.find({courses: req.params.course});
+            res.send(tutorAvaible); // or do something with the user object
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
     }
 
 }

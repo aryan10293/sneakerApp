@@ -8,6 +8,7 @@ function Register() {
     const [password, setPassword] = React.useState<string>('')
     const [fullName, setFullName] = React.useState<string>('')
     const [tutor, setTutor] = React.useState<string>('tutor')
+    const [courses,setCourse] = React.useState<string[]>([])
     
     const handleOptionChange = (e:any) => {
         setTutor(e.target.value);
@@ -70,6 +71,14 @@ function Register() {
             <input className="pl-2 outline-none border-none" checked={tutor === 'tutor'}  type="radio" name="tutor" id="tutor" value={'tutor'} onChange={handleOptionChange}/>
             <label htmlFor="tutor">Tutor</label>
           </div>
+          {tutor === 'tutor' ? (
+            <div className="flex items-center">
+              <input type="checkbox" id="myCheckbox" name="myCheckbox" className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"/>
+              <label htmlFor="myCheckbox" className="ml-2 text-gray-700">Math</label>
+              <input type="checkbox" id="myCheckbox" name="myCheckbox" className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"/>
+              <label htmlFor="myCheckbox" className="ml-2 text-gray-700">English</label>
+            </div>
+          ) : null}
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
             <input className="pl-2 outline-none border-none" type="password" name="" id="" placeholder="Password" onChange={(e)=> {setPassword(e.target.value)}}/>
           </div>

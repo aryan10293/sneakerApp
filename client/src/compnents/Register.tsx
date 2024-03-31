@@ -11,7 +11,18 @@ function Register() {
     const [courses,setCourse] = React.useState<string[]>([])
     
     const handleOptionChange = (e:any) => {
+      if(e.target.value === 'student'){
+        setCourse([])
+      }
         setTutor(e.target.value);
+    }
+    const HandleMath = (e:any) => {
+      console.log(e.target.checked, e.target.value)
+      if(e.target.checked){
+        setCourse([...courses, e.target.value])
+      } else {
+        setCourse(courses.filter(x => x !== e.target.value))
+      }
     }
     const userInfo = {
         email: email,
@@ -19,7 +30,8 @@ function Register() {
         password: password,
         confirmPassword: confirmPassword,
         tutor: tutor === 'tutor',
-        userName: userName
+        userName: userName,
+        courses: courses
     }
     const handleSubmit = async(e: any) => {
        e.preventDefault()
@@ -73,9 +85,9 @@ function Register() {
           </div>
           {tutor === 'tutor' ? (
             <div className="flex items-center">
-              <input type="checkbox" id="myCheckbox" name="myCheckbox" className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"/>
+              <input type="checkbox" id="myCheckbox" name="myCheckbox" value={'math'} onChange={HandleMath} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"/>
               <label htmlFor="myCheckbox" className="ml-2 text-gray-700">Math</label>
-              <input type="checkbox" id="myCheckbox" name="myCheckbox" className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"/>
+              <input type="checkbox" id="myCheckbox" name="myCheckbox" onChange={HandleMath} value={'english'} className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"/>
               <label htmlFor="myCheckbox" className="ml-2 text-gray-700">English</label>
             </div>
           ) : null}

@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   messages: {type:Array},
   password: {type: String, required: true},
   tutor:{type: Boolean, required: true},
+  courses:{type: Array, required: false},
   bio: {type: String, default: ''} ,
   img: {type: String,  default: 'https://s-media-cache-ak0.pinimg.com/736x/dd/6f/40/dd6f403a57b73215b5be860bd397ec34.jpg'}
 });

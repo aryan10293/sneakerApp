@@ -3,13 +3,6 @@ import validator from "validator";
 import jwt from "jsonwebtoken";
 import User from "../model/User.js";
 let auth = {
-    getCreateAccount: (req,res) => {
-
-        res.render("create.ejs")
-    },
-    getLogin: (req,res) => {
-      res.render("login.ejs")
-  },
     postCreateAccount: (req, res, next) => {
       console.log(req.body)
         const validationErrors = [];

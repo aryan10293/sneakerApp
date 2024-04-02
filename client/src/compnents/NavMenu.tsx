@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 function NavMenu() {
   return (
-    <nav className='bg-gray-900 sticky top-0 hidden sm:block nav basis-1/6 lg:basis-1/5'>
+    <nav className='bg-gray-900 sticky top-0 w-40 hidden sm:block nav basis-1/6 lg:basis-1/5'>
        <div className={`fixed left-0 overflow-y-auto   bg-gray-900 lg:translate-x-0 lg:static lg:inset-0  `}>
           <div className="flex items-center justify-center mt-8">
             <div className="flex items-center">

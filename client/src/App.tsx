@@ -4,6 +4,7 @@ import RegisterPages from './pages/RegisterPages';
 import LoginPages from './pages/LoginPages';
 import Dashboard from './pages/Dashboard';
 import SchedulePage from './pages/SchedulePage';
+import ProfilePage from './pages/ProfilePage';
 import { Routes, Route, Navigate } from 'react-router-dom'
 function App() {
   const [userData,setUserData] = React.useState<any[]>([])
@@ -47,6 +48,9 @@ function App() {
         <Route 
         path="/schedule"
         element={ userLogin ? <SchedulePage /> : <Navigate to='/login'/>} />
+        <Route 
+        path="/profile"
+        element={ userLogin ? <ProfilePage /> : <Navigate to='/login'/>} />
     </Routes>
   );
 }

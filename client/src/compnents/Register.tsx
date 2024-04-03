@@ -17,7 +17,6 @@ function Register() {
         setTutor(e.target.value);
     }
     const HandleMath = (e:any) => {
-      console.log(e.target.checked, e.target.value)
       if(e.target.checked){
         setCourse([...courses, e.target.value])
       } else {

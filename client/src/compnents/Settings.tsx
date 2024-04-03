@@ -4,13 +4,31 @@ import Header from './Header'
 import NavMenu from './NavMenu'
 function Settings() {
     const usStates = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
-    const [tutor, setTutor] = React.useState<string>('tutor')
+    const schoolYear = ['Freshman (High School)','Sophomore (High School)','Junior (High School)','Senior (High School)','Freshman (College)','Sophomore (College)','Junior (College)','Senior (College)'];
+    const subjects = ['Algebra', 'Biology', 'English Composition', 'World History','Geometry', 'Chemistry', 'Literature', 'US History','Trigonometry', 'Physics', 'American Literature', 'Government','Calculus', 'Environmental Science', 'British Literature', 'Economics','Introduction to Psychology', 'College Algebra', 'Composition I', 'Introduction to Sociology','Statistics', 'Organic Chemistry', 'Composition II', 'Microeconomics','Advanced Calculus', 'Biochemistry', 'Creative Writing', 'Macroeconomics','Linear Algebra', 'Neuroscience', 'Technical Writing', 'International Relations']
     const [username, setUsername] = React.useState<string>('')
     const [date, setDate] = React.useState<any>('')
     const [about, setAbout] = React.useState<string>('')
     const [city,setCity] = React.useState<string>('')
     const [state,setState] = React.useState<string>('AL')
+    const [yearInSchool, setYearInSchool] = React.useState<string>('Freshman (High School)')
+    const [major, setMajor] = React.useState<string>('')
+    const [school, setSchool] = React.useState<string>('')
     const [userData,setUserData] = React.useState<any[]>([])
+    const [courses,setCourse] = React.useState<string[]>([])
+    
+    const userStuff = {
+        username: username,
+        dob: date,
+        bio: about,
+        city: city,
+        state: state,
+        subjects: courses,
+        yearInSchool: yearInSchool,
+        major: major,
+        school: school,
+
+    }
     React.useEffect(() => {
     const fetchData = async() => {
         try {
@@ -29,9 +47,21 @@ function Settings() {
     fetchData()
     }, [])
 
-    const handleSubmit = (e:any) => {
+    const handleSubmit = async (e:any) => {
         e.preventDefault()
-        console.log( username, date, about, city, state)
+        console.log( userStuff)
+
+        try {
+            const response = await fetch(`http://localhost:2020/editprofile`, {
+                method: 'PUT',
+                headers:  {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                body: JSON.stringify(userStuff)
+                })
+            const data = await response.json()
+        } catch (error) {
+            console.log(error)
+        }
+
     }
     const characterLimit = (e:any) => {
         const inputValue = e.target.value;
@@ -42,6 +72,13 @@ function Settings() {
     const handleSelectChange = (e:any) => {
         setState(e.target.value);
     };
+    const HandleSubjects = (e:any) => {
+      if(e.target.checked){
+        setCourse([...courses, e.target.value])
+      } else {
+        setCourse(courses.filter(x => x !== e.target.value))
+      }
+    }
   return (
 
     <>
@@ -80,14 +117,14 @@ function Settings() {
         </div>
 
         <div className="col-span-full">
-          <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">Photo</label>
-          <div className="mt-2 flex items-center gap-x-3">
-            <svg className="h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
-            </svg>
-            <button type="button" className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Change</button>
-          </div>
+            <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">Photo</label>
+            <div className="mt-2 flex items-center gap-x-3">
+                <img className='relative z-10 block w-10 h-10 overflow-hidden rounded-full shadow focus:outline-none' src={userData.length > 0 ? userData[0].img : null} alt="" />
+                <label htmlFor="file-upload" className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-pointer">Change</label>
+                <input id="file-upload" name="file-upload" type="file" className="hidden"  />{/* onChange={handleImageChange} */}
+            </div>
         </div>
+
 
       </div>
     </div>
@@ -102,54 +139,60 @@ function Settings() {
                 </div>
 
                 <div className="sm:col-span-3">
-                <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">State</label>
-                <div className="mt-2">
-                    <select id="state" value={state} onChange={handleSelectChange} name="state" autoComplete="state-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                    {usStates.map((x:string) => (
-                        <option value={x}>{x}</option>
-                    )) }
+                    <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">State</label>
+                    <div className="mt-2">
+                        <select id="state" value={state} onChange={handleSelectChange} name="state" autoComplete="state-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                        {usStates.map((x:string) => (
+                            <option value={x}>{x}</option>
+                        )) }
 
-                    </select>
-                </div>
+                        </select>
+                    </div>
                 </div>
         </div>
     </div>
 
     <div className="border-b border-gray-900/10 pb-12">
-      <h2 className="text-base font-semibold leading-7 text-gray-900">Notifications</h2>
-      <p className="mt-1 text-sm leading-6 text-gray-600">We'll always let you know about important changes, but you pick what else you want to hear about.</p>
+      <h2 className="text-base font-semibold leading-7 text-gray-900">Educational Background</h2>
+      <div className="sm:col-span-3">
+        <label htmlFor="year" className="block text-sm font-medium leading-6 text-gray-900">Year In School</label>
+            <div className="mt-2">
+                <select id="year" value={yearInSchool} onChange={(e:any) => setYearInSchool(e.target.value)} name="year" autoComplete="year" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                {schoolYear.map((x:string) => (
+                    <option value={x}>{x}</option>
+                )) }
+
+                </select>
+            </div>
+
+            <label htmlFor="year" className="block text-sm font-medium mt-2 leading-6 text-gray-900">School/College/University Name</label>
+            <div className="mt-2">
+                <input type="text" onChange={(e:any) => setSchool(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
+            </div>
+
+            <label htmlFor="year" className="block text-sm font-medium mt-2 leading-6 text-gray-900">Major or Field of Study</label>
+            <div className="mt-2">
+                <input type="text" onChange={(e:any) => setMajor(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
+            </div>
+
+        </div>
 
       <div className="mt-10 space-y-10">
         <fieldset>
-          <legend className="text-sm font-semibold leading-6 text-gray-900">By Email</legend>
-          <div className="mt-6 space-y-6">
-            <div className="relative flex gap-x-3">
-              <div className="flex h-6 items-center">
-                <input id="comments" name="comments" type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-              </div>
-              <div className="text-sm leading-6">
-                <label htmlFor="comments" className="font-medium text-gray-900">Comments</label>
-                <p className="text-gray-500">Get notified when someone posts a comment on a posting.</p>
-              </div>
-            </div>
-            <div className="relative flex gap-x-3">
-              <div className="flex h-6 items-center">
-                <input id="candidates" name="candidates" type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-              </div>
-              <div className="text-sm leading-6">
-                <label htmlFor="candidates" className="font-medium text-gray-900">Candidates</label>
-                <p className="text-gray-500">Get notified when a candidate applies for a job.</p>
-              </div>
-            </div>
-            <div className="relative flex gap-x-3">
-              <div className="flex h-6 items-center">
-                <input id="offers" name="offers" type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-              </div>
-              <div className="text-sm leading-6">
-                <label htmlFor="offers" className="font-medium text-gray-900">Offers</label>
-                <p className="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
-              </div>
-            </div>
+          <legend className="text-sm font-semibold leading-6 text-gray-900">Subjects Interested In Or Needs Help With </legend>
+          <div className="mt-6 grid grid-cols-7 gap-x-6 gap-y-6">
+            {subjects.map((x:string) => {
+                return(
+                    <div className="relative flex gap-x-3">
+                        <div className="flex h-6 items-center">
+                            <input id={x} name={x} type="checkbox" onChange={HandleSubjects} value={x} className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                        </div>
+                        <div className="text-sm leading-6">
+                            <label htmlFor={x} className="font-medium text-gray-900">{x}</label>
+                        </div>
+                    </div>
+                )
+            })}
           </div>
         </fieldset>
         <fieldset>

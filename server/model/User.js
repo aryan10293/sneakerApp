@@ -10,8 +10,15 @@ const UserSchema = new mongoose.Schema({
   password: {type: String, required: true},
   tutor:{type: Boolean, required: true},
   courses:{type: Array, required: false},
-  bio: {type: String, default: ''} ,
-  img: {type: String,  default: 'https://s-media-cache-ak0.pinimg.com/736x/dd/6f/40/dd6f403a57b73215b5be860bd397ec34.jpg'}
+  bio: {type: String, default: ''},
+  img: {type: String,  default: 'https://s-media-cache-ak0.pinimg.com/736x/dd/6f/40/dd6f403a57b73215b5be860bd397ec34.jpg'},
+  major: {type: String, default: ''},
+  school: {type: String, default: ''},
+  yearInSchool: {type: String, default: ''},
+  city: {type: String, default: ''},
+  state: {type: String, default: ''},
+  dob: {type: String, default: ''},
+  subjects:{type: Array, required: false},
 });
 
 // Password hash middleware.

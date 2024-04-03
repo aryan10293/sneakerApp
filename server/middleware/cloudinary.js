@@ -1,6 +1,7 @@
-const cloudinary = require("cloudinary").v2;
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
 
-require("dotenv").config({ path: "./config/.env" });
+dotenv.config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -15,20 +16,7 @@ const opts = {
 };
 
 const uploadImage = (image) => {
-  //imgage = > base64
-  return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(image, opts, (error, result) => {
-      if (result && result.secure_url) {
-        console.log(result.secure_url);
-        return resolve(result.secure_url);
-      }
-      console.log(error.message);
-      return reject({ message: error.message });
-    });
-  });
-};
-module.exports = (image) => {
-  //imgage = > base64
+  // Image => base64
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(image, opts, (error, result) => {
       if (result && result.secure_url) {
@@ -41,7 +29,7 @@ module.exports = (image) => {
   });
 };
 
-module.exports.uploadMultipleImages = (images) => {
+export const uploadMultipleImages = (images) => {
   return new Promise((resolve, reject) => {
     const uploads = images.map((base) => uploadImage(base));
     Promise.all(uploads)

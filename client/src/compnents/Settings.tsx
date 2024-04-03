@@ -16,7 +16,7 @@ function Settings() {
     const [school, setSchool] = React.useState<string>('')
     const [userData,setUserData] = React.useState<any[]>([])
     const [courses,setCourse] = React.useState<string[]>([])
-    
+    const [id,setId] = React.useState<string>('')
     const userStuff = {
         username: username,
         dob: date,
@@ -27,41 +27,8 @@ function Settings() {
         yearInSchool: yearInSchool,
         major: major,
         school: school,
-
-    }
-    React.useEffect(() => {
-    const fetchData = async() => {
-        try {
-        const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
-            method: 'GET',
-            headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-        })
-        const data = await reg.json()
-        setUserData(data.userinfo)
-        setUsername(data.userinfo[0].userName)
-        setAbout(data.userinfo[0].bio)
-        } catch(err) {
-            console.error(err)
-        }
-    }
-    fetchData()
-    }, [])
-
-    const handleSubmit = async (e:any) => {
-        e.preventDefault()
-        console.log( userStuff)
-
-        try {
-            const response = await fetch(`http://localhost:2020/editprofile`, {
-                method: 'PUT',
-                headers:  {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-                body: JSON.stringify(userStuff)
-                })
-            const data = await response.json()
-        } catch (error) {
-            console.log(error)
-        }
-
+        profilePic: undefined,
+        id:id
     }
     const characterLimit = (e:any) => {
         const inputValue = e.target.value;
@@ -79,6 +46,66 @@ function Settings() {
         setCourse(courses.filter(x => x !== e.target.value))
       }
     }
+
+    const handleSubmit = async (e:any) => {
+        e.preventDefault()
+        let img = e.target.childNodes[0].childNodes[0].childNodes[2].childNodes[3].childNodes[1].childNodes[2].files[0]
+        if(img !== undefined){
+            img = await convertBase64(img)
+            userStuff.profilePic = img
+        }
+        try {
+            const response = await fetch(`http://localhost:2020/editprofile`, {
+                method: 'PUT',
+                headers:  {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                body: JSON.stringify(userStuff)
+                })
+            const data = await response.json()
+            window.location.href = "/profile"
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const convertBase64 = (file: any) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(file);
+
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        } catch (error) {
+          reject(error);
+        }
+      });
+    };
+
+    React.useEffect(() => {
+    const fetchData = async() => {
+        try {
+        const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
+            method: 'GET',
+            headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+        })
+        const data = await reg.json()
+        setUserData(data.userinfo)
+        setUsername(data.userinfo[0].userName)
+        setAbout(data.userinfo[0].bio)
+        setId(data.userinfo[0]._id)
+        } catch(err) {
+            console.error(err)
+        }
+    }
+    fetchData()
+    }, [])
+
   return (
 
     <>

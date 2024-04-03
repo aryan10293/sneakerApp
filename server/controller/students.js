@@ -10,44 +10,23 @@ let students = {
             console.error('Error fetching user:', error);
         }
     },
-    editProfile: async (req,res) => {
-        console.log(req.body)
-        
+    editProfile: async (req,res) => {      
+        console.log(req.body.profilePic)  
         // try{
-        //      if(req.body.obj.profilePic !== undefined){
+        //      if(req.body.profilePic !== undefined){
         //         const updateUser = await User.findOneAndUpdate(
         //             {_id: req.body.id},
         //             {
-        //                 $set: { img: await cloudinary(req.body.obj.profilePic), bio: req.body.obj.bio, userName: req.body.obj.username, websiteLink: req.body.obj.websiteLink},
+        //                 $set: { img: await uploadMultipleImages(req.body.obj.profilePic), bio: req.body.bio, userName: req.body.username, dob:req.body.dob, city: req.body.city, state:req.body.state, subjects: req.body.subjects, yearInSchool: req.body.yearInSchool, school:req.body.school, major:req.body.major},
         //             }
         //         )
-        //         const updateUserFeats = await Feat.updateMany(
-        //             {userId: req.body.id},
-        //             {
-        //                 $set: { profileImg: await cloudinary(req.body.obj.profilePic), userName: req.body.obj.username},
-        //             }
-        //         )
-        //         const filter = { "comments.userId": req.body.id };
-        //         const update = { $set: { "comments.$[elem].userName": req.body.obj.username,  "comments.$[elem].img": await cloudinary(req.body.obj.profilePic)} };
-        //         const options = { arrayFilters: [{ "elem.userId": req.body.id }] };
-        //         await Feat.updateMany(filter, update, options);
         //     } else {
         //         const updateUser = await User.findOneAndUpdate(
         //             {_id: req.body.id},
         //             {
-        //                 $set: { bio: req.body.obj.bio, userName: req.body.obj.username, websiteLink: req.body.obj.websiteLink},
+        //                 $set: { bio: req.body.bio, userName: req.body.username, dob:req.body.dob, city: req.body.city, state:req.body.state, subjects: req.body.subjects, yearInSchool: req.body.yearInSchool, school:req.body.school, major:req.body.major},
         //             }
         //         )
-        //         const updateUserFeats = await Feat.updateMany(
-        //             {userId: req.body.id},
-        //             {
-        //                 $set: { userName: req.body.obj.username},
-        //             }
-        //         )
-        //         const filter = { "comments.userId": req.body.id };
-        //         const update = { $set: { "comments.$[elem].userName": req.body.obj.username} };
-        //         const options = { arrayFilters: [{ "elem.userId": req.body.id }] };
-        //         await Feat.updateMany(filter, update, options);
         //     }
         //     if (!updateUser) {
         //         return res.status(404).json({ error: 'User not found' });

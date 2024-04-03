@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ path: './config/.env' });
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -15,7 +15,7 @@ const opts = {
   resource_type: "auto",
 };
 
-const uploadImage = (image) => {
+export const uploadImage = (image) => {
   // Image => base64
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(image, opts, (error, result) => {
@@ -29,11 +29,11 @@ const uploadImage = (image) => {
   });
 };
 
-export const uploadMultipleImages = (images) => {
-  return new Promise((resolve, reject) => {
-    const uploads = images.map((base) => uploadImage(base));
-    Promise.all(uploads)
-      .then((values) => resolve(values))
-      .catch((err) => reject(err));
-  });
-};
+// export const uploadMultipleImages = (images) => {
+//   return new Promise((resolve, reject) => {
+//     const uploads = images.map((base) => uploadImage(base));
+//     Promise.all(uploads)
+//       .then((values) => resolve(values))
+//       .catch((err) => reject(err));
+//   });
+// };

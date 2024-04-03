@@ -8,6 +8,7 @@ function Settings() {
     const subjects = ['Algebra', 'Biology', 'English Composition', 'World History','Geometry', 'Chemistry', 'Literature', 'US History','Trigonometry', 'Physics', 'American Literature', 'Government','Calculus', 'Environmental Science', 'British Literature', 'Economics','Introduction to Psychology', 'College Algebra', 'Composition I', 'Introduction to Sociology','Statistics', 'Organic Chemistry', 'Composition II', 'Microeconomics','Advanced Calculus', 'Biochemistry', 'Creative Writing', 'Macroeconomics','Linear Algebra', 'Neuroscience', 'Technical Writing', 'International Relations']
     const [username, setUsername] = React.useState<string>('')
     const [date, setDate] = React.useState<any>('')
+    const [lol, setlol] = React.useState<any>('')
     const [about, setAbout] = React.useState<string>('')
     const [city,setCity] = React.useState<string>('')
     const [state,setState] = React.useState<string>('AL')
@@ -99,6 +100,14 @@ function Settings() {
         setUsername(data.userinfo[0].userName)
         setAbout(data.userinfo[0].bio)
         setId(data.userinfo[0]._id)
+        setMajor(data.userinfo[0].major)
+        setSchool(data.userinfo[0].school)
+        setYearInSchool(data.userinfo[0].yearInSchool)
+        setCourse(data.userinfo[0].subjects)
+        setCity(data.userinfo[0].city)
+        setState(data.userinfo[0].state)
+        setDate(data.userinfo[0].dob)
+        setlol(data.userinfo[0].dob)
         } catch(err) {
             console.error(err)
         }
@@ -127,14 +136,15 @@ function Settings() {
             </div>
           </div>
         </div>
-        <div className="sm:col-span-4">
-          <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Date Of Birth</label>
-          <div className="mt-2">
-            <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-              <input type="date"  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value={date} onChange={(e:any) => {setDate(e.target.value)} }/>
+        <div className={`sm:col-span-4 ${lol !== '' ? null : 'hidden'}`}>
+                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Date Of Birth</label>
+                <div className="mt-2">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                        <input type="date" value={date} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" onChange={(e:any) => {setDate(e.target.value)} } />
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
+
         <div className="col-span-full">
           <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">About Me</label>
           <div className="mt-2">
@@ -161,7 +171,7 @@ function Settings() {
         <div className="sm:col-span-3">
                 <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">City</label>
                 <div className="mt-2">
-                    <input id="city" name="city" type="city" autoComplete="city" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e:any) => {setCity(e.target.value)}}  />
+                    <input id="city" name="city" value={city} type="city" autoComplete="city" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e:any) => {setCity(e.target.value)}}  />
                 </div>
                 </div>
 
@@ -194,12 +204,12 @@ function Settings() {
 
             <label htmlFor="year" className="block text-sm font-medium mt-2 leading-6 text-gray-900">School/College/University Name</label>
             <div className="mt-2">
-                <input type="text" onChange={(e:any) => setSchool(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
+                <input type="text" value={school} onChange={(e:any) => setSchool(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
             </div>
 
             <label htmlFor="year" className="block text-sm font-medium mt-2 leading-6 text-gray-900">Major or Field of Study</label>
             <div className="mt-2">
-                <input type="text" onChange={(e:any) => setMajor(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
+                <input type="text" value={major} onChange={(e:any) => setMajor(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" />
             </div>
 
         </div>
@@ -212,7 +222,7 @@ function Settings() {
                 return(
                     <div className="relative flex gap-x-3">
                         <div className="flex h-6 items-center">
-                            <input id={x} name={x} type="checkbox" onChange={HandleSubjects} value={x} className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                            <input id={x} name={x} type="checkbox" checked={courses.includes(x)} onChange={HandleSubjects} value={x} className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                         </div>
                         <div className="text-sm leading-6">
                             <label htmlFor={x} className="font-medium text-gray-900">{x}</label>

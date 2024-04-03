@@ -14,7 +14,7 @@ function ProfilePage(props:any) {
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
         })
         const data = await reg.json()
-        console.log(data)
+        console.log(data.userinfo[0].subjects)
         setUserData(data.userinfo)
         } catch(err) {
             console.error(err)
@@ -71,42 +71,65 @@ function ProfilePage(props:any) {
             </div>
             <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
               {userData.length === 0 ? null : (
-                `${userData[0].firstName} ${userData[0].lastName}(Age will go here)`
+                `${userData[0].firstName} ${userData[0].lastName}`
               )}
             </h3>
             <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
               <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-              Seattle, Washington (city will go here)
-            </div>
-            <div className="mb-2 text-blueGray-600 mt-10">
-              <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Solution Manager - Creative Tim Officer
-            </div>
-            <div className="mb-2 text-blueGray-600">
-              <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>University of Computer Science
+              {userData.length === 0 ? null : (
+                `${userData[0].city.toUpperCase()}, ${userData[0].state.toUpperCase()}`
+              )}
             </div>
           </div>
           <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
             <div className="flex  justify-center">
-              <div className="w-full lg:w-9/12 px-4">
+              <div className="w-full lg:w-9/12 px-4 overflow-auto">
                 <h2 className='mb-5 font-semibold leading-normal text-2xl text-blueGray-700 '>About Me</h2>
-                <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                  {/* {userData.length === 0 ? null : userData[0].bio} */}
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero illum laudantium perferendis impedit, neque asperiores vero rerum voluptatum qui. Dolorum, qui eaque fugit non fugiat molestiae? Autem blanditiis quia at ut, dolor itaque nam ab soluta! Qui voluptates dolorum nihil laborum consequuntur maiores nesciunt quibusdam, placeat amet deserunt, dolor odit?
+                <p className="mb-4  idk text-lg leading-relaxed text-blueGray-700">
+                  {userData.length === 0 ? null : userData[0].bio} 
                 </p>
               </div>
               <div className="w-full lg:w-9/12 px-4">
                 <h2 className='mb-5 font-semibold leading-normal text-2xl text-blueGray-700 '>Educational Information</h2>
-                <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                  {/* {userData.length === 0 ? null : userData[0].bio} */}
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero illum laudantium perferendis impedit, neque asperiores vero rerum voluptatum qui. Dolorum, qui eaque fugit non fugiat molestiae? Autem blanditiis quia at ut, dolor itaque nam ab soluta! Qui voluptates dolorum nihil laborum consequuntur maiores nesciunt quibusdam, placeat amet deserunt, dolor odit?
-                </p>
+                  <div>
+                    <td className="pl-5 pr-3 whitespace-no-wrap">
+                      <div className="text-gray-400">YEAR</div>
+                    </td>
+
+                    <td className="px-2 py-2 whitespace-no-wrap">
+                        <div className="leading-5 text-gray-500 font-medium">{userData.length === 0 ? null : userData[0].yearInSchool.toUpperCase()} </div>
+                    </td>
+                  </div>
+
+                  <div>
+                      <td className="pl-5 pr-3 whitespace-no-wrap">
+                          <div className="text-gray-400">SCHOOL</div>
+                      </td>
+
+                      <td className="px-2 py-2 whitespace-no-wrap">
+                          <div className="leading-5 text-gray-500 font-medium">{userData.length === 0 ? null : userData[0].school.toUpperCase()} </div>
+                      </td>
+                  </div>
+
+                  <div>
+                      <td className="pl-5 pr-3 whitespace-no-wrap">
+                          <div className="text-gray-400">MAJOR</div>
+                      </td>
+
+                      <td className="px-2 py-2 whitespace-no-wrap">
+                          <div className="leading-5 text-gray-500 font-medium">{userData.length === 0 ? null : userData[0].major.toUpperCase()} </div>
+                      </td>
+                  </div>
               </div>
               <div className="w-full lg:w-9/12 px-4">
-                <h2 className='mb-5 font-semibold leading-normal text-2xl text-blueGray-700 '> Academic Achievements</h2>
-                <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                  {/* {userData.length === 0 ? null : userData[0].bio} */}
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero illum laudantium perferendis impedit, neque asperiores vero rerum voluptatum qui. Dolorum, qui eaque fugit non fugiat molestiae? Autem blanditiis quia at ut, dolor itaque nam ab soluta! Qui voluptates dolorum nihil laborum consequuntur maiores nesciunt quibusdam, placeat amet deserunt, dolor odit?
-                </p>
+                <h2 className='mb-5 font-semibold leading-normal text-2xl text-blueGray-700 '> Areas Of Interest</h2>
+                  {userData.length === 0 ? null : 
+                      userData[0].subjects.map((x:string) => {
+                        return (
+                          <div>{x}</div>
+                        )
+                      })
+                  } 
               </div>
             </div>
           </div>

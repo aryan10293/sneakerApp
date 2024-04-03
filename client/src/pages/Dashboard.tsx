@@ -24,7 +24,7 @@ function Dashboard() {
       React.useEffect(() => {fetchData()}, [])
     return (
         <>
-            {userData ? <DashboardTutor/> : <DashboardStudent idk={okay}/>}
+            {userData ? <DashboardTutor idk={okay}/> : <DashboardStudent idk={okay}/>}
         </>
     );
 }

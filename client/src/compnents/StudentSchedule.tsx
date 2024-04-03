@@ -1,8 +1,9 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Header from './Header'
 import NavMenu from './NavMenu'
-function Schedule() {
+
+function StudentSchedule() {
     const [course, setCourse] = React.useState<string>('')
     const [teachers, setTeachers] = React.useState<any[]>([])
     const findTeacher = async(e:any) => {
@@ -71,4 +72,4 @@ function Schedule() {
   )
 }
 
-export default Schedule
+export default StudentSchedule

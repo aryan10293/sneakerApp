@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
   state: {type: String, default: ''},
   dob: {type: String, default: ''},
   subjects:{type: Array, required: false},
+  why:{type: String, default: ''},
 });
 
 // Password hash middleware.

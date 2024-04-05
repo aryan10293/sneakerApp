@@ -18,6 +18,7 @@ function Settings() {
     const [userData,setUserData] = React.useState<any[]>([])
     const [courses,setCourse] = React.useState<string[]>([])
     const [id,setId] = React.useState<string>('')
+    const [why,setWhy] = React.useState<string>('')
     const userStuff = {
         username: username,
         dob: date,
@@ -29,12 +30,20 @@ function Settings() {
         major: major,
         school: school,
         profilePic: undefined,
-        id:id
+        id:id,
+        why:why
     }
     const characterLimit = (e:any) => {
         const inputValue = e.target.value;
         if (inputValue.length <= 200) {
             setAbout(inputValue);
+        }
+    }
+
+    const characterLimitWhy = (e:any) => {
+        const inputValue = e.target.value;
+        if (inputValue.length <= 200) {
+            setWhy(inputValue);
         }
     }
     const handleSelectChange = (e:any) => {
@@ -50,7 +59,7 @@ function Settings() {
 
     const handleSubmit = async (e:any) => {
         e.preventDefault()
-        let img = e.target.childNodes[0].childNodes[0].childNodes[2].childNodes[3].childNodes[1].childNodes[2].files[0]
+        let img = e.target.childNodes[0].childNodes[0].childNodes[2].childNodes[4].childNodes[1].childNodes[2].files[0]
         if(img !== undefined){
             img = await convertBase64(img)
             userStuff.profilePic = img
@@ -108,6 +117,7 @@ function Settings() {
         setState(data.userinfo[0].state)
         setDate(data.userinfo[0].dob)
         setlol(data.userinfo[0].dob)
+        setWhy(data.userinfo[0].why)
         } catch(err) {
             console.error(err)
         }
@@ -151,6 +161,14 @@ function Settings() {
             <textarea id="about" name="about"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={about} onChange={characterLimit}></textarea>
           </div>
           <p className="mt-3 text-sm leading-6 text-gray-600">{about.length}/200</p>
+        </div>
+
+        <div className="col-span-full">
+          <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">Why Should Shoudl You Get Tutored?</label>
+          <div className="mt-2">
+            <input id="why" name="why"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={why} onChange={characterLimitWhy}/>
+          </div>
+          <p className="mt-3 text-sm leading-6 text-gray-600">{why.length}/50</p>
         </div>
 
         <div className="col-span-full">
@@ -222,10 +240,10 @@ function Settings() {
                 return(
                     <div className="relative flex gap-x-3">
                         <div className="flex h-6 items-center">
-                            <input id={x} name={x} type="checkbox" checked={courses.includes(x)} onChange={HandleSubjects} value={x} className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                            <input id={x.toLowerCase()} name={x.toLowerCase()} type="checkbox" checked={courses.includes(x.toLowerCase())} onChange={HandleSubjects} value={x.toLowerCase()} className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
                         </div>
                         <div className="text-sm leading-6">
-                            <label htmlFor={x} className="font-medium text-gray-900">{x}</label>
+                            <label htmlFor={x.toLowerCase()} className="font-medium text-gray-900">{x}</label>
                         </div>
                     </div>
                 )

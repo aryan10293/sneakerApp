@@ -1,6 +1,6 @@
 import React from 'react'
 import StudentSchedule from '../compnents/StudentSchedule'
-
+import TutorSchedule from '../compnents/TutorSchedule'
 function SchedulePage() {
   const [userData, setUserData] = React.useState<boolean>(true)
   const fetchData = async() => {
@@ -18,7 +18,7 @@ function SchedulePage() {
       React.useEffect(() => {fetchData()}, [])
   return (
     <>
-      {userData ? null: <StudentSchedule/> }
+      {userData ? <TutorSchedule/> : <StudentSchedule/> }
     </>
   )
 }

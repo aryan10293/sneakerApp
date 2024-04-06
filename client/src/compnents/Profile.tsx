@@ -2,10 +2,13 @@ import React from 'react';
 import { Fragment } from 'react';
 import NavMenu from './NavMenu';
 import Header from './Header';
-import { Link } from 'react-router-dom';
+import { Link , useParams} from 'react-router-dom';
 //style={'background-image: url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80');}" style="transform: translateZ(0px)"
 function ProfilePage(props:any) {
+  const { id } = useParams();
+  console.log(id)
   const [userData,setUserData] = React.useState<any[]>([])
+  const [tutor, isTutor] = React.useState<boolean>(false)
     React.useEffect(() => {
     const fetchData = async() => {
       try {
@@ -16,6 +19,8 @@ function ProfilePage(props:any) {
         const data = await reg.json()
         console.log(data.userinfo[0].subjects)
         setUserData(data.userinfo)
+        isTutor(data.userinfo[0].tutor)
+
         } catch(err) {
             console.error(err)
         }
@@ -46,6 +51,7 @@ function ProfilePage(props:any) {
                   <button className="bg-blue-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                   Edit Profile
                 </button>
+                <div>{tutor}</div>
                 </Link>
               </div>
             </div>
@@ -124,11 +130,19 @@ function ProfilePage(props:any) {
               <div className="w-full lg:w-9/12 px-4">
                 <h2 className='mb-5 font-semibold leading-normal text-2xl text-blueGray-700 '> Areas Of Interest</h2>
                   {userData.length === 0 ? null : 
-                      userData[0].subjects.map((x:string) => {
+                      tutor ? (
+                        userData[0].courses.map((x:string) => {
                         return (
                           <div>{x}</div>
                         )
                       })
+                      ) : (
+                        userData[0].subjects.map((x:string) => {
+                        return (
+                          <div>{x}</div>
+                        )
+                      })
+                      )
                   } 
               </div>
             </div>

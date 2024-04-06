@@ -32,7 +32,6 @@ function TutorSchedule() {
                     <label htmlFor="idkyet">search for Students to teach</label>
                     <input type="text" value={course} onChange={(e)=> {setCourse(e.target.value)}}/>
                     <button className='bg-blue'>Find a Student</button>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, deleniti architecto ipsum asperiores saepe debitis repellendus maxime ab voluptatibus doloribus sunt sint blanditiis laboriosam magni. At reiciendis asperiores quia in sequi necessitatibus laudantium mollitia deleniti est neque ea, possimus adipisci nam quam aliquid fugiat excepturi officia illum ullam qui nostrum. Velit veritatis dignissimos sequi! Expedita, repellendus, consequuntur impedit ut obcaecati quasi repudiandae atque, quibusdam aperiam ab aut suscipit debitis perferendis sit. Saepe ut qui eos quisquam placeat! Similique molestiae suscipit nam eligendi tenetur! Dolor modi aperiam perspiciatis aliquam dolorum, deleniti, commodi labore unde accusantium voluptatibus natus, dignissimos facere possimus libero.</p>
                 </form>
             </div>
 

@@ -11,4 +11,5 @@ router.get('/getuser/:token',  auth.checkUser)
 router.get('/findtutor/:course', students.findTutors)
 router.get('/findstudent/:course', teachers.findStudents)
 router.put('/editprofile', students.editProfile)
+router.put('/editprofileT', teachers.editProfile)
 export default router;

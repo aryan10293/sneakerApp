@@ -19,6 +19,7 @@ function Settings() {
     const [courses,setCourse] = React.useState<string[]>([])
     const [id,setId] = React.useState<string>('')
     const [why,setWhy] = React.useState<string>('')
+    const [tutor, isTutor] = React.useState<boolean>(false)
     const userStuff = {
         username: username,
         dob: date,
@@ -31,6 +32,7 @@ function Settings() {
         school: school,
         profilePic: undefined,
         id:id,
+        tutor:tutor,
         why:why
     }
     const characterLimit = (e:any) => {
@@ -65,7 +67,7 @@ function Settings() {
             userStuff.profilePic = img
         }
         try {
-            const response = await fetch(`http://localhost:2020/editprofile`, {
+            const response = await fetch(`http://localhost:2020/editprofile${tutor?'T':null}`, {
                 method: 'PUT',
                 headers:  {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
                 body: JSON.stringify(userStuff)
@@ -118,6 +120,7 @@ function Settings() {
         setDate(data.userinfo[0].dob)
         setlol(data.userinfo[0].dob)
         setWhy(data.userinfo[0].why)
+        isTutor(data.userinfo[0].tutor)
         } catch(err) {
             console.error(err)
         }
@@ -164,7 +167,7 @@ function Settings() {
         </div>
 
         <div className="col-span-full">
-          <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">Why Should Shoudl You Get Tutored?</label>
+          <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">{tutor ? 'Why Should Someone Pick You To Tutor Them?' : 'Why Should  You Get Tutored?'}</label>
           <div className="mt-2">
             <input id="why" name="why"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={why} onChange={characterLimitWhy}/>
           </div>
@@ -234,7 +237,7 @@ function Settings() {
 
       <div className="mt-10 space-y-10">
         <fieldset>
-          <legend className="text-sm font-semibold leading-6 text-gray-900">Subjects Interested In Or Needs Help With </legend>
+          <legend className="text-sm font-semibold leading-6 text-gray-900">{tutor ? 'Subjects You Can Teach' : 'Subjects Interested In Or Needs Help With'} </legend>
           <div className="mt-6 grid grid-cols-7 gap-x-6 gap-y-6">
             {subjects.map((x:string) => {
                 return(

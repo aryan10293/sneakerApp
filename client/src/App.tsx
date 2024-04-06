@@ -53,6 +53,9 @@ function App() {
         path="/profile"
         element={ userLogin ? <ProfilePage /> : <Navigate to='/login'/>} />
         <Route 
+        path="/profile/:id"
+        element={ userLogin ? <ProfilePage /> : <Navigate to='/login'/>} />
+        <Route 
         path="/settings"
         element={ userLogin ? <SettingsPage /> : <Navigate to='/login'/>} />
     </Routes>

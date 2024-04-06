@@ -33,9 +33,8 @@ function StudentSchedule() {
             <div>
                 <form onSubmit={findTeacher}>
                     <label htmlFor="idkyet">search for course course teachers</label>
-                    <input type="text" value={course} onChange={(e)=> {setCourse(e.target.value)}}/>
-                    <button className='bg-blue'>Find a teacher</button>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, deleniti architecto ipsum asperiores saepe debitis repellendus maxime ab voluptatibus doloribus sunt sint blanditiis laboriosam magni. At reiciendis asperiores quia in sequi necessitatibus laudantium mollitia deleniti est neque ea, possimus adipisci nam quam aliquid fugiat excepturi officia illum ullam qui nostrum. Velit veritatis dignissimos sequi! Expedita, repellendus, consequuntur impedit ut obcaecati quasi repudiandae atque, quibusdam aperiam ab aut suscipit debitis perferendis sit. Saepe ut qui eos quisquam placeat! Similique molestiae suscipit nam eligendi tenetur! Dolor modi aperiam perspiciatis aliquam dolorum, deleniti, commodi labore unde accusantium voluptatibus natus, dignissimos facere possimus libero.</p>
+                    <input type="text" className='border-gray-300 ' value={course} onChange={(e)=> {setCourse(e.target.value)}}/>
+                    <button className='bg-blue '>Find a teacher</button>
                 </form>
             </div>
 
@@ -53,10 +52,10 @@ function StudentSchedule() {
                                 </div>
                                 
                                 <div className="md:col-start-2 col-span-11 xl:-ml-5 flex justify-center items-center">
-                                    <p className="text-sm text-gray-800 font-light"> Empowering tutor igniting academic success with personalized teaching.</p>
+                                    <p className="text-sm text-gray-800 font-light"> {x.why}</p>
                                 </div>
                                 <div className='flex justify-center items-center space-x-4'>
-                                    <Link to='/home'> view profile</Link>
+                                    <Link to={`/profile/${x._id}`}> view profile</Link>
                                     <Link to='/werwtgrwh'> message tutor</Link>
                                 </div>
                                 

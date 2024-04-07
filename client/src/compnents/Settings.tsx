@@ -6,6 +6,8 @@ function Settings() {
     const usStates = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
     const schoolYear = ['Freshman (High School)','Sophomore (High School)','Junior (High School)','Senior (High School)','Freshman (College)','Sophomore (College)','Junior (College)','Senior (College)'];
     const subjects = ['Algebra', 'Biology', 'English Composition', 'World History','Geometry', 'Chemistry', 'Literature', 'US History','Trigonometry', 'Physics', 'American Literature', 'Government','Calculus', 'Environmental Science', 'British Literature', 'Economics','Introduction to Psychology', 'College Algebra', 'Composition I', 'Introduction to Sociology','Statistics', 'Organic Chemistry', 'Composition II', 'Microeconomics','Advanced Calculus', 'Biochemistry', 'Creative Writing', 'Macroeconomics','Linear Algebra', 'Neuroscience', 'Technical Writing', 'International Relations']
+    const usTimeZones = ['(GMT-10:00) Hawaii','(GMT-09:00) Alaska','(GMT-08:00) Pacific Time (US & Canada)','(GMT-07:00) Mountain Time (US & Canada)','(GMT-06:00) Central Time (US & Canada), Mexico City','(GMT-05:00) Eastern Time (US & Canada), Bogota, Lima','(GMT-04:00) Atlantic Time (Canada), Caracas, La Paz'];
+
     const [username, setUsername] = React.useState<string>('')
     const [date, setDate] = React.useState<any>('')
     const [lol, setlol] = React.useState<any>('')
@@ -20,6 +22,7 @@ function Settings() {
     const [id,setId] = React.useState<string>('')
     const [why,setWhy] = React.useState<string>('')
     const [tutor, isTutor] = React.useState<boolean>(false)
+    const [zone, setZone] = React.useState<string>('')
     const userStuff = {
         username: username,
         dob: date,
@@ -251,6 +254,27 @@ function Settings() {
                     </div>
                 )
             })}
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend className="text-sm font-semibold leading-6 text-gray-900">Select Your Availability </legend>
+          <p className="mt-1 text-sm leading-6 text-gray-600">Pick Your Time Zone!</p>
+          <div className="mt-2">
+            <input id="why" name="why"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={why} onChange={characterLimitWhy}/>
+          </div>
+          <div className="mt-6 space-y-6">
+            <div className="flex items-center gap-x-3">
+              <input id="push-everything" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+              <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">Everything</label>
+            </div>
+            <div className="flex items-center gap-x-3">
+              <input id="push-email" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+              <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">Same as email</label>
+            </div>
+            <div className="flex items-center gap-x-3">
+              <input id="push-nothing" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+              <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">No push notifications</label>
+            </div>
           </div>
         </fieldset>
         <fieldset>

@@ -121,6 +121,10 @@ let auth = {
             res.status(200).json({success: true, message:'lebron jame sis elite', userinfo: thisIsAwe})
           }
         });
+    },
+    getUser: async (req,res) => {
+      const user = await User.find({_id: req.params.id})
+      res.status(200).json({success: true, user})
     }
 }
 export default auth

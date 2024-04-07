@@ -52,7 +52,7 @@ function TutorSchedule() {
                                     <p className="text-sm text-gray-800 font-light"> {x.why}</p>
                                 </div>
                                 <div className='flex justify-center items-center space-x-4'>
-                                    <Link to='/home'> view profile</Link>
+                                    <Link to={`/profile/${x._id}`}> view profile</Link>
                                     <Link to='/werwtgrwh'> message tutor</Link>
                                 </div>
                                 

@@ -5,13 +5,12 @@ import Header from './Header';
 import { Link , useParams} from 'react-router-dom';
 //style={'background-image: url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80');}" style="transform: translateZ(0px)"
 function ProfilePage(props:any) {
-  const { id } = useParams();
-  console.log(id)
   const [userData,setUserData] = React.useState<any[]>([])
   const [tutor, isTutor] = React.useState<boolean>(false)
     React.useEffect(() => {
     const fetchData = async() => {
       try {
+        console.log('erwgthreytregf')
         const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
@@ -77,7 +76,7 @@ function ProfilePage(props:any) {
             </div>
             <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
               {userData.length === 0 ? null : (
-                `${userData[0].firstName} ${userData[0].lastName}`
+                `${userData[0].userName}`
               )}
             </h3>
             <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">

@@ -6,6 +6,7 @@ import NavMenu from './NavMenu';
 function ProfileID(props:any) {
   const [userData,setUserData] = React.useState<any[]>([])
   const [tutor, isTutor] = React.useState<boolean>(false)
+  console.log(props.id)
     React.useEffect(() => {
     const fetchData = async() => {
       try {

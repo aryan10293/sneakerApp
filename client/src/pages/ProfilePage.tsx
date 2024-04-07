@@ -6,7 +6,9 @@ function ProfilePage() {
   const { id } = useParams();
 
   return (
-    <ProfileID id={id}/>
+    <>
+      {id === undefined ? <Profile/> : <ProfileID id={id}/>}
+    </>
   )
 }
 

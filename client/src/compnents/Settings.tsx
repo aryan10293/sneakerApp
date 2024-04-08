@@ -7,6 +7,8 @@ function Settings() {
     const schoolYear = ['Freshman (High School)','Sophomore (High School)','Junior (High School)','Senior (High School)','Freshman (College)','Sophomore (College)','Junior (College)','Senior (College)'];
     const subjects = ['Algebra', 'Biology', 'English Composition', 'World History','Geometry', 'Chemistry', 'Literature', 'US History','Trigonometry', 'Physics', 'American Literature', 'Government','Calculus', 'Environmental Science', 'British Literature', 'Economics','Introduction to Psychology', 'College Algebra', 'Composition I', 'Introduction to Sociology','Statistics', 'Organic Chemistry', 'Composition II', 'Microeconomics','Advanced Calculus', 'Biochemistry', 'Creative Writing', 'Macroeconomics','Linear Algebra', 'Neuroscience', 'Technical Writing', 'International Relations']
     const usTimeZones = ['(GMT-10:00) Hawaii','(GMT-09:00) Alaska','(GMT-08:00) Pacific Time (US & Canada)','(GMT-07:00) Mountain Time (US & Canada)','(GMT-06:00) Central Time (US & Canada), Mexico City','(GMT-05:00) Eastern Time (US & Canada), Bogota, Lima','(GMT-04:00) Atlantic Time (Canada), Caracas, La Paz'];
+    const hours = ['0:00 AM', '1:00 AM', '2:00 AM', '3:00 AM', '4:00 AM', '5:00 AM', '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM', '9:00 PM', '10:00 PM', '11:00 PM'];
+    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     const [username, setUsername] = React.useState<string>('')
     const [date, setDate] = React.useState<any>('')
@@ -23,6 +25,15 @@ function Settings() {
     const [why,setWhy] = React.useState<string>('')
     const [tutor, isTutor] = React.useState<boolean>(false)
     const [zone, setZone] = React.useState<string>('')
+    const availabity = {
+      sun:{start:null, end:null} || false,
+      mon:{start:null, end:null} || false,
+      tue:{start:null, end:null} || false,
+      wed:{start:null, end:null} || false,
+      thur:{start:null, end:null} || false,
+      fri:{start:null, end:null} || false,
+      sat:{start:null, end:null} || false,
+    }
     const userStuff = {
         username: username,
         dob: date,
@@ -36,7 +47,9 @@ function Settings() {
         profilePic: undefined,
         id:id,
         tutor:tutor,
-        why:why
+        why:why,
+        zone:zone,
+        availabity: availabity
     }
     const characterLimit = (e:any) => {
         const inputValue = e.target.value;
@@ -53,6 +66,9 @@ function Settings() {
     }
     const handleSelectChange = (e:any) => {
         setState(e.target.value);
+    };
+    const handleTimeZone = (e:any) => {
+        setZone(e.target.value);
     };
     const HandleSubjects = (e:any) => {
       if(e.target.checked){
@@ -124,6 +140,7 @@ function Settings() {
         setlol(data.userinfo[0].dob)
         setWhy(data.userinfo[0].why)
         isTutor(data.userinfo[0].tutor)
+        setZone(data.userinfo[0].zone)
         } catch(err) {
             console.error(err)
         }
@@ -260,8 +277,40 @@ function Settings() {
           <legend className="text-sm font-semibold leading-6 text-gray-900">Select Your Availability </legend>
           <p className="mt-1 text-sm leading-6 text-gray-600">Pick Your Time Zone!</p>
           <div className="mt-2">
-            <input id="why" name="why"  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={why} onChange={characterLimitWhy}/>
+            <select id="" name=""   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} onChange={handleTimeZone}>
+              {usTimeZones.map((x:string) => (
+                    <option value={x}>{x}</option>
+                )) }
+            </select>
           </div>
+          {weekdays.map((x:string) => {
+            return (
+              <div className='mt-2 flex space-between'>
+              <h3 className='mr-5 w-10'>{x}</h3>
+              <div className='mr-5'>
+                Start Time
+                <select id="" name=""   className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} onChange={handleTimeZone}>
+                  {hours.map((x:string) => (
+                        <option value={x}>{x}</option>
+                    )) }
+                </select>
+              </div>
+              <div className='mr-5'>
+                End Time
+                <select id="" name=""   className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} onChange={handleTimeZone}>
+                  {hours.map((x:string) => (
+                        <option value={x}>{x}</option>
+                    )) }
+                </select>
+              </div>
+              <div className="mr-2 flex flex-col">
+                  <label htmlFor="idkwhatthisdoes">Not Available</label>
+                  <input type="checkbox" className="mt-1" name="" id="idkwhatthisdoes" />
+              </div>
+              {/* you can check the day with a onlcik event to she if unavaible is checked to set to false or get the times and set times  */}
+          </div>
+            )
+          })}
           <div className="mt-6 space-y-6">
             <div className="flex items-center gap-x-3">
               <input id="push-everything" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />

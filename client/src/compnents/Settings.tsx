@@ -25,6 +25,20 @@ function Settings() {
     const [fri, isFri] = React.useState<boolean>(false)
     const [sat, isSat] = React.useState<boolean>(false)
     const [zone, setZone] = React.useState<string>('')
+    const [sunStart, setSunStart] = React.useState<string>('0:00 AM')
+    const [sunEnd, setSunEnd] = React.useState<string>('0:00 AM')
+    const [monStart, stueonStart] = React.useState<string>('0:00 AM')
+    const [monEnd, setMonEnd] = React.useState<string>('0:00 AM')
+    const [tueStart, setTueStart] = React.useState<string>('0:00 AM')
+    const [tueEnd, setTueEnd] = React.useState<string>('0:00 AM')
+    const [wedStart, setWedStart] = React.useState<string>('0:00 AM')
+    const [wedEnd, setWedEnd] = React.useState<string>('0:00 AM')
+    const [thuStart, setThuStart] = React.useState<string>('0:00 AM')
+    const [thuEnd, setThuEnd] = React.useState<string>('0:00 AM')
+    const [friStart, setFriStart] = React.useState<string>('0:00 AM')
+    const [friEnd, setFriEnd] = React.useState<string>('0:00 AM')
+    const [satStart, setSatStart] = React.useState<string>('0:00 AM')
+    const [satEnd, setSatEnd] = React.useState<string>('0:00 AM')
     const [availabity, setAvailabity] = React.useState<any>({
         sun:{start:null, end:null},
         mon:{start:null, end:null},
@@ -100,7 +114,13 @@ function Settings() {
     const handleSat = (e:any) => {
       isSat(e.target.checked)
     }
-    const weekdays = [['Sun', sun, handleSun], ['Mon', mon,handleMon], ['Tue',tue, handleTue], ['Wed',wed, handleWed], ['Thu',thu,handleThu], ['Fri',fri,handleFri], ['Sat', sat, handleSat]];
+    const handleSunStart = (e:any) => {
+      setSunStart(e.target.value)
+    }
+    const handleSunEnd = (e:any) => {
+      setSunEnd(e.target.value)
+    }
+    const weekdays = [['Sun', sun, handleSun, sunStart, sunEnd], handleSunStart, handleSunEnd, ['Mon', mon, handleMon, monStart, monEnd], ['Tue',tue, handleTue, tueStart,tueEnd], ['Wed',wed, handleWed, wedStart, wedEnd], ['Thu',thu,handleThu, thuStart, thuEnd], ['Fri',fri,handleFri, friStart, friEnd], ['Sat', sat, handleSat, satStart, friEnd]];
     const HandleSubjects = (e:any) => {
       if(e.target.checked){
         setCourse([...courses, e.target.value])
@@ -121,12 +141,10 @@ function Settings() {
         case 'sun':
             if( startOrEnd === 'Start Time') confused['sun']['start'] = e.target.value
             if( startOrEnd === 'End Time') confused['sun']['end'] = e.target.value
-            console.log(day)
             break;
         case 'mon':
             if( startOrEnd === 'Start Time') confused['mon']['start'] = e.target.value
             if( startOrEnd === 'End Time') confused['mon']['end'] = e.target.value
-            console.log(day)
             break;
         case 'tue':
             if( startOrEnd === 'Start Time') confused['tue']['start'] = e.target.value
@@ -371,7 +389,7 @@ function Settings() {
               <h3 className='mr-5 w-10'>{x[0]}</h3>
               <div className='mr-5'>
                 Start Time
-                <select id="" name=""  disabled={x[1]} onChange={handleAvailabity} className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} >
+                <select id="" name=""  disabled={x[1]} onChange={handleAvailabity}  className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
                   {hours.map((x:string) => (
                         <option value={x}>{x}</option>
                     )) }
@@ -379,7 +397,7 @@ function Settings() {
               </div>
               <div className='mr-5'>
                 End Time
-                <select id="" name=""  disabled={x[1]} onChange={handleAvailabity}   className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} >
+                <select id="" name=""  disabled={x[1]} onChange={handleAvailabity}  value={x[4]} className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
                   {hours.map((x:string) => (
                         <option value={x}>{x}</option>
                     )) }

@@ -25,15 +25,16 @@ function Settings() {
     const [why,setWhy] = React.useState<string>('')
     const [tutor, isTutor] = React.useState<boolean>(false)
     const [zone, setZone] = React.useState<string>('')
-    const availabity = {
-      sun:{start:null, end:null} || false,
-      mon:{start:null, end:null} || false,
-      tue:{start:null, end:null} || false,
-      wed:{start:null, end:null} || false,
-      thur:{start:null, end:null} || false,
-      fri:{start:null, end:null} || false,
-      sat:{start:null, end:null} || false,
-    }
+    const [availabity, setAvailabity] = React.useState<any>({})
+    const toSetupAvailabityState = {
+        sun:{start:null, end:null},
+        mon:{start:null, end:null},
+        tue:{start:null, end:null},
+        wed:{start:null, end:null},
+        thur:{start:null, end:null},
+        fri:{start:null, end:null},
+        sat:{start:null, end:null},
+      }
     const userStuff = {
         username: username,
         dob: date,
@@ -77,25 +78,40 @@ function Settings() {
         setCourse(courses.filter(x => x !== e.target.value))
       }
     }
-
+    const handleAvailabity = (e:any) => {
+      let day = e.target.parentElement.parentElement.childNodes[0].innerHTML.toLowerCase()
+      const startOrEnd = e.target.parentElement.childNodes[0].data.toString()
+      if(day === 'sun'){
+        if( startOrEnd === 'Start Time') toSetupAvailabityState['sun']['start'] = e.target.value
+        if( startOrEnd === 'End Time') toSetupAvailabityState['sun']['end'] = e.target.value
+        // e.target.parentElement.childNodes[0], e.target.value
+      }
+      // this returns start time and end time console.log(e.target.parentElement.childNodes[0])
+      // this returns the console.log(e.target.parentElement.parentElement.childNodes[0].innerHTML)
+    }
+    const handleThisDumbShit = (e:any) => {
+      e.preventDefault()
+      setAvailabity(toSetupAvailabityState)
+    }
     const handleSubmit = async (e:any) => {
-        e.preventDefault()
-        let img = e.target.childNodes[0].childNodes[0].childNodes[2].childNodes[4].childNodes[1].childNodes[2].files[0]
-        if(img !== undefined){
-            img = await convertBase64(img)
-            userStuff.profilePic = img
-        }
-        try {
-            const response = await fetch(`http://localhost:2020/editprofile${tutor?'T':null}`, {
-                method: 'PUT',
-                headers:  {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-                body: JSON.stringify(userStuff)
-                })
-            const data = await response.json()
-            window.location.href = "/profile"
-        } catch (error) {
-            console.log(error)
-        }
+      e.preventDefault()
+      console.log(availabity)
+        // let img = e.target.childNodes[0].childNodes[0].childNodes[2].childNodes[4].childNodes[1].childNodes[2].files[0]
+        // if(img !== undefined){
+        //     img = await convertBase64(img)
+        //     userStuff.profilePic = img
+        // }
+        // try {
+        //     const response = await fetch(`http://localhost:2020/editprofile${tutor?'T':null}`, {
+        //         method: 'PUT',
+        //         headers:  {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+        //         body: JSON.stringify(userStuff)
+        //         })
+        //     const data = await response.json()
+        //     window.location.href = "/profile"
+        // } catch (error) {
+        //     console.log(error)
+        // }
 
     }
 
@@ -289,7 +305,7 @@ function Settings() {
               <h3 className='mr-5 w-10'>{x}</h3>
               <div className='mr-5'>
                 Start Time
-                <select id="" name=""   className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} onChange={handleTimeZone}>
+                <select id="" name=""   onChange={handleAvailabity} className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} >
                   {hours.map((x:string) => (
                         <option value={x}>{x}</option>
                     )) }
@@ -297,7 +313,7 @@ function Settings() {
               </div>
               <div className='mr-5'>
                 End Time
-                <select id="" name=""   className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} onChange={handleTimeZone}>
+                <select id="" name=""  onChange={handleAvailabity}   className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} >
                   {hours.map((x:string) => (
                         <option value={x}>{x}</option>
                     )) }
@@ -325,6 +341,7 @@ function Settings() {
               <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">No push notifications</label>
             </div>
           </div>
+          <button onClick={handleThisDumbShit}>save</button>
         </fieldset>
         <fieldset>
           <legend className="text-sm font-semibold leading-6 text-gray-900">Push Notifications</legend>

@@ -3,13 +3,6 @@ import { Fragment } from 'react'
 import Header from './Header'
 import NavMenu from './NavMenu'
 function Settings() {
-    const usStates = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
-    const schoolYear = ['Freshman (High School)','Sophomore (High School)','Junior (High School)','Senior (High School)','Freshman (College)','Sophomore (College)','Junior (College)','Senior (College)'];
-    const subjects = ['Algebra', 'Biology', 'English Composition', 'World History','Geometry', 'Chemistry', 'Literature', 'US History','Trigonometry', 'Physics', 'American Literature', 'Government','Calculus', 'Environmental Science', 'British Literature', 'Economics','Introduction to Psychology', 'College Algebra', 'Composition I', 'Introduction to Sociology','Statistics', 'Organic Chemistry', 'Composition II', 'Microeconomics','Advanced Calculus', 'Biochemistry', 'Creative Writing', 'Macroeconomics','Linear Algebra', 'Neuroscience', 'Technical Writing', 'International Relations']
-    const usTimeZones = ['(GMT-10:00) Hawaii','(GMT-09:00) Alaska','(GMT-08:00) Pacific Time (US & Canada)','(GMT-07:00) Mountain Time (US & Canada)','(GMT-06:00) Central Time (US & Canada), Mexico City','(GMT-05:00) Eastern Time (US & Canada), Bogota, Lima','(GMT-04:00) Atlantic Time (Canada), Caracas, La Paz'];
-    const hours = ['0:00 AM', '1:00 AM', '2:00 AM', '3:00 AM', '4:00 AM', '5:00 AM', '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM', '9:00 PM', '10:00 PM', '11:00 PM'];
-    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
     const [username, setUsername] = React.useState<string>('')
     const [date, setDate] = React.useState<any>('')
     const [lol, setlol] = React.useState<any>('')
@@ -24,17 +17,24 @@ function Settings() {
     const [id,setId] = React.useState<string>('')
     const [why,setWhy] = React.useState<string>('')
     const [tutor, isTutor] = React.useState<boolean>(false)
+    const [sun, isSun] = React.useState<boolean>(false)
+    const [mon, isMon] = React.useState<boolean>(false)
+    const [tue, isTue] = React.useState<boolean>(false)
+    const [wed, isWed] = React.useState<boolean>(false)
+    const [thu, isThu] = React.useState<boolean>(false)
+    const [fri, isFri] = React.useState<boolean>(false)
+    const [sat, isSat] = React.useState<boolean>(false)
     const [zone, setZone] = React.useState<string>('')
-    const [availabity, setAvailabity] = React.useState<any>({})
-    const toSetupAvailabityState = {
+    const [availabity, setAvailabity] = React.useState<any>({
         sun:{start:null, end:null},
         mon:{start:null, end:null},
         tue:{start:null, end:null},
         wed:{start:null, end:null},
-        thur:{start:null, end:null},
+        thu:{start:null, end:null},
         fri:{start:null, end:null},
         sat:{start:null, end:null},
-      }
+      })
+    const toSetupAvailabityState = {}
     const userStuff = {
         username: username,
         dob: date,
@@ -52,6 +52,14 @@ function Settings() {
         zone:zone,
         availabity: availabity
     }
+
+    const usStates = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
+    const schoolYear = ['Freshman (High School)','Sophomore (High School)','Junior (High School)','Senior (High School)','Freshman (College)','Sophomore (College)','Junior (College)','Senior (College)'];
+    const subjects = ['Algebra', 'Biology', 'English Composition', 'World History','Geometry', 'Chemistry', 'Literature', 'US History','Trigonometry', 'Physics', 'American Literature', 'Government','Calculus', 'Environmental Science', 'British Literature', 'Economics','Introduction to Psychology', 'College Algebra', 'Composition I', 'Introduction to Sociology','Statistics', 'Organic Chemistry', 'Composition II', 'Microeconomics','Advanced Calculus', 'Biochemistry', 'Creative Writing', 'Macroeconomics','Linear Algebra', 'Neuroscience', 'Technical Writing', 'International Relations']
+    const usTimeZones = ['(GMT-10:00) Hawaii','(GMT-09:00) Alaska','(GMT-08:00) Pacific Time (US & Canada)','(GMT-07:00) Mountain Time (US & Canada)','(GMT-06:00) Central Time (US & Canada), Mexico City','(GMT-05:00) Eastern Time (US & Canada), Bogota, Lima','(GMT-04:00) Atlantic Time (Canada), Caracas, La Paz'];
+    const hours = ['0:00 AM', '1:00 AM', '2:00 AM', '3:00 AM', '4:00 AM', '5:00 AM', '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '13:00 PM', '14:00 PM', '15:00 PM', '16:00 PM', '17:00 PM', '18:00 PM', '19:00 PM', '20:00 PM', '21:00 PM', '22:00 PM', '23:00 PM'];
+  
+
     const characterLimit = (e:any) => {
         const inputValue = e.target.value;
         if (inputValue.length <= 200) {
@@ -71,6 +79,28 @@ function Settings() {
     const handleTimeZone = (e:any) => {
         setZone(e.target.value);
     };
+    const handleSun = (e:any) => {
+      isSun(e.target.checked)
+    }
+    const handleMon = (e:any) => {
+      isMon(e.target.checked)
+    }
+    const handleTue = (e:any) => {
+      isTue(e.target.checked)
+    }
+    const handleWed = (e:any) => {
+      isWed(e.target.checked)
+    }
+    const handleThu = (e:any) => {
+      isThu(e.target.checked)
+    }
+    const handleFri = (e:any) => {
+      isFri(e.target.checked)
+    }
+    const handleSat = (e:any) => {
+      isSat(e.target.checked)
+    }
+    const weekdays = [['Sun', sun, handleSun], ['Mon', mon,handleMon], ['Tue',tue, handleTue], ['Wed',wed, handleWed], ['Thu',thu,handleThu], ['Fri',fri,handleFri], ['Sat', sat, handleSat]];
     const HandleSubjects = (e:any) => {
       if(e.target.checked){
         setCourse([...courses, e.target.value])
@@ -80,14 +110,50 @@ function Settings() {
     }
     const handleAvailabity = (e:any) => {
       let day = e.target.parentElement.parentElement.childNodes[0].innerHTML.toLowerCase()
+
       const startOrEnd = e.target.parentElement.childNodes[0].data.toString()
-      if(day === 'sun'){
-        if( startOrEnd === 'Start Time') toSetupAvailabityState['sun']['start'] = e.target.value
-        if( startOrEnd === 'End Time') toSetupAvailabityState['sun']['end'] = e.target.value
-        // e.target.parentElement.childNodes[0], e.target.value
+      const confused = {
+        ...availabity,
+
       }
+
+      switch (day) {
+        case 'sun':
+            if( startOrEnd === 'Start Time') confused['sun']['start'] = e.target.value
+            if( startOrEnd === 'End Time') confused['sun']['end'] = e.target.value
+            console.log(day)
+            break;
+        case 'mon':
+            if( startOrEnd === 'Start Time') confused['mon']['start'] = e.target.value
+            if( startOrEnd === 'End Time') confused['mon']['end'] = e.target.value
+            console.log(day)
+            break;
+        case 'tue':
+            if( startOrEnd === 'Start Time') confused['tue']['start'] = e.target.value
+            if( startOrEnd === 'End Time') confused['tue']['end'] = e.target.value
+            break;
+        case 'wed':
+            if( startOrEnd === 'Start Time') confused['wed']['start'] = e.target.value
+            if( startOrEnd === 'End Time') confused['wed']['end'] = e.target.value
+            break;
+        case 'thu':
+            if( startOrEnd === 'Start Time') confused['thu']['start'] = e.target.value
+            if( startOrEnd === 'End Time') confused['thu']['end'] = e.target.value
+            break;
+        case 'fri':
+            if( startOrEnd === 'Start Time') confused['fri']['start'] = e.target.value
+            if( startOrEnd === 'End Time') confused['fri']['end'] = e.target.value
+            break;
+        case 'sat':
+            if( startOrEnd === 'Start Time') confused['sat']['start'] = e.target.value
+            if( startOrEnd === 'End Time') confused['sat']['end'] = e.target.value
+            break;
+        default:
+            console.log('ohhhh you fucked up')
+    }
       // this returns start time and end time console.log(e.target.parentElement.childNodes[0])
       // this returns the console.log(e.target.parentElement.parentElement.childNodes[0].innerHTML)
+      setAvailabity(confused)
     }
     const handleThisDumbShit = (e:any) => {
       e.preventDefault()
@@ -299,13 +365,13 @@ function Settings() {
                 )) }
             </select>
           </div>
-          {weekdays.map((x:string) => {
+          {weekdays.map((x:any) => {
             return (
               <div className='mt-2 flex space-between'>
-              <h3 className='mr-5 w-10'>{x}</h3>
+              <h3 className='mr-5 w-10'>{x[0]}</h3>
               <div className='mr-5'>
                 Start Time
-                <select id="" name=""   onChange={handleAvailabity} className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} >
+                <select id="" name=""  disabled={x[1]} onChange={handleAvailabity} className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} >
                   {hours.map((x:string) => (
                         <option value={x}>{x}</option>
                     )) }
@@ -313,7 +379,7 @@ function Settings() {
               </div>
               <div className='mr-5'>
                 End Time
-                <select id="" name=""  onChange={handleAvailabity}   className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} >
+                <select id="" name=""  disabled={x[1]} onChange={handleAvailabity}   className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value={zone} >
                   {hours.map((x:string) => (
                         <option value={x}>{x}</option>
                     )) }
@@ -321,7 +387,7 @@ function Settings() {
               </div>
               <div className="mr-2 flex flex-col">
                   <label htmlFor="idkwhatthisdoes">Not Available</label>
-                  <input type="checkbox" className="mt-1" name="" id="idkwhatthisdoes" />
+                  <input type="checkbox" checked={x[1]} onChange={x[2]} className="mt-1" name="" id="idkwhatthisdoes" />
               </div>
               {/* you can check the day with a onlcik event to she if unavaible is checked to set to false or get the times and set times  */}
           </div>

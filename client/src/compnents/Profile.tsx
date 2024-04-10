@@ -16,7 +16,6 @@ function ProfilePage(props:any) {
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
         })
         const data = await reg.json()
-        console.log(data.userinfo[0].subjects)
         setUserData(data.userinfo)
         isTutor(data.userinfo[0].tutor)
 
@@ -26,12 +25,6 @@ function ProfilePage(props:any) {
     }
     fetchData()
   }, [])
-    // Educational Background:
-
-    // Current Grade Level or Educational Stage
-    // School/College/University Name
-    // Major or Field of Study
-    // GPA or Academic Performance Metrics
   return (
     <>
     <Header/>
@@ -50,14 +43,6 @@ function ProfilePage(props:any) {
                   <button className="bg-blue-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                   Edit Profile
                 </button>
-                </Link>
-              </div>
-              <div className="py-6 px-3 mt-32 sm:mt-0">
-                <Link to='/settings'>
-                  <button className="bg-blue-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
-                  Edit Profile
-                </button>
-                <div>{tutor}</div>
                 </Link>
               </div>
 

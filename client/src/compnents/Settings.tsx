@@ -24,7 +24,7 @@ function Settings() {
     const [thu, isThu] = React.useState<boolean>(false)
     const [fri, isFri] = React.useState<boolean>(false)
     const [sat, isSat] = React.useState<boolean>(false)
-    const [zone, setZone] = React.useState<string>('')
+    const [zone, setZone] = React.useState<string>("(GMT-08:00) Pacific Time (US & Canada)")
     const [sunStart, setSunStart] = React.useState<string>('0:00 AM')
     const [sunEnd, setSunEnd] = React.useState<string>('0:00 AM')
     const [monStart, setMonStart] = React.useState<string>('0:00 AM')
@@ -165,7 +165,7 @@ function Settings() {
         confused['sat']['end'] = null
       }
     }
-    const weekdays = [['Sun', sun, handleSun, sunStart, sunEnd], ['Mon', mon, handleMon, monStart, monEnd], ['Tue',tue, handleTue, tueStart,tueEnd], ['Wed',wed, handleWed, wedStart, wedEnd], ['Thu',thu,handleThu, thuStart, thuEnd], ['Fri',fri,handleFri, friStart, friEnd], ['Sat', sat, handleSat, satStart, friEnd]];
+    const weekdays = [['Sun', sun, handleSun, sunStart, sunEnd], ['Mon', mon, handleMon, monStart, monEnd], ['Tue',tue, handleTue, tueStart,tueEnd], ['Wed',wed, handleWed, wedStart, wedEnd], ['Thu',thu,handleThu, thuStart, thuEnd], ['Fri',fri,handleFri, friStart, friEnd], ['Sat', sat, handleSat, satStart, satEnd]];
     const HandleSubjects = (e:any) => {
       if(e.target.checked){
         setCourse([...courses, e.target.value])
@@ -257,33 +257,26 @@ function Settings() {
         default:
             console.log('ohhhh you fucked up')
     }
-      // this returns start time and end time console.log(e.target.parentElement.childNodes[0])
-      // this returns the console.log(e.target.parentElement.parentElement.childNodes[0].innerHTML)
       setAvailabity(confused)
-    }
-    const handleThisDumbShit = (e:any) => {
-      e.preventDefault()
-      setAvailabity(toSetupAvailabityState)
     }
     const handleSubmit = async (e:any) => {
       e.preventDefault()
-      console.log(userStuff)
-        // let img = e.target.childNodes[0].childNodes[0].childNodes[2].childNodes[4].childNodes[1].childNodes[2].files[0]
-        // if(img !== undefined){
-        //     img = await convertBase64(img)
-        //     userStuff.profilePic = img
-        // }
-        // try {
-        //     const response = await fetch(`http://localhost:2020/editprofile${tutor?'T':null}`, {
-        //         method: 'PUT',
-        //         headers:  {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-        //         body: JSON.stringify(userStuff)
-        //         })
-        //     const data = await response.json()
-        //     window.location.href = "/profile"
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        let img = e.target.childNodes[0].childNodes[0].childNodes[2].childNodes[4].childNodes[1].childNodes[2].files[0]
+        if(img !== undefined){
+            img = await convertBase64(img)
+            userStuff.profilePic = img
+        }
+        try {
+            const response = await fetch(`http://localhost:2020/editprofile${tutor?'T':''}`, {
+                method: 'PUT',
+                headers:  {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                body: JSON.stringify(userStuff)
+                })
+            const data = await response.json()
+            window.location.href = "/profile"
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
@@ -321,7 +314,7 @@ function Settings() {
         setMajor(data.userinfo[0].major)
         setSchool(data.userinfo[0].school)
         setYearInSchool(data.userinfo[0].yearInSchool)
-        setCourse(data.userinfo[0].subjects)
+        setCourse(data.userinfo[0].tutor ? data.userinfo[0].courses : data.userinfo[0].subjects )
         setCity(data.userinfo[0].city)
         setState(data.userinfo[0].state)
         setDate(data.userinfo[0].dob)
@@ -495,7 +488,6 @@ function Settings() {
                     <label htmlFor="idkwhatthisdoes">Not Available</label>
                     <input type="checkbox" checked={x[1]} onChange={x[2]} className="mt-1" name="" id="idkwhatthisdoes" />
                 </div>
-              {/* you can check the day with a onlcik event to she if unavaible is checked to set to false or get the times and set times  */}
              </div>
             )
           })}

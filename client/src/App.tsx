@@ -27,7 +27,7 @@ function App() {
           setUser(true)
         }
         } catch(err) {
-            console.error(err)
+            localStorage.clear()
         }
     }
     fetchData()

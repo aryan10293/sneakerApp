@@ -27,7 +27,7 @@ function Settings() {
     const [zone, setZone] = React.useState<string>('')
     const [sunStart, setSunStart] = React.useState<string>('0:00 AM')
     const [sunEnd, setSunEnd] = React.useState<string>('0:00 AM')
-    const [monStart, stueonStart] = React.useState<string>('0:00 AM')
+    const [monStart, setMonStart] = React.useState<string>('0:00 AM')
     const [monEnd, setMonEnd] = React.useState<string>('0:00 AM')
     const [tueStart, setTueStart] = React.useState<string>('0:00 AM')
     const [tueEnd, setTueEnd] = React.useState<string>('0:00 AM')
@@ -95,32 +95,77 @@ function Settings() {
     };
     const handleSun = (e:any) => {
       isSun(e.target.checked)
+      const confused = {...availabity}
+      if(e.target.checked){
+        setSunStart('0:00 AM')
+        setSunEnd('0:00 AM')
+        confused['sun']['start'] = null
+        confused['sun']['end'] = null
+      }
+      setAvailabity(confused)
     }
     const handleMon = (e:any) => {
       isMon(e.target.checked)
+      const confused = {...availabity}
+      if(e.target.checked){
+        setMonStart('0:00 AM')
+        setMonEnd('0:00 AM')
+        confused['mon']['start'] = null
+        confused['mon']['end'] = null
+      }
+      setAvailabity(confused)
     }
     const handleTue = (e:any) => {
       isTue(e.target.checked)
+      const confused = {...availabity}
+      if(e.target.checked){
+        setTueStart('0:00 AM')
+        setTueEnd('0:00 AM')
+        confused['tue']['start'] = null
+        confused['tue']['end'] = null
+      }
     }
     const handleWed = (e:any) => {
       isWed(e.target.checked)
+      const confused = {...availabity}
+      if(e.target.checked){
+        setWedStart('0:00 AM')
+        setWedEnd('0:00 AM')
+        confused['wed']['start'] = null
+        confused['wed']['end'] = null
+      }
     }
     const handleThu = (e:any) => {
       isThu(e.target.checked)
+      const confused = {...availabity}
+      if(e.target.checked){
+        setThuStart('0:00 AM')
+        setThuEnd('0:00 AM')
+        confused['thu']['start'] = null
+        confused['thu']['end'] = null
+      }
     }
     const handleFri = (e:any) => {
       isFri(e.target.checked)
+      const confused = {...availabity}
+      if(e.target.checked){
+        setFriStart('0:00 AM')
+        setFriEnd('0:00 AM')
+        confused['fri']['start'] = null
+        confused['fri']['end'] = null
+      }
     }
     const handleSat = (e:any) => {
       isSat(e.target.checked)
+      const confused = {...availabity}
+      if(e.target.checked){
+        setSatStart('0:00 AM')
+        setSatEnd('0:00 AM')
+        confused['sat']['start'] = null
+        confused['sat']['end'] = null
+      }
     }
-    const handleSunStart = (e:any) => {
-      setSunStart(e.target.value)
-    }
-    const handleSunEnd = (e:any) => {
-      setSunEnd(e.target.value)
-    }
-    const weekdays = [['Sun', sun, handleSun, sunStart, sunEnd], handleSunStart, handleSunEnd, ['Mon', mon, handleMon, monStart, monEnd], ['Tue',tue, handleTue, tueStart,tueEnd], ['Wed',wed, handleWed, wedStart, wedEnd], ['Thu',thu,handleThu, thuStart, thuEnd], ['Fri',fri,handleFri, friStart, friEnd], ['Sat', sat, handleSat, satStart, friEnd]];
+    const weekdays = [['Sun', sun, handleSun, sunStart, sunEnd], ['Mon', mon, handleMon, monStart, monEnd], ['Tue',tue, handleTue, tueStart,tueEnd], ['Wed',wed, handleWed, wedStart, wedEnd], ['Thu',thu,handleThu, thuStart, thuEnd], ['Fri',fri,handleFri, friStart, friEnd], ['Sat', sat, handleSat, satStart, friEnd]];
     const HandleSubjects = (e:any) => {
       if(e.target.checked){
         setCourse([...courses, e.target.value])
@@ -139,32 +184,75 @@ function Settings() {
 
       switch (day) {
         case 'sun':
-            if( startOrEnd === 'Start Time') confused['sun']['start'] = e.target.value
-            if( startOrEnd === 'End Time') confused['sun']['end'] = e.target.value
+            if( startOrEnd === 'Start Time'){ 
+              confused['sun']['start'] = e.target.value
+              setSunStart(e.target.value)
+             }
+            if( startOrEnd === 'End Time'){
+              confused['sun']['end'] = e.target.value
+              setSunEnd(e.target.value)
+            }
+
             break;
         case 'mon':
-            if( startOrEnd === 'Start Time') confused['mon']['start'] = e.target.value
-            if( startOrEnd === 'End Time') confused['mon']['end'] = e.target.value
+            if( startOrEnd === 'Start Time'){
+              confused['mon']['start'] = e.target.value
+              setMonStart(e.target.value)
+            }
+            if( startOrEnd === 'End Time'){
+              confused['mon']['end'] = e.target.value
+              setMonEnd(e.target.value)
+            }
             break;
         case 'tue':
-            if( startOrEnd === 'Start Time') confused['tue']['start'] = e.target.value
-            if( startOrEnd === 'End Time') confused['tue']['end'] = e.target.value
+            if( startOrEnd === 'Start Time'){
+              confused['tue']['start'] = e.target.value
+              setTueStart(e.target.value)
+            }
+            if( startOrEnd === 'End Time'){
+              confused['tue']['end'] = e.target.value
+              setTueEnd(e.target.value)
+            }
             break;
         case 'wed':
-            if( startOrEnd === 'Start Time') confused['wed']['start'] = e.target.value
-            if( startOrEnd === 'End Time') confused['wed']['end'] = e.target.value
+            if( startOrEnd === 'Start Time'){
+              confused['wed']['start'] = e.target.value
+              setWedStart(e.target.value)
+            }
+            if( startOrEnd === 'End Time'){
+              confused['wed']['end'] = e.target.value
+              setWedEnd(e.target.value)
+            }
             break;
         case 'thu':
-            if( startOrEnd === 'Start Time') confused['thu']['start'] = e.target.value
-            if( startOrEnd === 'End Time') confused['thu']['end'] = e.target.value
+            if( startOrEnd === 'Start Time'){
+              confused['thu']['start'] = e.target.value
+              setThuStart(e.target.value)
+            }
+            if( startOrEnd === 'End Time'){
+              confused['thu']['end'] = e.target.value
+              setThuEnd(e.target.value)
+            }
             break;
         case 'fri':
-            if( startOrEnd === 'Start Time') confused['fri']['start'] = e.target.value
-            if( startOrEnd === 'End Time') confused['fri']['end'] = e.target.value
+            if( startOrEnd === 'Start Time'){
+              confused['fri']['start'] = e.target.value
+              setFriStart(e.target.value)
+            }
+            if( startOrEnd === 'End Time'){
+              confused['fri']['end'] = e.target.value
+              setFriEnd(e.target.value)
+            }
             break;
         case 'sat':
-            if( startOrEnd === 'Start Time') confused['sat']['start'] = e.target.value
-            if( startOrEnd === 'End Time') confused['sat']['end'] = e.target.value
+            if( startOrEnd === 'Start Time'){
+              confused['sat']['start'] = e.target.value
+              setSatStart(e.target.value)
+            }
+            if( startOrEnd === 'End Time'){
+              confused['sat']['end'] = e.target.value
+              setSatEnd(e.target.value)
+            }
             break;
         default:
             console.log('ohhhh you fucked up')
@@ -179,7 +267,7 @@ function Settings() {
     }
     const handleSubmit = async (e:any) => {
       e.preventDefault()
-      console.log(availabity)
+      console.log(userStuff)
         // let img = e.target.childNodes[0].childNodes[0].childNodes[2].childNodes[4].childNodes[1].childNodes[2].files[0]
         // if(img !== undefined){
         //     img = await convertBase64(img)
@@ -386,46 +474,31 @@ function Settings() {
           {weekdays.map((x:any) => {
             return (
               <div className='mt-2 flex space-between'>
-              <h3 className='mr-5 w-10'>{x[0]}</h3>
-              <div className='mr-5'>
-                Start Time
-                <select id="" name=""  disabled={x[1]} onChange={handleAvailabity}  className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
-                  {hours.map((x:string) => (
-                        <option value={x}>{x}</option>
-                    )) }
-                </select>
-              </div>
-              <div className='mr-5'>
-                End Time
-                <select id="" name=""  disabled={x[1]} onChange={handleAvailabity}  value={x[4]} className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
-                  {hours.map((x:string) => (
-                        <option value={x}>{x}</option>
-                    )) }
-                </select>
-              </div>
-              <div className="mr-2 flex flex-col">
-                  <label htmlFor="idkwhatthisdoes">Not Available</label>
-                  <input type="checkbox" checked={x[1]} onChange={x[2]} className="mt-1" name="" id="idkwhatthisdoes" />
-              </div>
+                <h3 className='mr-5 w-10'>{x[0]}</h3>
+                <div className='mr-5'>
+                  Start Time
+                  <select id="" name=""  disabled={x[1]} onChange={handleAvailabity}  value={x[3]} className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
+                    {hours.map((x:string) => (
+                          <option value={x}>{x}</option>
+                      )) }
+                  </select>
+                </div>
+                <div className='mr-5'>
+                  End Time
+                  <select id="" name=""  disabled={x[1]} onChange={handleAvailabity}  value={x[4]} className="block w-20 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
+                    {hours.map((x:string) => (
+                          <option value={x}>{x}</option>
+                      )) }
+                  </select>
+                </div>
+                <div className="mr-2 flex flex-col">
+                    <label htmlFor="idkwhatthisdoes">Not Available</label>
+                    <input type="checkbox" checked={x[1]} onChange={x[2]} className="mt-1" name="" id="idkwhatthisdoes" />
+                </div>
               {/* you can check the day with a onlcik event to she if unavaible is checked to set to false or get the times and set times  */}
-          </div>
+             </div>
             )
           })}
-          <div className="mt-6 space-y-6">
-            <div className="flex items-center gap-x-3">
-              <input id="push-everything" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-              <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">Everything</label>
-            </div>
-            <div className="flex items-center gap-x-3">
-              <input id="push-email" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-              <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">Same as email</label>
-            </div>
-            <div className="flex items-center gap-x-3">
-              <input id="push-nothing" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-              <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">No push notifications</label>
-            </div>
-          </div>
-          <button onClick={handleThisDumbShit}>save</button>
         </fieldset>
         <fieldset>
           <legend className="text-sm font-semibold leading-6 text-gray-900">Push Notifications</legend>

@@ -48,7 +48,6 @@ function Settings() {
         fri:{start:null, end:null},
         sat:{start:null, end:null},
       })
-    const toSetupAvailabityState = {}
     const userStuff = {
         username: username,
         dob: date,
@@ -335,7 +334,7 @@ function Settings() {
       <Header/>
       <div className='flex'>
         <NavMenu/>
-        <form className='overflow-auto div p-10' onSubmit={handleSubmit}>
+        <form className='overflow-auto div p-10 w-screen' onSubmit={handleSubmit}>
   <div className="space-y-12">
     <div className=" pb-12">
       <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>

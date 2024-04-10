@@ -29,7 +29,7 @@ function StudentSchedule() {
       <Header/>
       <div className='flex'>
         <NavMenu/>
-        <div className='m-10'>
+        <div className='m-10 w-screen'>
             <div>
                 <form onSubmit={findTeacher}>
                     <label htmlFor="idkyet">search for course course teachers</label>

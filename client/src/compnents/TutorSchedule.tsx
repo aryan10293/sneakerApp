@@ -26,7 +26,7 @@ function TutorSchedule() {
       <Header/>
       <div className='flex'>
         <NavMenu/>
-        <div className='m-10'>
+        <div className='m-10 w-screen'>
             <div>
                 <form onSubmit={findStudents}>
                     <label htmlFor="idkyet">search for Students to teach</label>

@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import SchedulePage from './pages/SchedulePage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
+import ScheduleSessionPage from './pages/ScheduleSessionPage';
 import { Routes, Route, Navigate } from 'react-router-dom'
 function App() {
   const [userData,setUserData] = React.useState<any[]>([])
@@ -58,6 +59,9 @@ function App() {
         <Route 
         path="/settings"
         element={ userLogin ? <SettingsPage /> : <Navigate to='/login'/>} />
+        <Route 
+        path="/schedule-session/:id"
+        element={ userLogin ? <ScheduleSessionPage /> : <Navigate to='/login'/>} />
     </Routes>
   );
 }

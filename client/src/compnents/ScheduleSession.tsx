@@ -11,6 +11,7 @@ function ScheduleSession() {
     const [text,setText] = React.useState<string>('')
     const [email,setEmail] = React.useState<string>('')
     const [name,setName] = React.useState<string>('')
+    const [date, setDate] = React.useState<string>('')
     const sessionData = {
         text:text,
         name:name,
@@ -47,6 +48,15 @@ function ScheduleSession() {
         e.preventDefault()
         console.log(imCookin)
     }
+    const handleDate = (e:any) => {
+        let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+    
+        let lol = new Date(e.target.value)
+        let idk = lol.getDay()
+        setDate(days[idk])
+        console.log( lol, days[idk], idk)
+    } 
+    console.log(imCookin)
   return (
     <>
       <Header/>
@@ -81,14 +91,16 @@ function ScheduleSession() {
                     rows={10}/>
                 </div>
                 <div className='flex flex-col'>
-                    <label> Select Day{tutor.length > 0 ? tutor[0].zone.toUpperCase() : null}</label>
+                    <input type="date" name="wec" id="wec" onChange={handleDate}/>
+                    {imCookin.includes(date) ? 'yay thus make worjk' : 'nah this shit aint wokrin'}
+                    {/* <label> Select Day{tutor.length > 0 ? tutor[0].zone.toUpperCase() : null}</label>
                     <select name="" id="">
                         {imCookin.map((x:any) => {
                             return(
                                 <option value="idk yet">{x[0].toUpperCase()}</option>
                             )
                         })}
-                    </select>
+                    </select> */}
                     {/* make on array for the day  */}
                     {/* when user clicks on a day person is open list out the times open */}
                     {/* user clicks a time to schedule */}

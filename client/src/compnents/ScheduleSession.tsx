@@ -15,6 +15,7 @@ function ScheduleSession() {
     const [schedule, setSchedule] = React.useState<any[]>([])
     const [timeOpen, setTimeOpen] = React.useState<string[]>([])
     const [time, setTime] = React.useState<string>('')
+    const today = new Date().toISOString().split('T')[0];
     const sessionData = {
         text:text,
         name:name,
@@ -55,7 +56,7 @@ function ScheduleSession() {
 
     const handleSessionRequest = (e:any) => {
         e.preventDefault()
-        console.log(imCookin)
+        console.log(sessionData)
     }
     const handleDate = (e:any) => {
         let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
@@ -67,6 +68,7 @@ function ScheduleSession() {
         const newDateValue = e.target.value;
         const [year, month, day] = newDateValue.split('-').map(Number);
         const lol = new Date(year, month - 1, day);
+        setDate(`${year}-${month}-${day}`)
         for(let i in imCookin){
             if(imCookin[i].includes(days[lol.getDay()])){
                 // this shit finna get ugly
@@ -102,7 +104,7 @@ function ScheduleSession() {
                     <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
                     <div className="mt-2">
                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input type="text"  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
+                            <input type="text" onChange={(e:any) => setName(e.target.value)} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
                         </div>
                     </div>
                 </div>
@@ -110,7 +112,7 @@ function ScheduleSession() {
                     <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Email</label>
                     <div className="mt-2">
                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input type="email"  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                            <input type="email"  onChange={(e:any) => setEmail(e.target.value)}  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
                 </div>
@@ -124,15 +126,15 @@ function ScheduleSession() {
                     rows={10}/>
                 </div>
                 <div className='flex flex-col'>
-                    <input type="date" name="wec" id="wec" onChange={handleDate}/>
+                    <input type="date" name="wec" id="wec" min={today} onChange={handleDate}/>
                     {schedule.length > 0 ? (
                         <>
                             <div>
                                 <h3>Here's {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} {schedule[0].charAt(0).toUpperCase() + schedule[0].slice(1)}day Availabity!</h3>
                             </div>
-                            <select id="" name=""  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
+                            <select id="" name=""  onChange={(e:any) => setTime(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
                                 {timeOpen.map((x:string) => (
-                                    <option>{x}</option>
+                                    <option value={x}>{x}</option>
                                 )) }
                              </select>
                         </>

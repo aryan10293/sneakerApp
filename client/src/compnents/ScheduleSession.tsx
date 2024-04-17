@@ -12,6 +12,7 @@ function ScheduleSession() {
     const [email,setEmail] = React.useState<string>('')
     const [name,setName] = React.useState<string>('')
     const [date, setDate] = React.useState<string>('')
+    const [schedule, setSchedule] = React.useState<any[]>([])
     const sessionData = {
         text:text,
         name:name,
@@ -50,13 +51,14 @@ function ScheduleSession() {
     }
     const handleDate = (e:any) => {
         let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
-    
+        let yayy = Number(e.target.value[e.target.value.length - 1]) + 1
+        const hope = e.target.value.slice(0, e.target.value.length - 1) + yayy
         let lol = new Date(e.target.value)
         let idk = lol.getDay()
-        setDate(days[idk])
-        console.log( lol, days[idk], idk)
+        
+        console.log(lol)
+        imCookin.forEach((x:any) => x.includes(days[idk]) ? setSchedule(x): setSchedule([]))
     } 
-    console.log(imCookin)
   return (
     <>
       <Header/>
@@ -92,7 +94,7 @@ function ScheduleSession() {
                 </div>
                 <div className='flex flex-col'>
                     <input type="date" name="wec" id="wec" onChange={handleDate}/>
-                    {imCookin.includes(date) ? 'yay thus make worjk' : 'nah this shit aint wokrin'}
+                    {schedule.length > 0 ? 'yay thus make worjk' : 'nah this shit aint wokrin'}
                     {/* <label> Select Day{tutor.length > 0 ? tutor[0].zone.toUpperCase() : null}</label>
                     <select name="" id="">
                         {imCookin.map((x:any) => {

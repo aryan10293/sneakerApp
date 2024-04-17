@@ -13,10 +13,18 @@ function ScheduleSession() {
     const [name,setName] = React.useState<string>('')
     const [date, setDate] = React.useState<string>('')
     const [schedule, setSchedule] = React.useState<any[]>([])
+    const [timeOpen, setTimeOpen] = React.useState<string[]>([])
+    const [time, setTime] = React.useState<string>('')
     const sessionData = {
         text:text,
         name:name,
-        email:email
+        email:email,
+        appointmentTimeDetails: {
+            date:date,
+            time:time
+        },
+        //the date
+        // the time
     }
     React.useEffect(() => {
         const fetchData = async() => {
@@ -51,13 +59,36 @@ function ScheduleSession() {
     }
     const handleDate = (e:any) => {
         let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
-        let yayy = Number(e.target.value[e.target.value.length - 1]) + 1
-        const hope = e.target.value.slice(0, e.target.value.length - 1) + yayy
-        let lol = new Date(e.target.value)
-        let idk = lol.getDay()
-        
-        console.log(lol)
-        imCookin.forEach((x:any) => x.includes(days[idk]) ? setSchedule(x): setSchedule([]))
+        // let yayy = Number(e.target.value[e.target.value.length - 1]) + 1
+        // const hope = e.target.value.slice(0, e.target.value.length - 1) + yayy
+        // let lol = new Date(e.target.value)
+        // let idk = lol.getDay()
+
+        const newDateValue = e.target.value;
+        const [year, month, day] = newDateValue.split('-').map(Number);
+        const lol = new Date(year, month - 1, day);
+        for(let i in imCookin){
+            if(imCookin[i].includes(days[lol.getDay()])){
+                // this shit finna get ugly
+                // splti the start and end time at ':'
+                // tuern the into ints
+                // make a loop adding the times to an array
+                // for example {start:"3:00", end{15:00}}
+                // 3:00-4:00
+                const time = []
+                const start = Number(imCookin[i][1]['start'].split(':')[0])
+                const end = Number(imCookin[i][1]['end'].split(':')[0])
+                for(let i = start; i<end; i++){
+                    const blah = `${i}:00 - ${i+1}:00`
+                    time.push(blah)
+                }
+                setSchedule(imCookin[i])
+                setTimeOpen(time)
+                break
+            } else {
+                setSchedule([])
+            }
+        }
     } 
   return (
     <>
@@ -94,7 +125,24 @@ function ScheduleSession() {
                 </div>
                 <div className='flex flex-col'>
                     <input type="date" name="wec" id="wec" onChange={handleDate}/>
-                    {schedule.length > 0 ? 'yay thus make worjk' : 'nah this shit aint wokrin'}
+                    {schedule.length > 0 ? (
+                        <>
+                            <div>
+                                <h3>Here's {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} {schedule[0].charAt(0).toUpperCase() + schedule[0].slice(1)}day Availabity!</h3>
+                            </div>
+                            <select id="" name=""  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
+                                {timeOpen.map((x:string) => (
+                                    <option>{x}</option>
+                                )) }
+                             </select>
+                        </>
+                    ) : (
+                        <>
+                            <div>
+                                <h3>The {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} Doesn't have an opening for the day you selected! </h3>
+                            </div>
+                        </>
+                    )}
                     {/* <label> Select Day{tutor.length > 0 ? tutor[0].zone.toUpperCase() : null}</label>
                     <select name="" id="">
                         {imCookin.map((x:any) => {

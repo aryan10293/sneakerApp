@@ -38,6 +38,31 @@ let students = {
             return res.status(500).json({ error: 'Internal Server Error' });
         }
     },
+    makeASessionRequest: async(req,res) => {
+        console.log(req.body)
+        try {
+            let updateUserPendingSession  = await User.findOneAndUpdate(
+                    {_id: req.body.userId},
+                    {
+                        $set: { pendingSession: [req.body]},
+                    }
+                )
+            let updateTutorPendingSession  = await User.findOneAndUpdate(
+                        {_id: req.body.tutorId},
+                        {
+                            $set: { pendingSession: [req.body]},
+                        }
+                    )
+            if (!updateUserPendingSession) {
+                    return res.status(404).json({ error: 'User not found' });
+                } else if(!updateTutorPendingSession){
+                    return res.status(404).json({ error: 'Tutor not found' });
+                }
+                return res.status(200).json(updateUserPendingSession);
+        } catch (error) {
+            console.error(error)
+        }
+    }, 
 
 }
 export default students

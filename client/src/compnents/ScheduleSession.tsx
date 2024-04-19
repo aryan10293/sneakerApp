@@ -6,15 +6,17 @@ import { useParams } from 'react-router-dom'
 function ScheduleSession() {
     const {id} = useParams()
     const [tutor, setTutor] = React.useState<any[]>([])
-    const [idk, setIdk] = React.useState<any>({})
     const [imCookin, setImCookin] = React.useState<any[]>([])
     const [text,setText] = React.useState<string>('')
+    const [userId,setUserId] = React.useState<string>('')
     const [email,setEmail] = React.useState<string>('')
     const [name,setName] = React.useState<string>('')
     const [date, setDate] = React.useState<string>('')
     const [schedule, setSchedule] = React.useState<any[]>([])
     const [timeOpen, setTimeOpen] = React.useState<string[]>([])
     const [time, setTime] = React.useState<string>('')
+    const [subject, setSubject] = React.useState<string>('')
+    const [course, setCourse] = React.useState<string[]>([])
     const today = new Date().toISOString().split('T')[0];
     const sessionData = {
         text:text,
@@ -22,8 +24,11 @@ function ScheduleSession() {
         email:email,
         appointmentTimeDetails: {
             date:date,
-            time:time
+            time:time,
+            subject: subject
         },
+        userId:userId,
+        tutorId: id
         //the date
         // the time
     }
@@ -36,6 +41,7 @@ function ScheduleSession() {
             })
             const data = await reg.json()
             setTutor(data.user)
+            setCourse(data.user[0].courses)
             } catch(err) {
                 console.error(err)
             }
@@ -54,8 +60,31 @@ function ScheduleSession() {
         }
     }, [tutor]);
 
-    const handleSessionRequest = (e:any) => {
+    React.useEffect(() => {
+    const fetchData = async() => {
+        try {
+        const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
+            method: 'GET',
+            headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+        })
+        const data = await reg.json()
+        setUserId(data.userinfo[0]._id)
+        } catch(err) {
+            console.error(err)
+        }
+    }
+    fetchData()
+    }, [])
+
+    const handleSessionRequest = async (e:any) => {
         e.preventDefault()
+        const req = await fetch(`http://localhost:2020/studentsessionrequest`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+            body: JSON.stringify(sessionData)
+        })
+        const data = await req.json()
+        console.log(data)
         console.log(sessionData)
     }
     const handleDate = (e:any) => {
@@ -114,6 +143,16 @@ function ScheduleSession() {
                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="email"  onChange={(e:any) => setEmail(e.target.value)}  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
                         </div>
+                    </div>
+                </div>
+                <div className="sm:col-span-4">
+                    <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Subject</label>
+                    <div className="mt-2">
+                        <select className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            {course.map((x:any) => (
+                                <option  value={x} onChange={(e:any) => setSubject(e.target.value)}  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >{x}</option>
+                            ))}
+                        </select>
                     </div>
                 </div>
                 <div className='flex flex-col'>

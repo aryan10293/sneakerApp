@@ -7,6 +7,7 @@ import SchedulePage from './pages/SchedulePage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
 import ScheduleSessionPage from './pages/ScheduleSessionPage';
+import NotifcationPage from './pages/NotifcationPage';
 import { Routes, Route, Navigate } from 'react-router-dom'
 function App() {
   const [userData,setUserData] = React.useState<any[]>([])
@@ -62,6 +63,9 @@ function App() {
         <Route 
         path="/schedule-session/:id"
         element={ userLogin ? <ScheduleSessionPage /> : <Navigate to='/login'/>} />
+        <Route 
+        path="/notifications"
+        element={ userLogin ? <NotifcationPage /> : <Navigate to='/login'/>} />
     </Routes>
   );
 }

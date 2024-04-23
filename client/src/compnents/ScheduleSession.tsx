@@ -28,7 +28,10 @@ function ScheduleSession() {
             subject: subject
         },
         userId:userId,
-        tutorId: id
+        tutorId: id,
+        date: Date.now(),
+        typeOfNoti: 'tutor session',
+        seen: false
         //the date
         // the time
     }

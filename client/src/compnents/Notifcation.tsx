@@ -1,8 +1,15 @@
 import React from 'react'
 import Header from './Header'
 import NavMenu from './NavMenu'
+import MessagesLi from './MessagesLi'
+import TutorLi from './TutorLi'
+import FeedbackLi from './FeedbackLi'
 import { Fragment } from 'react'
 function Notifcation() {
+    const [display, setDisplay] = React.useState<string>('All Notifications')
+    const displayNoti = (e:any) => {
+        setDisplay(e.target.textContent)
+    }
   return (
     <>
       <Header/>
@@ -10,22 +17,23 @@ function Notifcation() {
         <NavMenu/>
         <div className="w-full">
             <div>
-                <h1 className='flex justify-center items-center font-bold text-2xl'>Your Notifcations</h1>
+                <h1 className='flex justify-center pt-10 items-center font-bold text-2xl'>Your Notifcations</h1>
             </div>
             <div className=" flex justify-center items-center w-1/2 m-auto ">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
                     <div className="flex items-center justify-between h-16 ">
                     <div className="flex">
                         {/* Navigation Links */}
-                        <a href="#" className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All Notifications</a>
-                        <a href="#" className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Messages</a>
-                        <a href="#" className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
-                        <a href="#" className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tutor Sessions</a>
+                        <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All Notifications</a>
+                        <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Messages</a>
+                        <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
+                        <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tutor Sessions</a>
                     </div>
                     </div>
                 </div>
             </div>
-            <div className="max-w-lg mx-auto items-center h-screen">
+            {display === 'All Notifications' ? (
+                <div className="max-w-lg mx-auto items-center">
                 <div className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">
                     <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
@@ -49,6 +57,9 @@ function Notifcation() {
                     </div>
                 </div>
             </div>
+            ) : display === 'Messages' ? (
+                <MessagesLi/>
+            ): null}
 
         </div>
       </div>

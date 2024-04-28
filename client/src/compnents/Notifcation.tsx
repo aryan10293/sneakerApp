@@ -59,6 +59,8 @@ function Notifcation() {
             </div>
             ) : display === 'Messages' ? (
                 <MessagesLi/>
+            ): display === "Feedback" ? (
+                <FeedbackLi></FeedbackLi>
             ): null}
 
         </div>

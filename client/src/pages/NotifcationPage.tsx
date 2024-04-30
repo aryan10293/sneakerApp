@@ -1,8 +1,8 @@
 import React from 'react'
 import Notifcation from '../compnents/Notifcation'
-function NotifcationPage() {
+function NotifcationPage(props:any) {
   return (
-    <Notifcation/>
+    <Notifcation id={props.id}/>
   )
 }
 

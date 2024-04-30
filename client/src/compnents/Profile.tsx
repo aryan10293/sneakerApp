@@ -10,7 +10,6 @@ function ProfilePage(props:any) {
     React.useEffect(() => {
     const fetchData = async() => {
       try {
-        console.log('erwgthreytregf')
         const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},

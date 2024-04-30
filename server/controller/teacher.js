@@ -38,6 +38,9 @@ let teachers = {
             return res.status(500).json({ error: 'Internal Server Error' });
         }
     },
+    getTutorSessions: async (req,res) => {
+        
+    }
 
 }
 export default teachers

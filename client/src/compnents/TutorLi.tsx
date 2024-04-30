@@ -2,6 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function TutorLi() {
+    React.useEffect(() => {
+        const fetchData = async() => {
+        try {
+            const reg = await fetch(`http://localhost:2020/getTutorSessions/${localStorage.getItem('token')}`,{
+                method: 'GET',
+                headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+            })
+            const data = await reg.json()
+            } catch(err) {
+                localStorage.clear()
+            }
+        }
+        fetchData()
+    }, [])
   return (
                 <div className="max-w-lg mx-auto items-center">
                 <div className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">

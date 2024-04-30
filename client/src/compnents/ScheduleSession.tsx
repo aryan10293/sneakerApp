@@ -81,15 +81,13 @@ function ScheduleSession() {
 
     const handleSessionRequest = async (e:any) => {
         e.preventDefault()
-        console.log(sessionData)
         const req = await fetch(`http://localhost:2020/studentsessionrequest`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
             body: JSON.stringify(sessionData)
         })
         const data = await req.json()
-        console.log(data)
-        console.log(sessionData)
+        window.location.href = '/home'
     }
     const handleDate = (e:any) => {
         let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
@@ -120,6 +118,7 @@ function ScheduleSession() {
                 setSchedule([])
             }
         }
+
     } 
   return (
     <>

@@ -12,6 +12,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 function App() {
   const [userData,setUserData] = React.useState<any[]>([])
   const [tutor, setTutor] = React.useState<boolean>(false)
+  const [id, setId] = React.useState<string>('')
   const [user, setUser] = React.useState<any>(true)
   let userLogin = false
   React.useEffect(() => {
@@ -24,6 +25,7 @@ function App() {
         const data = await reg.json()
     //    console.log(data)
         if(data.success){
+          setId(data.userinfo[0]._id)
           setTutor(data.userinfo[0].tutor)
           setUserData(data.userinfo)
           setUser(true)
@@ -65,7 +67,7 @@ function App() {
         element={ userLogin ? <ScheduleSessionPage /> : <Navigate to='/login'/>} />
         <Route 
         path="/notifications"
-        element={ userLogin ? <NotifcationPage /> : <Navigate to='/login'/>} />
+        element={ userLogin ? <NotifcationPage id={id}/> : <Navigate to='/login'/>} />
     </Routes>
   );
 }

@@ -5,7 +5,8 @@ import MessagesLi from './MessagesLi'
 import TutorLi from './TutorLi'
 import FeedbackLi from './FeedbackLi'
 import { Fragment } from 'react'
-function Notifcation() {
+function Notifcation(props:any) {
+    console.log(props)
     const [display, setDisplay] = React.useState<string>('All Notifications')
     const displayNoti = (e:any) => {
         setDisplay(e.target.textContent)
@@ -60,7 +61,9 @@ function Notifcation() {
             ) : display === 'Messages' ? (
                 <MessagesLi/>
             ): display === "Feedback" ? (
-                <FeedbackLi></FeedbackLi>
+                <FeedbackLi/>
+            ): display === 'Tutor Sessions' ? (
+                <TutorLi/>
             ): null}
 
         </div>

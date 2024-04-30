@@ -46,6 +46,9 @@ let teachers = {
         } catch (error) {
             console.error(error, 'shit broke brother')
         }
+    }, 
+    getStudentImages: async (req,res) => {
+        console.log(req.body)
     }
 
 }

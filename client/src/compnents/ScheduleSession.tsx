@@ -81,6 +81,7 @@ function ScheduleSession() {
 
     const handleSessionRequest = async (e:any) => {
         e.preventDefault()
+        console.log(sessionData)
         const req = await fetch(`http://localhost:2020/studentsessionrequest`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
@@ -92,10 +93,6 @@ function ScheduleSession() {
     }
     const handleDate = (e:any) => {
         let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
-        // let yayy = Number(e.target.value[e.target.value.length - 1]) + 1
-        // const hope = e.target.value.slice(0, e.target.value.length - 1) + yayy
-        // let lol = new Date(e.target.value)
-        // let idk = lol.getDay()
 
         const newDateValue = e.target.value;
         const [year, month, day] = newDateValue.split('-').map(Number);

@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../model/User.js";
+import TutorSession from "../model/TutorSession.js";
 import { uploadImage } from "../middleware/cloudinary.js";
 let students = {
     findTutors: async (req,res) => {
@@ -63,6 +64,37 @@ let students = {
             console.error(error)
         }
     }, 
+    yooo: async(req,res) => {
+        console.log(req.body)
+        try{
+            const sessionData = {
+                text:req.body.text,
+                name:req.body.name,
+                email:req.body.email,
+                appointmentTimeDetails: {
+                    date:req.body.appointmentTimeDetails.date,
+                    time:req.body.appointmentTimeDetails.time,
+                    subject: req.body.appointmentTimeDetails.subject
+                },
+                userId:req.body.userId,
+                tutorId: req.body.tutorId,
+                date: Date.now(),
+                typeOfNoti: 'tutor session',
+                seen: false
+                //the date
+                // the time
+            }
+            console.log(sessionData)
+            const createSession =  await TutorSession.create(sessionData)
+            if (!createSession) {
+            return res.status(404).json({ error: 'Session was not created' });
+            }
+
+            return res.status(200).json(createSession);
+            } catch(err){
+                console.error(err, 'idk waht to put here')
+            }
+    }
 
 }
 export default students

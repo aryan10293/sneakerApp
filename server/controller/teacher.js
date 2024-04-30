@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../model/User.js";
+import TutorSession from "../model/TutorSession.js";
 import { uploadImage } from "../middleware/cloudinary.js";
 let teachers = {
     findStudents: async (req,res) => {
@@ -39,7 +40,12 @@ let teachers = {
         }
     },
     getTutorSessions: async (req,res) => {
-        
+        try {
+            const yourSessionRequest = await TutorSession.find({tutorId: req.params.id})
+            return res.status(200).json(yourSessionRequest)
+        } catch (error) {
+            console.error(error, 'shit broke brother')
+        }
     }
 
 }

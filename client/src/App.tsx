@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
 import ScheduleSessionPage from './pages/ScheduleSessionPage';
 import NotifcationPage from './pages/NotifcationPage';
+import TutorDisplaySessionPage from './pages/TutorDisplaySessionPage';
 import { Routes, Route, Navigate } from 'react-router-dom'
 function App() {
   const [userData,setUserData] = React.useState<any[]>([])
@@ -68,6 +69,9 @@ function App() {
         <Route 
         path="/notifications"
         element={ userLogin ? <NotifcationPage id={id}/> : <Navigate to='/login'/>} />
+        <Route 
+        path="/tutorsession/:id"
+        element={ userLogin ? <TutorDisplaySessionPage /> : <Navigate to='/login'/>} />
     </Routes>
   );
 }

@@ -36,6 +36,10 @@ function TutorLi(props:any) {
         }
         fetchData()
         // ill figure this shit out when i open my laptop again 
+        // send user id to bvackend
+        // get users images sent back to front end in an array 
+        // display the usrrs images 
+        // get back to working on the the view request page
         console.log(ids)
     }, [sessions])
 function formatTimestamp(timestamp:string) {

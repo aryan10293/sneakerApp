@@ -48,9 +48,19 @@ let teachers = {
         }
     }, 
     getStudentImages: async (req,res) => {
-        console.log(req.body)
+        const imgArray =[]
+        try {
+            await Promise.all(req.body.stuff.map(async (x, i) => {
+                const userImg = await User.find({ _id: x });
+                imgArray.push(userImg[0].img);
+        }));
+            return res.status(200).json(imgArray);
+        } catch (error) {
+            console.error('Error fetching images:', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
     }
-    
+
 
 }
 export default teachers

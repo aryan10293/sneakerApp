@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 function TutorLi(props:any) {
     const [sessions, setSessions] = React.useState<any[]>([])
+    const [imgUrl, setImgUrl] = React.useState<string[]>([])
     React.useEffect(() => {
         const fetchData = async() => {
             try {
@@ -24,12 +25,13 @@ function TutorLi(props:any) {
         })
         const fetchData = async() => {
             try {
-                const reg = await fetch(`http://localhost:2020/getTutorSessions/${props.id}`,{
-                    method: 'GET',
+                const reg = await fetch(`http://localhost:2020/getimages`,{
+                    method: 'POST',
                     headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                    body: JSON.stringify({stuff: sessions.map((x:any) => {return x.userId })}),
                 })
                 const data = await reg.json()
-                setSessions(data)
+                setImgUrl(data)
                 } catch(err) {
                     localStorage.clear()
                 }
@@ -42,6 +44,7 @@ function TutorLi(props:any) {
         // get back to working on the the view request page
         console.log(ids)
     }, [sessions])
+    
 function formatTimestamp(timestamp:string) {
         const date = new Date(timestamp);
         const hours = date.getHours();
@@ -70,13 +73,13 @@ function formatTimestamp(timestamp:string) {
     }
   return (
             <div>
-                {sessions.map((x:any) => {
+                {sessions.map((x:any, i:number) => {
                     return (
                         <div className="max-w-lg mx-auto items-center">
                         <div className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">
                             <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
-                                    <img className="w-full h-full object-cover rounded-full" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="" />
+                                    <img className="w-full h-full object-cover rounded-full" src={imgUrl[i]} alt="" />
                                 </div>
                             </div>
                             <div>

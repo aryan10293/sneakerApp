@@ -32,7 +32,7 @@ function App() {
           setUser(true)
         }
         } catch(err) {
-            localStorage.clear()
+            // localStorage.clear()
         }
     }
     fetchData()

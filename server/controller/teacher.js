@@ -59,6 +59,14 @@ let teachers = {
             console.error('Error fetching images:', error);
             return res.status(500).json({ error: 'Internal server error' });
         }
+    },
+     getTutorSession: async (req,res) => {
+        try {
+            const yourSessionRequest = await TutorSession.find({_id: req.params.id})
+            return res.status(200).json(yourSessionRequest)
+        } catch (error) {
+            console.error(error, 'shit broke brother')
+        }
     }
 
 

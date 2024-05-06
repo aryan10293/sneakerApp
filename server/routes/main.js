@@ -6,10 +6,11 @@ import authenticateToken from "../middleware/jwt.js";
 import teachers from "../controller/teacher.js";
 router.post('/createaccount', auth.postCreateAccount)
 router.post('/login', auth.postLogin)
-router.use(authenticateToken);
+//router.use(authenticateToken);
 router.get('/getuser/:token',  auth.checkUser)
 router.get('/getuserid/:id',  auth.getUser)
 router.get('/gettutorsessions/:id',  teachers.getTutorSessions)
+router.get('/gettutorsession/:id',  teachers.getTutorSession)
 router.get('/findtutor/:course', students.findTutors)
 router.get('/findstudent/:course', teachers.findStudents)
 router.put('/editprofile', students.editProfile)

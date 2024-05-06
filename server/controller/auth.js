@@ -90,7 +90,7 @@ let auth = {
             }
             req.flash("success", { msg: "Success! You are logged in." });
             
-             const token = jwt.sign({ sub: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+             const token = jwt.sign({ sub: user._id }, process.env.SECRET_KEY,);//{ expiresIn: '1h' }
              res.send(
                   { token, newUser: user }
                 )

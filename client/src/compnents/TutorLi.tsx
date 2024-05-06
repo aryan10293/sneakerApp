@@ -14,7 +14,7 @@ function TutorLi(props:any) {
                 const data = await reg.json()
                 setSessions(data)
                 } catch(err) {
-                    localStorage.clear()
+                    console.error(err)
                 }
         }
         fetchData()
@@ -33,16 +33,10 @@ function TutorLi(props:any) {
                 const data = await reg.json()
                 setImgUrl(data)
                 } catch(err) {
-                    localStorage.clear()
+                    console.error(err)
                 }
         }
         fetchData()
-        // ill figure this shit out when i open my laptop again 
-        // send user id to bvackend
-        // get users images sent back to front end in an array 
-        // display the usrrs images 
-        // get back to working on the the view request page
-        console.log(ids)
     }, [sessions])
     
 function formatTimestamp(timestamp:string) {

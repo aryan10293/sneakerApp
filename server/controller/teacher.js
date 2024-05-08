@@ -67,6 +67,9 @@ let teachers = {
         } catch (error) {
             console.error(error, 'shit broke brother')
         }
+    }, 
+    confirmSession: async (req,res) => {
+        console.log(req.body)
     }
 
 

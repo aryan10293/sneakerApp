@@ -17,4 +17,5 @@ router.put('/editprofile', students.editProfile)
 router.put('/editprofileT', teachers.editProfile)
 router.post('/studentsessionrequest', students.yooo)
 router.post('/getimages', teachers.getStudentImages)
+router.post('/comfirmsession', teachers.confirmSession)
 export default router;

@@ -71,22 +71,22 @@ function TutorSession() {
 
     }
     interface Notification {
-    appointmentTimeDetails: {
+        appointmentTimeDetails: {
+            date: string,
+            time: string,
+            subject: string
+        },
         date: string,
-        time: string,
-        subject: string
-    },
-    date: string,
-    email: string,
-    name: string,
-    seen: boolean,
-    text: string,
-    tutorId: string,
-    typeOfNoti: string,
-    userId: string,
-    __v: number,
-    _id: string
-}
+        email: string,
+        name: string,
+        seen: boolean,
+        text: string,
+        tutorId: string,
+        typeOfNoti: string,
+        userId: string,
+        __v: number,
+        _id: string
+    }
     React.useEffect(() => {
         const fetchData = async() => {
             try {
@@ -132,7 +132,30 @@ function TutorSession() {
 
         return `${monthName} ${formattedDay}`;
     }
+    function hasTimePassed(targetDate: Date, targetTime: string): boolean {
+    // Get the current date and time
+        const currentDate = new Date();
+        const currentTime = currentDate.getTime();
+
+        // Parse the target time string (e.g., '9:00 - 10:00')
+        const lolHour: string = targetTime.split(':')[0]
+        const lolMinute: string = targetTime.split(':')[0].split(' ')[0]
+       // const [startHour, startMinute] = targetTime.split(':')[0].split(' ')[0];
+        const [endHour] = targetTime.split(' ')[2].split(':');
+        
+        // Set the time of the target date to the target time
+        targetDate.setHours(parseInt(lolHour), parseInt(lolMinute), 0);
+
+        // Check if the target date and time have passed
+        if (targetDate.getTime() < currentTime) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     const handleAccept = async(e:any) => {
+        let cool = new Date(session.appointmentTimeDetails.date)
+        console.log(hasTimePassed(cool, session.appointmentTimeDetails.time))
         // check if the date has passed if so alert user date has passed and delete session
         // maybe do  the above on page load
 
@@ -195,9 +218,6 @@ function TutorSession() {
                             </div>
                             <div className="col-span-4 sm:col-span-9 ">
                                 <div className="bg-white shadow rounded-lg p-6">
-                                    <h2 className="text-xl font-bold mb-4">About {userInfo.firstName}</h2>
-                                    <p className="text-gray-700">{userInfo.bio}</p>
-
                                     <h2 className="text-xl font-bold mt-6 mb-4">Session Details</h2>
                                     <div className="mb-6">
                                         <div className="flex justify-between flex-wrap gap-2 w-full">
@@ -216,7 +236,11 @@ function TutorSession() {
                                         <p className="">
                                             {session.text}
                                         </p>
-                                    </div>
+                                    </div> 
+
+
+                                    <h2 className="text-xl font-bold mb-4">About {userInfo.firstName}</h2>
+                                    <p className="text-gray-700">{userInfo.bio}</p>
 
                                     <h2 className="text-xl font-bold mt-6 mb-4">Reviews</h2>
                                     <div className="mb-6">

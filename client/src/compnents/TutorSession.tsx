@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './Header'
 import NavMenu from './NavMenu'
 import { Params, Link, useParams } from 'react-router-dom'
+import { Session } from 'inspector'
 function TutorSession() {
     const {id} = useParams()
     const [user, setUser] = React.useState<string>('')
@@ -133,20 +134,13 @@ function TutorSession() {
         return `${monthName} ${formattedDay}`;
     }
     function hasTimePassed(targetDate: Date, targetTime: string): boolean {
-    // Get the current date and time
         const currentDate = new Date();
         const currentTime = currentDate.getTime();
 
-        // Parse the target time string (e.g., '9:00 - 10:00')
         const lolHour: string = targetTime.split(':')[0]
         const lolMinute: string = targetTime.split(':')[0].split(' ')[0]
-       // const [startHour, startMinute] = targetTime.split(':')[0].split(' ')[0];
         const [endHour] = targetTime.split(' ')[2].split(':');
-        
-        // Set the time of the target date to the target time
         targetDate.setHours(parseInt(lolHour), parseInt(lolMinute), 0);
-
-        // Check if the target date and time have passed
         if (targetDate.getTime() < currentTime) {
             return true;
         } else {
@@ -155,7 +149,7 @@ function TutorSession() {
     }
     const handleAccept = async(e:any) => {
         let cool = new Date(session.appointmentTimeDetails.date)
-        console.log(hasTimePassed(cool, session.appointmentTimeDetails.time))
+        //hasTimePassed(cool, session.appointmentTimeDetails.time) this function call return true if the date has passed 
         // check if the date has passed if so alert user date has passed and delete session
         // maybe do  the above on page load
 
@@ -167,13 +161,20 @@ function TutorSession() {
                 const reg = await fetch(`http://localhost:2020/comfirmsession/`,{
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                    body: JSON.stringify({
+                        hasSessionPassed:hasTimePassed(cool, session.appointmentTimeDetails.time),
+                        tutor:session.tutorId,
+                        student:session.userId,
+                        date:session.appointmentTimeDetails.date,
+                        time:session.appointmentTimeDetails.time
+
+                    })
                 })
                 const data = await reg.json()
                 setUserInfo(data.user[0])
                 } catch(err) {
                     console.error(err)
             }
-        console.log(' the accept tutor session button works')
     }
     const handleDecline = async(e:any) => {
         // just delete the session from the database and send an alert to the student that the session was declined

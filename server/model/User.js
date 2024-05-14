@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   subjects:{type: Array, required: false},
   why:{type: String, default: ''},
   zone:{type: String, default: ''},
-  pendingSession:{type: Array, required:false}
+  upcomingSessions:{type: Object, default:{lol:true}}
   //cd {type: Object, required:false}
 });
 

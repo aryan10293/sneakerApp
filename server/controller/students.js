@@ -65,7 +65,6 @@ let students = {
         }
     }, 
     yooo: async(req,res) => {
-        console.log(req.body)
         try{
             const sessionData = {
                 text:req.body.text,
@@ -84,7 +83,6 @@ let students = {
                 //the date
                 // the time
             }
-            console.log(sessionData)
             const createSession =  await TutorSession.create(sessionData)
             if (!createSession) {
             return res.status(404).json({ error: 'Session was not created' });

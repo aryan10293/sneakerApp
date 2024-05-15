@@ -20,8 +20,10 @@ const UserSchema = new mongoose.Schema({
   dob: {type: String, default: ''},
   subjects:{type: Array, required: false},
   why:{type: String, default: ''},
-  zone:{type: String, default: ''},
-  upcomingSessions:{type: Object, default:{lol:true}}
+  upcomingSessions:{type: Object, default:{lol:true}},
+  availabity: {type: Object, default:{}}
+
+
   //cd {type: Object, required:false}
 });
 

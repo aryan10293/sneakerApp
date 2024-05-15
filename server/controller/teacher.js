@@ -82,12 +82,18 @@ let teachers = {
                     // acess the date we need and see if has a schdule session 
                         // if it does then send some time of error message saying 'one of yall are already book for this time'
                         // or continue with the function
-        student.upcomingSessions[`${req.body.date}`] = req.body.time
-        console.log(student)
+        // student.upcomingSessions[`${req.body.date}`] = req.body.time
+        // console.log(student)
 
         const result = await User.updateOne({_id: req.body.student}, {
         $set: {
-                [`upcomingSessions.${req.body.date}`]: req.body.time
+                [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
+            }
+        });
+
+        const addingTutorStuffToAnArray = await User.updateOne({_id: req.body.tutor}, {
+        $set: {
+                [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
             }
         });
         // try {

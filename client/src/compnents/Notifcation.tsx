@@ -12,10 +12,9 @@ function Notifcation(props:any) {
     }
   return (
     <>
-      <Header/>
       <div className="flex">
         <NavMenu/>
-        <div className="w-full">
+        <div className="w-full h-screen overflow-auto ">
             <div>
                 <h1 className='flex justify-center pt-10 items-center font-bold text-2xl'>Your Notifcations</h1>
             </div>
@@ -33,17 +32,17 @@ function Notifcation(props:any) {
                 </div>
             </div>
             {display === 'All Notifications' ? (
-                <div className="max-w-lg mx-auto items-center">
-                <div className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">
-                    <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
-                            <img className="w-full h-full object-cover rounded-full" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="" />
+                <div className="max-w-lg mx-auto items-center overflow-auto">
+                    <div className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">
+                        <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
+                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
+                                <img className="w-full h-full object-cover rounded-full" src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg" alt="" />
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <span className="font-mono">Emma would like to connect with you</span>
-                    </div>
-                    <div className="flex gap-2">
+                        <div>
+                            <span className="font-mono">Emma would like to connect with you</span>
+                        </div>
+                        <div className="flex gap-2">
                         <button>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />

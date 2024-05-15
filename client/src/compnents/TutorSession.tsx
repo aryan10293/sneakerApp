@@ -147,6 +147,23 @@ function TutorSession() {
             return false;
         }
     }
+    const deleteTutorSessionFromDatabase = async (howItisGettingDeleted:string) => {
+            try {
+                const reg = await fetch(`http://localhost:2020/deletetutorrequest/`,{
+                    method: 'DELETE',
+                    headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                    body: JSON.stringify({
+                        tutor:session.tutorId,
+                        student:session.userId,
+                        session: session._id,
+                        howItisGettingDeleted: howItisGettingDeleted
+                    })
+                })
+                //const data = await reg.json()
+                } catch(err) {
+                    console.error(err)
+            }
+    }
     const handleAccept = async(e:any) => {
         let cool = new Date(session.appointmentTimeDetails.date)
         //hasTimePassed(cool, session.appointmentTimeDetails.time) this function call return true if the date has passed 
@@ -157,29 +174,31 @@ function TutorSession() {
         // if double booked send message to logged user and to the student
 
         // if everything checks off and send a link to each user so they can facetime
-        try {
-                const reg = await fetch(`http://localhost:2020/comfirmsession/`,{
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-                    body: JSON.stringify({
-                        hasSessionPassed:hasTimePassed(cool, session.appointmentTimeDetails.time),
-                        tutor:session.tutorId,
-                        student:session.userId,
-                        date:session.appointmentTimeDetails.date,
-                        time:session.appointmentTimeDetails.time
+        // try {
+        //         const reg = await fetch(`http://localhost:2020/comfirmsession/`,{
+        //             method: 'POST',
+        //             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+        //             body: JSON.stringify({
+        //                 hasSessionPassed:hasTimePassed(cool, session.appointmentTimeDetails.time),
+        //                 tutor:session.tutorId,
+        //                 student:session.userId,
+        //                 date:session.appointmentTimeDetails.date,
+        //                 time:session.appointmentTimeDetails.time
 
-                    })
-                })
-                const data = await reg.json()
-                setUserInfo(data.user[0])
-                } catch(err) {
-                    console.error(err)
-            }
+        //             })
+        //         })
+        //         const data = await reg.json()
+        //         setUserInfo(data.user[0])
+        //         } catch(err) {
+        //             console.error(err)
+        //     }
+            deleteTutorSessionFromDatabase('accept')
     }
     const handleDecline = async(e:any) => {
         // just delete the session from the database and send an alert to the student that the session was declined
         // maybe send a reason why
         console.log(' the decline tutor session button works')
+        // deleteTutorSessionFromDatabase('decline')
     }
   return (
     <>

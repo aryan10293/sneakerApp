@@ -86,25 +86,30 @@ let teachers = {
         // console.log(student)
 
         const result = await User.updateOne({_id: req.body.student}, {
-        $set: {
-                [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
-            }
-        });
+            $set: {
+                    [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
+                }
+            });
 
-        const addingTutorStuffToAnArray = await User.updateOne({_id: req.body.tutor}, {
-        $set: {
-                [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
-            }
-        });
-        // try {
-        //     await student.save();
-        //     console.log("Student session updated successfully");
-        // } catch (error) {
-        //     console.error("Error saving student session:", error);
-        // }
-        // console.log(student[0].upcomingSessions)
-        // console.log(tutor[0].upcomingSessions)
-        // console.log(req.body)
+            const addingTutorStuffToAnArray = await User.updateOne({_id: req.body.tutor}, {
+            $set: {
+                    [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
+                }
+            });
+
+    },
+    deleteRequestFromDatabase: async (req,res) => {
+        // gone head and send the ids to the body
+        //const deleted = await Character.findOneAndDelete({ name: 'Ken' })
+        const session = await await TutorSession.findOneAndDelete({ _id: req.body.session })
+
+        if(req.body.howItisGettingDeleted === 'accept'){
+            return res.status(200).json('your session was succesfully booked')
+        } else if(req.body.howItisGettingDeleted === 'decline'){
+            return res.status(200).json('you declined this session')
+        } 
+        console.log(session)
+
     }
 
 

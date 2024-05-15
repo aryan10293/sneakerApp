@@ -13,9 +13,13 @@ router.get('/gettutorsessions/:id',  teachers.getTutorSessions)
 router.get('/gettutorsession/:id',  teachers.getTutorSession)
 router.get('/findtutor/:course', students.findTutors)
 router.get('/findstudent/:course', teachers.findStudents)
+
 router.put('/editprofile', students.editProfile)
 router.put('/editprofileT', teachers.editProfile)
+
 router.post('/studentsessionrequest', students.yooo)
 router.post('/getimages', teachers.getStudentImages)
 router.post('/comfirmsession', teachers.confirmSession)
+
+router.delete('/deletetutorrequest', teachers.deleteRequestFromDatabase)
 export default router;

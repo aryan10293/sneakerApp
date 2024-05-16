@@ -119,7 +119,6 @@ function TutorSession() {
         }
         fetchData()
     }, [user])
-
     function formatDateString(dateString: string): string {
         const dateParts = dateString.split('-');
         const year = parseInt(dateParts[0]);
@@ -159,7 +158,8 @@ function TutorSession() {
                         howItisGettingDeleted: howItisGettingDeleted
                     })
                 })
-                //const data = await reg.json()
+                const data = await reg.json()
+                alert(data)
                 } catch(err) {
                     console.error(err)
             }
@@ -174,25 +174,26 @@ function TutorSession() {
         // if double booked send message to logged user and to the student
 
         // if everything checks off and send a link to each user so they can facetime
-        // try {
-        //         const reg = await fetch(`http://localhost:2020/comfirmsession/`,{
-        //             method: 'POST',
-        //             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-        //             body: JSON.stringify({
-        //                 hasSessionPassed:hasTimePassed(cool, session.appointmentTimeDetails.time),
-        //                 tutor:session.tutorId,
-        //                 student:session.userId,
-        //                 date:session.appointmentTimeDetails.date,
-        //                 time:session.appointmentTimeDetails.time
+        try {
+                const reg = await fetch(`http://localhost:2020/comfirmsession/`,{
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                    body: JSON.stringify({
+                        hasSessionPassed:hasTimePassed(cool, session.appointmentTimeDetails.time),
+                        tutor:session.tutorId,
+                        student:session.userId,
+                        date:session.appointmentTimeDetails.date,
+                        time:session.appointmentTimeDetails.time
 
-        //             })
-        //         })
-        //         const data = await reg.json()
-        //         setUserInfo(data.user[0])
-        //         } catch(err) {
-        //             console.error(err)
-        //     }
-            deleteTutorSessionFromDatabase('accept')
+                    })
+                })
+                const data = await reg.json()
+               deleteTutorSessionFromDatabase('accept')
+                window.location.href = '/notifications'
+                } catch(err) {
+                    console.error(err)
+            }
+
     }
     const handleDecline = async(e:any) => {
         // just delete the session from the database and send an alert to the student that the session was declined

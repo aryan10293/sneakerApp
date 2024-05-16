@@ -23,6 +23,9 @@ function DashboardTutor(props:any) {
     <Header img={props.idk.img}/>
     <div className='flex'>
       <NavMenu />
+      <div>
+        i have no idea what i want to do with this tutor page yet
+      </div>
     </div>
     </>
   )

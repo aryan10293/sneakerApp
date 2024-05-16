@@ -97,6 +97,8 @@ let teachers = {
                 }
             });
 
+           return res.status(200).json('this session was comfirmed')
+
     },
     deleteRequestFromDatabase: async (req,res) => {
         // gone head and send the ids to the body

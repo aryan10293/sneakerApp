@@ -199,7 +199,7 @@ function TutorSession() {
         // just delete the session from the database and send an alert to the student that the session was declined
         // maybe send a reason why
         console.log(' the decline tutor session button works')
-        // deleteTutorSessionFromDatabase('decline')
+         deleteTutorSessionFromDatabase('decline')
     }
   return (
     <>

@@ -21,5 +21,5 @@ router.post('/studentsessionrequest', students.yooo)
 router.post('/getimages', teachers.getStudentImages)
 router.post('/comfirmsession', teachers.confirmSession)
 
-router.delete('/deletetutorrequest', teachers.deleteRequestFromDatabase)
+router.delete('/deletetutorrequest', teachers.deleteScheduleRequestFromDatabase)
 export default router;

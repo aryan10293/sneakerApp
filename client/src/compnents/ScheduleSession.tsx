@@ -87,7 +87,12 @@ function ScheduleSession() {
             body: JSON.stringify(sessionData)
         })
         const data = await req.json()
-        window.location.href = '/home'
+        console.log(data)
+        if(data.status === '409')alert(data.message)
+        if(data.status === '404')alert(data.message)
+        if(data.status === '400')alert(data.message)
+        if(data.status === '200')window.location.href = '/home'
+        
     }
     const handleDate = (e:any) => {
         let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']

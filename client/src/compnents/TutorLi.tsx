@@ -5,7 +5,7 @@ function TutorLi(props:any) {
     const [sessions, setSessions] = React.useState<any[]>([])
     const [imgUrl, setImgUrl] = React.useState<string[]>([])
     React.useEffect(() => {
-        const fetchData = async() => {
+        const fetchTutorData = async() => {
             try {
                 const reg = await fetch(`http://localhost:2020/getTutorSessions/${props.id}`,{
                     method: 'GET',
@@ -17,7 +17,19 @@ function TutorLi(props:any) {
                     console.error(err)
                 }
         }
-        fetchData()
+        const fetchStudentData = async() => {
+            try {
+                const reg = await fetch(`http://localhost:2020/getstudentsessions/${props.id}`,{
+                    method: 'GET',
+                    headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                })
+                const data = await reg.json()
+                setSessions(data)
+                } catch(err) {
+                    console.error(err)
+                }
+        }
+        props.tutor ? fetchTutorData() : fetchStudentData()
     }, [])
     React.useEffect(() => {
         const ids = sessions.map((x:any) => {
@@ -38,7 +50,7 @@ function TutorLi(props:any) {
         }
         fetchData()
     }, [sessions])
-    
+    console.log(sessions)
 function formatTimestamp(timestamp:string) {
         const date = new Date(timestamp);
         const hours = date.getHours();

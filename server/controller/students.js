@@ -103,6 +103,15 @@ let students = {
                 }
         }
     },
+    getRequestedSessions: async (req,res) => {
+        try {
+            const yourSessionRequest = await TutorSession.find({userId: req.params.id})
+            console.log(yourSessionRequest)
+            return res.status(200).json(yourSessionRequest)
+        } catch (error) {
+            console.error(error, 'shit broke brother')
+        }
+    },
 
 }
 export default students

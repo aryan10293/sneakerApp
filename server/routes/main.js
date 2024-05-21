@@ -11,6 +11,7 @@ router.get('/getuser/:token',  auth.checkUser)
 router.get('/getuserid/:id',  auth.getUser)
 router.get('/gettutorsessions/:id',  teachers.getTutorSessions)
 router.get('/gettutorsession/:id',  teachers.getTutorSession)
+router.get('/getstudentsessions/:id', students.getRequestedSessions)
 router.get('/findtutor/:course', students.findTutors)
 router.get('/findstudent/:course', teachers.findStudents)
 

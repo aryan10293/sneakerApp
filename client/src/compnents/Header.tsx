@@ -13,7 +13,7 @@ function Header(props:any) {
     };
     const activeClass = "bg-gray-800"; // Define your active class
     const inactiveClass = "bg-gray-900"; 
-        const [okay,setOkay] = React.useState<any>('')
+    const [okay,setOkay] = React.useState<any>('')
     const fetchData = async() => {
         try {
             const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{

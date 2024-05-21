@@ -7,9 +7,27 @@ import FeedbackLi from './FeedbackLi'
 import { Fragment } from 'react'
 function Notifcation(props:any) {
     const [display, setDisplay] = React.useState<string>('All Notifications')
+    const [user,setUser] = React.useState<any>('')
+    const fetchData = async() => {
+        try {
+            const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
+                method: 'GET',
+                headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+            })
+            const data = await reg.json()
+        //    console.log(data)
+            if(data.success){
+            setUser(data.userinfo[0].tutor)
+            }
+            } catch(err) {
+                console.error(err)
+            }
+        }
+      React.useEffect(() => {fetchData()}, [])
     const displayNoti = (e:any) => {
         setDisplay(e.target.textContent)
     }
+    console.log(user)
   return (
     <>
       <div className="flex">
@@ -26,7 +44,7 @@ function Notifcation(props:any) {
                         <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All Notifications</a>
                         <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Messages</a>
                         <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
-                        <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tutor Sessions</a>
+                        <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{user? 'Session Request' : 'Pending Sessions'}</a>
                     </div>
                     </div>
                 </div>
@@ -60,8 +78,8 @@ function Notifcation(props:any) {
                 <MessagesLi/>
             ): display === "Feedback" ? (
                 <FeedbackLi/>
-            ): display === 'Tutor Sessions' ? (
-                <TutorLi id={props.id}/>
+            ): display === 'Session Request' || display === 'Pending Sessions' ? (
+                <TutorLi id={props.id} tutor={user}/>
             ): null}
 
         </div>

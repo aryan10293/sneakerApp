@@ -118,6 +118,7 @@ function ScheduleSession() {
                 }
                 setSchedule(imCookin[i])
                 setTimeOpen(time)
+                setTime(time[0])
                 break
             } else {
                 setSchedule([])

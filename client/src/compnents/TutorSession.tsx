@@ -166,14 +166,6 @@ function TutorSession() {
     }
     const handleAccept = async(e:any) => {
         let cool = new Date(session.appointmentTimeDetails.date)
-        //hasTimePassed(cool, session.appointmentTimeDetails.time) this function call return true if the date has passed 
-        // check if the date has passed if so alert user date has passed and delete session
-        // maybe do  the above on page load
-
-        // create an api that checks the tutor and students times for the day to make sure we dont double book
-        // if double booked send message to logged user and to the student
-
-        // if everything checks off and send a link to each user so they can facetime
         try {
                 const reg = await fetch(`http://localhost:2020/comfirmsession/`,{
                     method: 'POST',
@@ -188,8 +180,10 @@ function TutorSession() {
                     })
                 })
                 const data = await reg.json()
-               deleteTutorSessionFromDatabase('accept')
-                window.location.href = '/notifications'
+                console.log(data)
+                if(data.status === '409')alert(data.message)
+               //deleteTutorSessionFromDatabase('accept')
+                //window.location.href = '/notifications'
                 } catch(err) {
                     console.error(err)
             }

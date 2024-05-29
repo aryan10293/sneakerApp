@@ -17,6 +17,7 @@ function ScheduleSession() {
     const [time, setTime] = React.useState<string>('')
     const [subject, setSubject] = React.useState<string>('')
     const [course, setCourse] = React.useState<string[]>([])
+    const [pendingSession, setPendingSession] = React.useState<string[]>([])
     const today = new Date().toISOString().split('T')[0];
     const sessionData = {
         text:text,
@@ -43,7 +44,9 @@ function ScheduleSession() {
                 headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
             })
             const data = await reg.json()
+            console.log(data)
             setTutor(data.user)
+            setPendingSession(data.tutorSession)
             setCourse(data.user[0].courses)
             } catch(err) {
                 console.error(err)
@@ -94,21 +97,21 @@ function ScheduleSession() {
         if(data.status === '200')window.location.href = '/home'
         
     }
-    const handleDate = (e:any) => {
+    
+    const handleDate = async (e:any) => {
         let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
-
+        const req = await fetch(`http://localhost:2020/getpendingsession/${id}/${e.target.value}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+        })
+        const data = await req.json()
+        
         const newDateValue = e.target.value;
         const [year, month, day] = newDateValue.split('-').map(Number);
         const lol = new Date(year, month - 1, day);
         setDate(`${year}-${month}-${day}`)
         for(let i in imCookin){
             if(imCookin[i].includes(days[lol.getDay()])){
-                // this shit finna get ugly
-                // splti the start and end time at ':'
-                // tuern the into ints
-                // make a loop adding the times to an array
-                // for example {start:"3:00", end{15:00}}
-                // 3:00-4:00
                 const time = []
                 const start = Number(imCookin[i][1]['start'].split(':')[0])
                 const end = Number(imCookin[i][1]['end'].split(':')[0])
@@ -124,7 +127,7 @@ function ScheduleSession() {
                 setSchedule([])
             }
         }
-
+        console.log(pendingSession, 'yeaaaaahhhhhhh buddy', newDateValue)
     } 
   return (
     <>

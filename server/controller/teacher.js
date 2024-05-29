@@ -122,6 +122,28 @@ let teachers = {
             return res.status(200).json('you declined this session')
         } 
 
+    },
+    getPendingSessions: async (req,res) => {
+        function parseDate(dateStr) {
+            const [year, month, day] = dateStr.split('-').map(Number)
+            return new Date(year, month - 1, day)
+        }
+        const isSameDate = (d1, d2) => {
+                return d1.getFullYear() === d2.getFullYear() &&
+                    d1.getMonth() === d2.getMonth() &&
+                    d1.getDate() === d2.getDate()
+            }
+        const tutorsPendingSessions = await TutorSession.find({tutorId: req.params.id})
+        const date1 = new Date(req.params.date);
+        const thePendingSessions =  tutorsPendingSessions.filter(x => {
+            const date2 = new Date(x.appointmentTimeDetails.date)
+            console.log(x.appointmentTimeDetails.date, req.params.date)
+            // if(isSameDate(date1,date2)){
+            //     return x.appointmentTimeDetails.time
+            // } 
+        })
+        // fuuuuuuucccccccckkkkk pleaase dont forget what you were doping
+        console.log(thePendingSessions)
     }
 
 

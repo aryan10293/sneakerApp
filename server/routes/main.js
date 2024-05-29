@@ -14,6 +14,7 @@ router.get('/gettutorsession/:id',  teachers.getTutorSession)
 router.get('/getstudentsessions/:id', students.getRequestedSessions)
 router.get('/findtutor/:course', students.findTutors)
 router.get('/findstudent/:course', teachers.findStudents)
+router.get('/getpendingsession/:id/:date', teachers.getPendingSessions)
 
 router.put('/editprofile', students.editProfile)
 router.put('/editprofileT', teachers.editProfile)

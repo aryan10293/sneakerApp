@@ -2,6 +2,7 @@ import passport from "passport"
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import User from "../model/User.js";
+import TutorSession from "../model/TutorSession.js";
 let auth = {
     postCreateAccount: (req, res, next) => {
       console.log(req.body)
@@ -124,7 +125,9 @@ let auth = {
     },
     getUser: async (req,res) => {
       const user = await User.find({_id: req.params.id})
-      res.status(200).json({success: true, user})
+      const tutorsPendingSessions = await TutorSession.find({tutorId: req.params.id})
+      const thePendingSessions =  tutorsPendingSessions.map(x => x.appointmentTimeDetails.time)
+      res.status(200).json({success: true, user, tutorSession:thePendingSessions})
     }
 }
 export default auth

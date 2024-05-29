@@ -66,42 +66,42 @@ let students = {
     }, 
     yooo: async(req,res) => {
         const tutor = await User.findOne({_id: req.body.tutorId})
-        if(tutor.upcomingSessions[req.body.appointmentTimeDetails.date] !== undefined && tutor.upcomingSessions[req.body.appointmentTimeDetails.date].includes(req.body.appointmentTimeDetails.time)){
-            return res.status(409).json({ status:'409', error:'Conflict' ,message: 'The requested time has already been book! Please Select another time or different day!' })
-        } else {
-            try{
-                const sessionData = {
-                    text:req.body.text,
-                    name:req.body.name,
-                    email:req.body.email,
-                    appointmentTimeDetails: {
-                        date:req.body.appointmentTimeDetails.date,
-                        time:req.body.appointmentTimeDetails.time,
-                        subject: req.body.appointmentTimeDetails.subject
-                    },
-                    userId:req.body.userId,
-                    tutorId: req.body.tutorId,
-                    date: Date.now(),
-                    typeOfNoti: 'tutor session',
-                    seen: false
-                    //the date
-                    // the time
-                }
-                const createSession =  await TutorSession.create(sessionData)
-                if (!createSession) {
-                return res.status(404).json({ status:'404', message:'error is unknown, Please try again!'});
-                }
+        // if(tutor.upcomingSessions[req.body.appointmentTimeDetails.date] !== undefined && tutor.upcomingSessions[req.body.appointmentTimeDetails.date].includes(req.body.appointmentTimeDetails.time)){
+        //     return res.status(409).json({ status:'409', error:'Conflict' ,message: 'The requested time has already been book! Please Select another time or different day!' })
+        // } else {
+        //     try{
+        //         const sessionData = {
+        //             text:req.body.text,
+        //             name:req.body.name,
+        //             email:req.body.email,
+        //             appointmentTimeDetails: {
+        //                 date:req.body.appointmentTimeDetails.date,
+        //                 time:req.body.appointmentTimeDetails.time,
+        //                 subject: req.body.appointmentTimeDetails.subject
+        //             },
+        //             userId:req.body.userId,
+        //             tutorId: req.body.tutorId,
+        //             date: Date.now(),
+        //             typeOfNoti: 'tutor session',
+        //             seen: false
+        //             //the date
+        //             // the time
+        //         }
+        //         const createSession =  await TutorSession.create(sessionData)
+        //         if (!createSession) {
+        //         return res.status(404).json({ status:'404', message:'error is unknown, Please try again!'});
+        //         }
 
-                return res.status(200).json({status:'200', message:'session was sucessfully requested', sessionData: createSession});
-                } catch(err){
+        //         return res.status(200).json({status:'200', message:'session was sucessfully requested', sessionData: createSession});
+        //         } catch(err){
                     
-                    console.error(Object.keys(err.errors), 'idk what to put here')
-                    if(Object.keys(err.errors).length>=1){
-                        const errors = Object.keys(err.errors).map(x => `${x} is required`)
-                        return res.status(400).json({status:'400', message:errors.join(', ')})
-                    }
-                }
-        }
+        //             console.error(Object.keys(err.errors), 'idk what to put here')
+        //             if(Object.keys(err.errors).length>=1){
+        //                 const errors = Object.keys(err.errors).map(x => `${x} is required`)
+        //                 return res.status(400).json({status:'400', message:errors.join(', ')})
+        //             }
+        //         }
+        // }
     },
     getRequestedSessions: async (req,res) => {
         try {

@@ -3,9 +3,12 @@ import Header from './Header'
 import NavMenu from './NavMenu'
 import { Params, Link, useParams } from 'react-router-dom'
 import { Session } from 'inspector'
+import Confirm from './Confirm'
 function TutorSession() {
     const {id} = useParams()
     const [user, setUser] = React.useState<string>('')
+    const [idkWhatToCallThis, setIdk] = React.useState<boolean>(false)
+    const [message, setMessage] = React.useState<string>('')
     const [session, sessionDetails] = React.useState<Notification>({
     appointmentTimeDetails: {
         date: "",
@@ -181,7 +184,10 @@ function TutorSession() {
                 })
                 const data = await reg.json()
                 console.log(data)
-                if(data.status === '409')alert(data.message)
+                 if(data.status === '409') {
+                    setIdk(true)
+                    setMessage(`${data.message} would you like to reschedule with this guy`)
+                 }
                //deleteTutorSessionFromDatabase('accept')
                 //window.location.href = '/notifications'
                 } catch(err) {
@@ -194,6 +200,23 @@ function TutorSession() {
         // maybe send a reason why
         console.log(' the decline tutor session button works')
          deleteTutorSessionFromDatabase('decline')
+    }
+    const onConfirm = () => {
+        console.log('lol')
+        window.location.href = '/timeadjustment/'
+        // go to a screen that allows the teacher to adjust the time 
+        // then send a noti to student 
+        // make the studnet accept or decline
+
+        // i think we can avoid this by using the calendy like method where if a student schedule a time itll tblock that time of the persons avaiblity
+        setIdk(false)
+    }
+    const onCancel = () => {
+        setIdk(false)
+        console.log('hey is this working')
+        // what i actually need to do is deleted this tutor session 
+        // tell the student why it got deleted ie. tutor cancel becuase a student is already scheduled for your selected time
+        // send back to notifcation page
     }
   return (
     <>
@@ -216,6 +239,13 @@ function TutorSession() {
                                             <button onClick={handleAccept} className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Accept</button>
                                             <button onClick={handleDecline} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Decline</button>
                                         </div>
+                                        {idkWhatToCallThis && (
+                                            <Confirm
+                                            message = {message}
+                                            onConfirm = {onConfirm}
+                                            onCancel = {onCancel}
+                                            />
+                                        )}
                                     </div>
                                     <hr className="my-6 border-t border-gray-300"/>
                                     <div className="flex flex-col">

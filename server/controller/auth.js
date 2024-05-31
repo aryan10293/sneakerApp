@@ -125,9 +125,8 @@ let auth = {
     },
     getUser: async (req,res) => {
       const user = await User.find({_id: req.params.id})
-      const tutorsPendingSessions = await TutorSession.find({tutorId: req.params.id})
-      const thePendingSessions =  tutorsPendingSessions.map(x => x.appointmentTimeDetails.time)
-      res.status(200).json({success: true, user, tutorSession:thePendingSessions})
+      
+      res.status(200).json({success: true, user})
     }
 }
 export default auth

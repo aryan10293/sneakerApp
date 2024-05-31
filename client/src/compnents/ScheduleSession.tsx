@@ -1,5 +1,4 @@
 import React from 'react'
-import Header from './Header'
 import NavMenu from './NavMenu'
 import { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
@@ -17,7 +16,6 @@ function ScheduleSession() {
     const [time, setTime] = React.useState<string>('')
     const [subject, setSubject] = React.useState<string>('')
     const [course, setCourse] = React.useState<string[]>([])
-    const [pendingSession, setPendingSession] = React.useState<string[]>([])
     const today = new Date().toISOString().split('T')[0];
     const sessionData = {
         text:text,
@@ -44,9 +42,6 @@ function ScheduleSession() {
                 headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
             })
             const data = await reg.json()
-            console.log(data)
-            setTutor(data.user)
-            setPendingSession(data.tutorSession)
             setCourse(data.user[0].courses)
             } catch(err) {
                 console.error(err)
@@ -105,7 +100,6 @@ function ScheduleSession() {
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
         })
         const data = await req.json()
-        console.log(data)
         const newDateValue = e.target.value;
         const [year, month, day] = newDateValue.split('-').map(Number);
         const lol = new Date(year, month - 1, day);
@@ -117,7 +111,9 @@ function ScheduleSession() {
                 const end = Number(imCookin[i][1]['end'].split(':')[0])
                 for(let i = start; i<end; i++){
                     const blah = `${i}:00 - ${i+1}:00`
-                    time.push(blah)
+                    if(!data.includes(blah)){
+                        time.push(blah)
+                    }
                 }
                 setSchedule(imCookin[i])
                 setTimeOpen(time)
@@ -127,87 +123,87 @@ function ScheduleSession() {
                 setSchedule([])
             }
         }
-        console.log(pendingSession, 'yeaaaaahhhhhhh buddy', newDateValue)
     } 
   return (
     <>
-      <Header/>
       <div className="flex">
         <NavMenu/>
-        <div className='flex flex-col items-center w-screen m-20 '>
-            <h1 className='text-3xl font-bold text-indigo-500'>Book A Session With {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null}</h1>
-            <form className='w-full' onSubmit={handleSessionRequest}>
-                <div className="sm:col-span-4">
-                    <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
-                    <div className="mt-2">
-                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input type="text" onChange={(e:any) => setName(e.target.value)} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
+        <div className='w-screen flex justify-center items-center'>
+            <div className='flex flex-col items-center justify-content max-w-xl m-20 '>
+                <h1 className='text-3xl font-bold text-indigo-500'>Book A Session With {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null}</h1>
+                <form className='w-full' onSubmit={handleSessionRequest}>
+                    <div className="sm:col-span-4">
+                        <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
+                        <div className="mt-2">
+                            <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" onChange={(e:any) => setName(e.target.value)} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="sm:col-span-4">
-                    <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Email</label>
-                    <div className="mt-2">
-                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input type="email"  onChange={(e:any) => setEmail(e.target.value)}  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                    <div className="sm:col-span-4">
+                        <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Email</label>
+                        <div className="mt-2">
+                            <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="email"  onChange={(e:any) => setEmail(e.target.value)}  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="sm:col-span-4">
-                    <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Subject</label>
-                    <div className="mt-2">
-                        <select className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            {course.map((x:any) => (
-                                <option  value={x} onChange={(e:any) => setSubject(e.target.value)}  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >{x}</option>
-                            ))}
-                        </select>
+                    <div className="sm:col-span-4">
+                        <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Subject</label>
+                        <div className="mt-2">
+                            <select className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                {course.map((x:any) => (
+                                    <option  value={x} onChange={(e:any) => setSubject(e.target.value)}  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >{x}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div className='flex flex-col'>
-                     <label> Leave a message for {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} </label>
-                    <textarea
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    cols={30}
-                    rows={10}/>
-                </div>
-                <div className='flex flex-col'>
-                    <input type="date" name="wec" id="wec" min={today} onChange={handleDate}/>
-                    {schedule.length > 0 ? (
-                        <>
-                            <div>
-                                <h3>Here's {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} {schedule[0].charAt(0).toUpperCase() + schedule[0].slice(1)}day Availabity!</h3>
-                            </div>
-                            <select id="" name=""  onChange={(e:any) => setTime(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
-                                {timeOpen.map((x:string) => (
-                                    <option value={x}>{x}</option>
-                                )) }
-                             </select>
-                        </>
-                    ) : (
-                        <>
-                            <div>
-                                <h3>The {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} Doesn't have an opening for the day you selected! </h3>
-                            </div>
-                        </>
-                    )}
-                    {/* <label> Select Day{tutor.length > 0 ? tutor[0].zone.toUpperCase() : null}</label>
-                    <select name="" id="">
-                        {imCookin.map((x:any) => {
-                            return(
-                                <option value="idk yet">{x[0].toUpperCase()}</option>
-                            )
-                        })}
-                    </select> */}
-                    {/* make on array for the day  */}
-                    {/* when user clicks on a day person is open list out the times open */}
-                    {/* user clicks a time to schedule */}
-                </div>
-                <div>
-                    <button className='block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm bg-indigo-400 w-full sm:leading-6'>Request Session</button>
-                </div>
-            </form>
+                    <div className='flex flex-col'>
+                        <label> Leave a message for {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} </label>
+                        <textarea
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        cols={30}
+                        rows={10}/>
+                    </div>
+                    <div className='flex flex-col'>
+                        <input type="date" name="wec" id="wec" min={today} onChange={handleDate}/>
+                        {schedule.length > 0 ? (
+                            <>
+                                <div>
+                                    <h3>Here's {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} {schedule[0].charAt(0).toUpperCase() + schedule[0].slice(1)}day Availabity!</h3>
+                                </div>
+                                <select id="" name=""  onChange={(e:any) => setTime(e.target.value)} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"  >
+                                    {timeOpen.map((x:string) => (
+                                        <option value={x}>{x}</option>
+                                    )) }
+                                </select>
+                            </>
+                        ) : (
+                            <>
+                                <div>
+                                    <h3>The {tutor.length > 0 ? tutor[0].userName.toUpperCase() : null} Doesn't have an opening for the day you selected! </h3>
+                                </div>
+                            </>
+                        )}
+                        {/* <label> Select Day{tutor.length > 0 ? tutor[0].zone.toUpperCase() : null}</label>
+                        <select name="" id="">
+                            {imCookin.map((x:any) => {
+                                return(
+                                    <option value="idk yet">{x[0].toUpperCase()}</option>
+                                )
+                            })}
+                        </select> */}
+                        {/* make on array for the day  */}
+                        {/* when user clicks on a day person is open list out the times open */}
+                        {/* user clicks a time to schedule */}
+                    </div>
+                    <div>
+                        <button type='submit' className='block flex-1 border-0  py-1.5 pl-1 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm bg-indigo-500 mt-5 rounded-lg w-full sm:leading-6'>Request Session</button>
+                    </div>
+                </form>
+            </div>
         </div>
       </div>
     </>

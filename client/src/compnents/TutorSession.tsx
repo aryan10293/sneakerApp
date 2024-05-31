@@ -163,6 +163,7 @@ function TutorSession() {
                 })
                 const data = await reg.json()
                 alert(data)
+                window.location.href = '/notifications'
                 } catch(err) {
                     console.error(err)
             }

@@ -105,7 +105,7 @@ function ScheduleSession() {
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
         })
         const data = await req.json()
-        
+        console.log(data)
         const newDateValue = e.target.value;
         const [year, month, day] = newDateValue.split('-').map(Number);
         const lol = new Date(year, month - 1, day);

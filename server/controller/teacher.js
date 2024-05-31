@@ -124,26 +124,23 @@ let teachers = {
 
     },
     getPendingSessions: async (req,res) => {
-        function parseDate(dateStr) {
-            const [year, month, day] = dateStr.split('-').map(Number)
-            return new Date(year, month - 1, day)
-        }
-        const isSameDate = (d1, d2) => {
-                return d1.getFullYear() === d2.getFullYear() &&
-                    d1.getMonth() === d2.getMonth() &&
-                    d1.getDate() === d2.getDate()
-            }
         const tutorsPendingSessions = await TutorSession.find({tutorId: req.params.id})
-        const date1 = new Date(req.params.date);
-        const thePendingSessions =  tutorsPendingSessions.filter(x => {
-            const date2 = new Date(x.appointmentTimeDetails.date)
-            console.log(x.appointmentTimeDetails.date, req.params.date)
+        const date1 = req.params.date.split('-')
+
+        let thePendingSessions =  tutorsPendingSessions.filter(x => {
+            const date2 = x.appointmentTimeDetails.date.split('-')
+            if(Number(date1[0])=== Number(date2[0]) && Number(date1[1])=== Number(date2[1]) && Number(date1[2])=== Number(date2[2])){
+                return x.appointmentTimeDetails.time
+            } else {
+                null
+            }
             // if(isSameDate(date1,date2)){
             //     return x.appointmentTimeDetails.time
             // } 
         })
         // fuuuuuuucccccccckkkkk pleaase dont forget what you were doping
-        console.log(thePendingSessions)
+        thePendingSessions = thePendingSessions.map(x => x.appointmentTimeDetails.time)
+        return res.status(200).json(thePendingSessions)
     }
 
 

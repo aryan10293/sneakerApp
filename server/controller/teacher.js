@@ -86,33 +86,32 @@ let teachers = {
         // student.upcomingSessions[`${req.body.date}`] = req.body.time
         // console.log(student)
 
-
-        if(tutor.upcomingSessions[req.body.date].includes(req.body.time)){
+        console.log(tutor.upcomingSessions[req.body.date] === undefined && student.upcomingSessions[req.body.date] === undefined)
+        
+        if(tutor.upcomingSessions[req.body.date] === undefined && student.upcomingSessions[req.body.date] === undefined){
+            null
+        } else if(tutor.upcomingSessions[req.body.date].includes(req.body.time)){
             return  res.status(409).json({status:'409', message:'You already have a session book for this day and time!'})
-        }
-        if(student.upcomingSessions[req.body.date].includes(req.body.time)){
-            return  res.status(409).json({status:'409', message:'The student has recently booked a session  at this date and time!'})
+        } else if(student.upcomingSessions[req.body.date].includes(req.body.time)){
+            return  res.status(409).json({status:'409', message:'The student has recently booked a session at this date and time!'})
         }
 
-        // const result = await User.updateOne({_id: req.body.student}, {
-        //     $set: {
-        //             [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
-        //         }
-        //     });
+        const result = await User.updateOne({_id: req.body.student}, {
+            $set: {
+                    [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
+                }
+            });
 
-        //     const addingTutorStuffToAnArray = await User.updateOne({_id: req.body.tutor}, {
-        //     $set: {
-        //             [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
-        //         }
-        //     });
-            //console.log(tutor.upcomingSessions[req.body['date']].includes(req.body.time),)
+        const addingTutorStuffToAnArray = await User.updateOne({_id: req.body.tutor}, {
+            $set: {
+                    [`upcomingSessions.${req.body.date}`]: !student.upcomingSessions[req.body.date] ? [req.body.time] : [...student.upcomingSessions[req.body.date], req.body.time]
+                }
+            });
 
            return res.status(200).json('this session was comfirmed')
 
     },
     deleteScheduleRequestFromDatabase: async (req,res) => {
-        // gone head and send the ids to the body
-        //const deleted = await Character.findOneAndDelete({ name: 'Ken' })
         const session =  await TutorSession.findOneAndDelete({ _id: req.body.session })
 
         if(req.body.howItisGettingDeleted === 'accept'){
@@ -133,11 +132,7 @@ let teachers = {
             } else {
                 null
             }
-            // if(isSameDate(date1,date2)){
-            //     return x.appointmentTimeDetails.time
-            // } 
         })
-        // fuuuuuuucccccccckkkkk pleaase dont forget what you were doping
         thePendingSessions = thePendingSessions.map(x => x.appointmentTimeDetails.time)
         return res.status(200).json(thePendingSessions)
     }

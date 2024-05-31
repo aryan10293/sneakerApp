@@ -169,28 +169,29 @@ function TutorSession() {
             }
     }
     const handleAccept = async(e:any) => {
-        let cool = new Date(session.appointmentTimeDetails.date)
+        console.log(session)
+        let sessionDate = new Date(session.appointmentTimeDetails.date)
+        const sessionDettails = {
+            hasSessionPassed:hasTimePassed(sessionDate, session.appointmentTimeDetails.time),
+            tutor:session.tutorId,
+            student:session.userId,
+            date:session.appointmentTimeDetails.date,
+            time:session.appointmentTimeDetails.time
+        }
         try {
                 const reg = await fetch(`http://localhost:2020/comfirmsession/`,{
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-                    body: JSON.stringify({
-                        hasSessionPassed:hasTimePassed(cool, session.appointmentTimeDetails.time),
-                        tutor:session.tutorId,
-                        student:session.userId,
-                        date:session.appointmentTimeDetails.date,
-                        time:session.appointmentTimeDetails.time
-
-                    })
+                    body: JSON.stringify(sessionDettails)
                 })
                 const data = await reg.json()
-                console.log(data)
+
                  if(data.status === '409') {
                     setIdk(true)
                     setMessage(`${data.message} would you like to reschedule with this guy`)
                  }
-               //deleteTutorSessionFromDatabase('accept')
-                //window.location.href = '/notifications'
+               deleteTutorSessionFromDatabase('accept')
+                window.location.href = '/notifications'
                 } catch(err) {
                     console.error(err)
             }

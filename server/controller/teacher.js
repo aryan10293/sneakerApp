@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../model/User.js";
 import TutorSession from "../model/TutorSession.js";
+import Notifications from "../model/Notifications.js";
 import { uploadImage } from "../middleware/cloudinary.js";
 let teachers = {
     findStudents: async (req,res) => {
@@ -85,8 +86,6 @@ let teachers = {
         // student.upcomingSessions[`${req.body.date}`] = req.body.time
         // console.log(student)
 
-        console.log(student.upcomingSessions[req.body.date].includes(req.body.time))
-        console.log()
 
         if(tutor.upcomingSessions[req.body.date].includes(req.body.time)){
             return  res.status(409).json({status:'409', message:'You already have a session book for this day and time!'})

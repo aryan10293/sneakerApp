@@ -42,6 +42,8 @@ function ScheduleSession() {
                 headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
             })
             const data = await reg.json()
+            console.log(data)
+            setTutor(data.user)
             setCourse(data.user[0].courses)
             } catch(err) {
                 console.error(err)
@@ -124,6 +126,7 @@ function ScheduleSession() {
             }
         }
     } 
+    console.log(schedule, imCookin)
   return (
     <>
       <div className="flex">

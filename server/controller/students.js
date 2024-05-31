@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../model/User.js";
 import TutorSession from "../model/TutorSession.js";
+import Notifications from "../model/Notifications.js";
 import { uploadImage } from "../middleware/cloudinary.js";
 let students = {
     findTutors: async (req,res) => {

@@ -164,18 +164,18 @@ function TutorSession() {
                 })
                 const data = await reg.json()
 
-                Swal.fire({
+                const result = await Swal.fire({
                     title: 'Notification',
                     text: data,
                     icon: 'info',
                     confirmButtonText: 'OK'
-                    }).then((result) => {
-                    // Check if the user clicked the "OK" button
-                    if (result.isConfirmed) {
-                        // Redirect to the notifications page
-                        window.location.href = '/notifications';
-                    }
-                })
+                });
+
+                // Check if the user clicked the "OK" button
+                if (result.isConfirmed) {
+                    // Redirect to the notifications page
+                    window.location.href = '/notifications';
+                }
                 } catch(err) {
                     console.error(err)
             }
@@ -209,27 +209,17 @@ function TutorSession() {
 
     }
     const handleDecline = async(e:any) => {
-        // just delete the session from the database and send an alert to the student that the session was declined
-        // maybe send a reason why
         console.log(' the decline tutor session button works')
          deleteTutorSessionFromDatabase('decline')
     }
     const onConfirm = () => {
         console.log('lol')
         window.location.href = '/timeadjustment/'
-        // go to a screen that allows the teacher to adjust the time 
-        // then send a noti to student 
-        // make the studnet accept or decline
-
-        // i think we can avoid this by using the calendy like method where if a student schedule a time itll tblock that time of the persons avaiblity
         setIdk(false)
     }
     const onCancel = () => {
         setIdk(false)
         console.log('hey is this working')
-        // what i actually need to do is deleted this tutor session 
-        // tell the student why it got deleted ie. tutor cancel becuase a student is already scheduled for your selected time
-        // send back to notifcation page
     }
   return (
     <>

@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from './Header'
 import NavMenu from './NavMenu'
+import Swal from 'sweetalert2';
 import { Params, Link, useParams } from 'react-router-dom'
 import { Session } from 'inspector'
 import Confirm from './Confirm'
@@ -162,8 +163,19 @@ function TutorSession() {
                     })
                 })
                 const data = await reg.json()
-                alert(data)
-                window.location.href = '/notifications'
+
+                Swal.fire({
+                    title: 'Notification',
+                    text: data,
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                    }).then((result) => {
+                    // Check if the user clicked the "OK" button
+                    if (result.isConfirmed) {
+                        // Redirect to the notifications page
+                        window.location.href = '/notifications';
+                    }
+                })
                 } catch(err) {
                     console.error(err)
             }
@@ -191,7 +203,6 @@ function TutorSession() {
                     setMessage(`${data.message} would you like to reschedule with this guy`)
                  }
                deleteTutorSessionFromDatabase('accept')
-                window.location.href = '/notifications'
                 } catch(err) {
                     console.error(err)
             }

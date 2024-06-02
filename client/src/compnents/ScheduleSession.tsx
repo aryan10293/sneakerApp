@@ -62,7 +62,6 @@ function ScheduleSession() {
             setImCookin(updatedImCookin);
         }
     }, [tutor]);
-
     React.useEffect(() => {
     const fetchData = async() => {
         try {
@@ -88,7 +87,7 @@ function ScheduleSession() {
         })
         const data = await req.json()
         console.log(data)
-        if(data.status === '409')alert(data.message)
+        if(data.status === '409')alert(`${data.message} lol`)
         if(data.status === '404')alert(data.message)
         if(data.status === '400')alert(data.message)
         if(data.status === '200')window.location.href = '/home'
@@ -126,7 +125,6 @@ function ScheduleSession() {
             }
         }
     } 
-    console.log(schedule, imCookin)
   return (
     <>
       <div className="flex">

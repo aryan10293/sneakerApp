@@ -123,18 +123,30 @@ let teachers = {
     },
     getPendingSessions: async (req,res) => {
         const tutorsPendingSessions = await TutorSession.find({tutorId: req.params.id})
+        const updateUserPendingSession = await User.find({_id: req.params.id})
+        let idkWhatToCallThis = []
+        let newDateString = ''
+        for(let i = 0; i<req.params.date.length; i++){
+            if(req.params.date[i] === '0' && req.params.date[i-1] === '-'){
+                null
+            } else {
+                newDateString += req.params.date[i]
+            }
+        }
         const date1 = req.params.date.split('-')
 
-        let thePendingSessions =  tutorsPendingSessions.filter(x => {
+        tutorsPendingSessions.forEach(x => {
             const date2 = x.appointmentTimeDetails.date.split('-')
             if(Number(date1[0])=== Number(date2[0]) && Number(date1[1])=== Number(date2[1]) && Number(date1[2])=== Number(date2[2])){
-                return x.appointmentTimeDetails.time
-            } else {
-                null
-            }
+                idkWhatToCallThis.push(x.appointmentTimeDetails.time)
+            } 
         })
-        thePendingSessions = thePendingSessions.map(x => x.appointmentTimeDetails.time)
-        return res.status(200).json(thePendingSessions)
+        if(updateUserPendingSession[0].upcomingSessions[newDateString] !== undefined){
+            updateUserPendingSession[0].upcomingSessions[newDateString].forEach(x => idkWhatToCallThis.push(x))
+        }
+        console.log(idkWhatToCallThis)
+        // this shit will prolly break again - drej june 2nd at 1:37pm at cherry street coffee house
+        return res.status(200).json(idkWhatToCallThis)
     }
 
 

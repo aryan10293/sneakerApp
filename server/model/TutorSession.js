@@ -12,10 +12,6 @@ const TutorSchema = new mongoose.Schema({
     userId:{ type: String, required: true},
     tutorId: { type: String, required: true},
     date: { type: Date, required: true},
-    typeOfNoti: { type: String, required: true},
-    seen: { type: Boolean, required: true}
-    //the date
-    // the time
 });
 
 const TutorSession = mongoose.model('TutorSchema', TutorSchema);

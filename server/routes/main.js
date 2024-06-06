@@ -22,7 +22,7 @@ router.put('/editprofileT', teachers.editProfile)
 router.post('/studentsessionrequest', students.yooo)
 router.post('/getimages', teachers.getStudentImages)
 router.post('/comfirmsession', teachers.confirmSession)
-router.post('/notification', students.addNotfi)
+router.post('/notification', students.addNoti)
 
 router.delete('/deletetutorrequest', teachers.deleteScheduleRequestFromDatabase)
 export default router;

@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 function ScheduleSession() {
     const {id} = useParams()
+    const [userFirstname, setUserFirstname] = React.useState<any>([])
     const [tutor, setTutor] = React.useState<any[]>([])
     const [imCookin, setImCookin] = React.useState<any[]>([])
     const [text,setText] = React.useState<string>('')
@@ -29,10 +30,15 @@ function ScheduleSession() {
         userId:userId,
         tutorId: id,
         date: Date.now(),
+    }
+    const notiData = {
+        date: Date.now(),
+        message: `${userFirstname} wants to book a tutoring session with you!`,
+        userId: userId,
+        tutorId: id,
         typeOfNoti: 'tutor session',
-        seen: false
-        //the date
-        // the time
+        isRead: false,
+        extras: [sessionData] 
     }
     React.useEffect(() => {
         const fetchData = async() => {
@@ -70,6 +76,7 @@ function ScheduleSession() {
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
         })
         const data = await reg.json()
+        setUserFirstname(data.userinfo[0].firstName)
         setUserId(data.userinfo[0]._id)
         } catch(err) {
             console.error(err)
@@ -86,11 +93,18 @@ function ScheduleSession() {
             body: JSON.stringify(sessionData)
         })
         const data = await req.json()
-        console.log(data)
-        if(data.status === '409')alert(`${data.message} lol`)
+        if(data.status === '409')alert(data.message)
         if(data.status === '404')alert(data.message)
         if(data.status === '400')alert(data.message)
-        if(data.status === '200')window.location.href = '/home'
+        const sendNoti = await fetch(`http://localhost:2020/notification`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+            body: JSON.stringify(notiData)
+        })
+        const notiSendData = await sendNoti.json()
+        console.log(notiSendData)
+        //if(data.status === '200')window.location.href = '/home'
+
         
     }
     
@@ -125,7 +139,6 @@ function ScheduleSession() {
             }
         }
     } 
-    console.log(subject, time)
   return (
     <>
       <div className="flex">

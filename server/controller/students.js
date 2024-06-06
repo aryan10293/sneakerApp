@@ -112,7 +112,26 @@ let students = {
         }
     },
     addNoti: async (req,res) => {
-        console.log('yooooooo')
+        const notiData = {
+            date: req.body.date,
+            message: req.body.message,
+            userId: req.body.userId,
+            tutorId: req.body.tutorId,
+            typeOfNoti: req.body.typeOfNoti,
+            isRead: req.body.isRead,
+            extras: req.body.extra  
+        }
+        try {
+            const sendNoti = await Notifications.create(notiData)
+            if(!sendNoti) {
+                return res.status(404).json({ status:'404', message:'error is unknown, Please try again!'});
+            }
+            return res.status(200).json({status:'200', message:'i can honestly say, i have no idea what im doing!'});
+        } catch (error) {
+            console.log(error)
+            //return res.status(400).json({status:'400', message:'i have no idea why theres an error'})
+        }
+                
     }
 
 }

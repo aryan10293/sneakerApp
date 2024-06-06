@@ -2,7 +2,6 @@ import mongoose from "mongoose"
 
 const NotificationsSchema = new mongoose.Schema({
     date:{ type: String, required: true},
-    typeofnoti:{ type: String, required: true},
     message:{ type: String, required: true},
     userId:{ type: String, required: true},
     tutorId: { type: String, required: true},

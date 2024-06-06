@@ -24,7 +24,7 @@ function ScheduleSession() {
         appointmentTimeDetails: {
             date:date,
             time:time,
-            subject: subject
+            subject:subject
         },
         userId:userId,
         tutorId: id,
@@ -125,6 +125,7 @@ function ScheduleSession() {
             }
         }
     } 
+    console.log(subject, time)
   return (
     <>
       <div className="flex">
@@ -152,9 +153,9 @@ function ScheduleSession() {
                     <div className="sm:col-span-4">
                         <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Subject</label>
                         <div className="mt-2">
-                            <select className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            <select onChange={(e:any) => setSubject(e.target.value)}  className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 {course.map((x:any) => (
-                                    <option  value={x} onChange={(e:any) => setSubject(e.target.value)}  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >{x}</option>
+                                    <option  value={x} className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >{x}</option>
                                 ))}
                             </select>
                         </div>
@@ -188,17 +189,6 @@ function ScheduleSession() {
                                 </div>
                             </>
                         )}
-                        {/* <label> Select Day{tutor.length > 0 ? tutor[0].zone.toUpperCase() : null}</label>
-                        <select name="" id="">
-                            {imCookin.map((x:any) => {
-                                return(
-                                    <option value="idk yet">{x[0].toUpperCase()}</option>
-                                )
-                            })}
-                        </select> */}
-                        {/* make on array for the day  */}
-                        {/* when user clicks on a day person is open list out the times open */}
-                        {/* user clicks a time to schedule */}
                     </div>
                     <div>
                         <button type='submit' className='block flex-1 border-0  py-1.5 pl-1 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm bg-indigo-500 mt-5 rounded-lg w-full sm:leading-6'>Request Session</button>

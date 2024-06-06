@@ -111,6 +111,9 @@ let students = {
             console.error(error, 'shit broke brother')
         }
     },
+    addNoti: async (req,res) => {
+        console.log('yooooooo')
+    }
 
 }
 export default students

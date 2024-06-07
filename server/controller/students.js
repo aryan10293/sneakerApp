@@ -141,7 +141,18 @@ let students = {
                 
     }, 
     getNoti: async (req,res) => {
-        console.log('get noti')
+        try {
+            const notifactions = await Notifications.find({userId: req.params.id})
+            const idk = await Notifications.find({tutorId: req.params.id})
+            const notis =  [...idk, ...notifactions]
+            
+            if(notis.length === 0) {
+                    return res.status(404).json({ status:'404', message:'user doesnt have any data'});
+                }
+            return res.status(200).json({status:'200', message:'i can honestly say, i have no idea what im doing!', details:notis});
+        } catch (error) {
+            return res.status(500).json({ status: '500', message: 'An unexpected error occurred.', error: error.message });
+        }
     }
 
 }

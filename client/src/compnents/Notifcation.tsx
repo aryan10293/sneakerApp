@@ -32,7 +32,11 @@ function Notifcation(props:any) {
             })
 
             const data = await notifactions.json()
-
+            if(data.status = '200'){
+                alert('i dont know why im making this alert')
+                setNotifactions(data.details)
+                
+            }
        }
         
       React.useEffect(() => {fetchData()}, [])
@@ -40,7 +44,7 @@ function Notifcation(props:any) {
     const displayNoti = (e:any) => {
         setDisplay(e.target.textContent)
     }
-    console.log(user)
+
   return (
     <>
       <div className="flex">

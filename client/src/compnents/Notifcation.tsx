@@ -8,6 +8,8 @@ import { Fragment } from 'react'
 function Notifcation(props:any) {
     const [display, setDisplay] = React.useState<string>('All Notifications')
     const [user,setUser] = React.useState<any>('')
+    const[userId, setUserId] = React.useState<string>('')
+    const [notification, setNotifactions] = React.useState<any[]>([])
     const fetchData = async() => {
         try {
             const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
@@ -15,15 +17,26 @@ function Notifcation(props:any) {
                 headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
             })
             const data = await reg.json()
-        //    console.log(data)
             if(data.success){
             setUser(data.userinfo[0].tutor)
+            setUserId(data.userinfo[0]._id)
             }
             } catch(err) {
                 console.error(err)
             }
         }
+       const getNotifactions = async () => {
+            const notifactions = await fetch(`http://localhost:2020/getnotifications/${userId}`,{
+                method:'GET',
+                headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+            })
+
+            const data = await notifactions.json()
+
+       }
+        
       React.useEffect(() => {fetchData()}, [])
+      React.useEffect(() => {getNotifactions()}, [])
     const displayNoti = (e:any) => {
         setDisplay(e.target.textContent)
     }

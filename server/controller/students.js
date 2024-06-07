@@ -128,10 +128,20 @@ let students = {
             }
             return res.status(200).json({status:'200', message:'i can honestly say, i have no idea what im doing!'});
         } catch (error) {
-            console.log(error)
-            //return res.status(400).json({status:'400', message:'i have no idea why theres an error'})
+            if (error.name === 'ValidationError') {
+                return res.status(400).json({ status: '400', message: 'Validation error', details: error.message });
+            }
+
+            if (error.name === 'SequelizeDatabaseError') { 
+                return res.status(500).json({ status: '500', message: 'Database error', details: error.message });
+            }
+
+            return res.status(500).json({ status: '500', message: 'An unexpected error occurred', details: error.message });
         }
                 
+    }, 
+    getNoti: async (req,res) => {
+        console.log('get noti')
     }
 
 }

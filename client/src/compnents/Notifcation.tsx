@@ -30,17 +30,14 @@ function Notifcation(props:any) {
                 method:'GET',
                 headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
             })
-
-            const data = await notifactions.json()
-            if(data.status = '200'){
-                alert('i dont know why im making this alert')
+            if(notifactions.status === 200){
+                const data = await notifactions.json()
                 setNotifactions(data.details)
-                
             }
        }
         
       React.useEffect(() => {fetchData()}, [])
-      React.useEffect(() => {getNotifactions()}, [])
+      React.useEffect(() => {getNotifactions()}, [userId])
     const displayNoti = (e:any) => {
         setDisplay(e.target.textContent)
     }

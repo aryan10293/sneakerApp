@@ -9,6 +9,7 @@ import SettingsPage from './pages/SettingsPage';
 import ScheduleSessionPage from './pages/ScheduleSessionPage';
 import NotifcationPage from './pages/NotifcationPage';
 import TutorDisplaySessionPage from './pages/TutorDisplaySessionPage';
+import SignUpOrLogin from './compnents/SignUpOrLogin';
 import { Routes, Route, Navigate } from 'react-router-dom'
 function App() {
   const [userData,setUserData] = React.useState<any[]>([])
@@ -42,6 +43,9 @@ function App() {
   }
   return (
     <Routes>
+      <Route 
+          path="/"
+          element={ <SignUpOrLogin />  } />
       <Route 
           path="/register"
           element={ <RegisterPages />  } />

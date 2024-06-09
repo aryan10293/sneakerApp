@@ -17,6 +17,7 @@ function ScheduleSession() {
     const [time, setTime] = React.useState<string>('')
     const [subject, setSubject] = React.useState<string>('')
     const [course, setCourse] = React.useState<string[]>([])
+    const [tutorName,setTutorName] = React.useState<string>('')
     const today = new Date().toISOString().split('T')[0];
     const sessionData = {
         text:text,
@@ -31,11 +32,18 @@ function ScheduleSession() {
         tutorId: id,
         date: Date.now(),
     }
-    const notiData = {
+    const tutorNotiData = {
         date: Date.now(),
         message: `${userFirstname} wants to book a tutoring session with you!`,
+        userId: id,
+        typeOfNoti: 'tutor session',
+        isRead: false,
+        extras: [sessionData] 
+    }
+    const studentNotiData = {
+        date: Date.now(),
+        message: `You've booked a session with ${tutorName}`,
         userId: userId,
-        tutorId: id,
         typeOfNoti: 'tutor session',
         isRead: false,
         extras: [sessionData] 
@@ -51,6 +59,7 @@ function ScheduleSession() {
             console.log(data)
             setTutor(data.user)
             setCourse(data.user[0].courses)
+            setTutorName(data.userinfo[0].firstName)
             } catch(err) {
                 console.error(err)
             }
@@ -99,11 +108,10 @@ function ScheduleSession() {
         const sendNoti = await fetch(`http://localhost:2020/notification`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-            body: JSON.stringify(notiData)
+            body: JSON.stringify({notiData: [tutorNotiData, studentNotiData]})
         })
         const notiSendData = await sendNoti.json()
-        console.log(notiSendData)
-        //if(data.status === '200')window.location.href = '/home'
+        if(notiSendData.status === '200')window.location.href = '/home'
 
         
     }

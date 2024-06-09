@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Params, Link, useParams } from 'react-router-dom'
 import { Session } from 'inspector'
 import Confirm from './Confirm'
+import { isTryStatement } from 'typescript';
 function TutorSession() {
     const {id} = useParams()
     const [user, setUser] = React.useState<string>('')
@@ -203,9 +204,23 @@ function TutorSession() {
                     setMessage(`${data.message} would you like to reschedule with this guy`)
                  }
                deleteTutorSessionFromDatabase('accept')
-                } catch(err) {
+            } catch(err) {
                     console.error(err)
             }
+
+        try {
+            const sendNoti = await fetch(`http://localhost:2020/notification`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+           // body: JSON.stringify(notiData)
+        })
+        const notiSendData = await sendNoti.json()
+        console.log(notiSendData)
+        } catch (error) {
+            
+        }
+
+        console.log('this where we')
 
     }
     const handleDecline = async(e:any) => {

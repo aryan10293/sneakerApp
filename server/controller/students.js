@@ -112,33 +112,38 @@ let students = {
         }
     },
     addNoti: async (req,res) => {
-        const notiData = {
-            date: req.body.date,
-            message: req.body.message,
-            userId: req.body.userId,
-            tutorId: req.body.tutorId,
-            typeOfNoti: req.body.typeOfNoti,
-            isRead: req.body.isRead,
-            extras: req.body.extra  
-        }
         try {
-            const sendNoti = await Notifications.create(notiData)
-            if(!sendNoti) {
+            let didSendToDataBase = true
+            for(let i = 0; i<req.body.notiData.length; i++){
+                const notiData = {
+                    date: req.body.notiData[i].date,
+                    message: req.body.notiData[i].message,
+                    userId: req.body.notiData[i].userId,
+                    typeOfNoti: req.body.notiData[i].typeOfNoti,
+                    isRead: req.body.notiData[i].isRead,
+                    extras: req.body.notiData[i].extra  
+                }  
+                const sendNoti = await Notifications.create(notiData)
+                if(!notiData){
+                    didSendToDataBase = false
+                    break
+                }
+             }
+            if(!didSendToDataBase){
                 return res.status(404).json({ status:'404', message:'error is unknown, Please try again!'});
             }
             return res.status(200).json({status:'200', message:'i can honestly say, i have no idea what im doing!'});
         } catch (error) {
-            if (error.name === 'ValidationError') {
-                return res.status(400).json({ status: '400', message: 'Validation error', details: error.message });
-            }
+                if (error.name === 'ValidationError') {
+                    return res.status(400).json({ status: '400', message: 'Validation error', details: error.message });
+                }
 
-            if (error.name === 'SequelizeDatabaseError') { 
-                return res.status(500).json({ status: '500', message: 'Database error', details: error.message });
-            }
+                if (error.name === 'SequelizeDatabaseError') { 
+                    return res.status(500).json({ status: '500', message: 'Database error', details: error.message });
+                }
 
-            return res.status(500).json({ status: '500', message: 'An unexpected error occurred', details: error.message });
-        }
-                
+                return res.status(500).json({ status: '500', message: 'An unexpected error occurred', details: error.message });
+            }       
     }, 
     getNoti: async (req,res) => {
         try {

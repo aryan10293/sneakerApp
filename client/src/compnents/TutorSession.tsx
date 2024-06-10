@@ -6,50 +6,53 @@ import { Params, Link, useParams } from 'react-router-dom'
 import { Session } from 'inspector'
 import Confirm from './Confirm'
 import { isTryStatement } from 'typescript';
+import { json } from 'stream/consumers';
+import { stringify } from 'querystring';
 function TutorSession() {
     const {id} = useParams()
     const [user, setUser] = React.useState<string>('')
     const [idkWhatToCallThis, setIdk] = React.useState<boolean>(false)
     const [message, setMessage] = React.useState<string>('')
     const [session, sessionDetails] = React.useState<Notification>({
-    appointmentTimeDetails: {
+        appointmentTimeDetails: {
+            date: "",
+            time: "",
+            subject: ""
+        },
         date: "",
-        time: "",
-        subject: ""
-    },
-    date: "",
-    email: "",
-    name: "",
-    seen: false,
-    text: "",
-    tutorId: "",
-    typeOfNoti: "",
-    userId: "",
-    __v: 0,
-    _id: ""
-})
+        email: "",
+        name: "",
+        seen: false,
+        text: "",
+        tutorId: "",
+        typeOfNoti: "",
+        userId: "",
+        __v: 0,
+        _id: ""
+    })
     const [userInfo, setUserInfo] = React.useState<User>({bio: "",
-    city: "",
-    courses: [],
-    dob: "",
-    email: "",
-    firstName: "",
-    img: "",
-    lastName: "",
-    major: "",
-    messages: [],
-    password: "",
-    pendingSession: [],
-    school: "",
-    state: "",
-    subjects: [],
-    tutor: false,
-    userName: "",
-    why: "",
-    yearInSchool: "",
-    zone: "",
-    __v: 0,
-    _id: ""})
+        city: "",
+        courses: [],
+        dob: "",
+        email: "",
+        firstName: "",
+        img: "",
+        lastName: "",
+        major: "",
+        messages: [],
+        password: "",
+        pendingSession: [],
+        school: "",
+        state: "",
+        subjects: [],
+        tutor: false,
+        userName: "",
+        why: "",
+        yearInSchool: "",
+        zone: "",
+        __v: 0,
+        _id: ""
+    })
 
     interface User {
         bio: string,
@@ -61,9 +64,9 @@ function TutorSession() {
         img: string,
         lastName: string,
         major: string,
-        messages: any[], // You can define a specific type for messages if known
+        messages: any[],
         password: string,
-        pendingSession: any[], // You can define a specific type for pending sessions if known
+        pendingSession: any[],
         school: string,
         state: string,
         subjects: string[],
@@ -92,6 +95,20 @@ function TutorSession() {
         userId: string,
         __v: number,
         _id: string
+    }
+    const acceptNotiData = {
+        date: Date.now(),
+        message: 'Tutor session with xyz is confirmed',
+        userId: session.userId,
+        typeOfNoti: 'confirmed session',
+        extras:[session]
+    }
+
+    const deleteNotiData = {
+        date: Date.now(),
+        message: 'Tutor session with xyz has been declined',
+        userId: session.userId,
+        typeOfNoti: 'declined session',
     }
     React.useEffect(() => {
         const fetchData = async() => {
@@ -172,9 +189,8 @@ function TutorSession() {
                     confirmButtonText: 'OK'
                 });
 
-                // Check if the user clicked the "OK" button
+
                 if (result.isConfirmed) {
-                    // Redirect to the notifications page
                     window.location.href = '/notifications';
                 }
                 } catch(err) {
@@ -212,30 +228,37 @@ function TutorSession() {
             const sendNoti = await fetch(`http://localhost:2020/notification`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-           // body: JSON.stringify(notiData)
+            body: JSON.stringify({notiData: [acceptNotiData]})
         })
+
         const notiSendData = await sendNoti.json()
+
         console.log(notiSendData)
+
         } catch (error) {
-            
+            console.error(error)
         }
 
         console.log('this where we')
 
     }
     const handleDecline = async(e:any) => {
-        console.log(' the decline tutor session button works')
+        try {
+            const deleteNoti = await fetch(`http://localhost:2020/notification`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+                body: JSON.stringify({notiData: [deleteNotiData]})
+            })
+
+            const deleteData = await deleteNoti.json()
+
+        } catch (error) {
+            console.log(error)
+        }
          deleteTutorSessionFromDatabase('decline')
     }
-    const onConfirm = () => {
-        console.log('lol')
-        window.location.href = '/timeadjustment/'
-        setIdk(false)
-    }
-    const onCancel = () => {
-        setIdk(false)
-        console.log('hey is this working')
-    }
+
+
   return (
     <>
         <Header/>
@@ -257,13 +280,6 @@ function TutorSession() {
                                             <button onClick={handleAccept} className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Accept</button>
                                             <button onClick={handleDecline} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Decline</button>
                                         </div>
-                                        {idkWhatToCallThis && (
-                                            <Confirm
-                                            message = {message}
-                                            onConfirm = {onConfirm}
-                                            onCancel = {onCancel}
-                                            />
-                                        )}
                                     </div>
                                     <hr className="my-6 border-t border-gray-300"/>
                                     <div className="flex flex-col">

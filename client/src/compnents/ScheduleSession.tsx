@@ -111,7 +111,8 @@ function ScheduleSession() {
             body: JSON.stringify({notiData: [tutorNotiData, studentNotiData]})
         })
         const notiSendData = await sendNoti.json()
-        if(notiSendData.status === '200')window.location.href = '/home'
+        
+        if(notiSendData.status === '200') window.location.href = '/home'
 
         
     }

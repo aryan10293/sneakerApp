@@ -6,7 +6,7 @@ const NotificationsSchema = new mongoose.Schema({
     userId:{ type: String, required: true},
     typeOfNoti: { type: String, required: true},
     isRead: { type: Boolean, default:false},
-    extras:{type: Array, default:[]}
+    extras:{type: Array, required:false}
 });
 
 const Notifications = mongoose.model('Notifications', NotificationsSchema);

@@ -121,7 +121,7 @@ let students = {
                     userId: req.body.notiData[i].userId,
                     typeOfNoti: req.body.notiData[i].typeOfNoti,
                     isRead: req.body.notiData[i].isRead,
-                    extras: req.body.notiData[i].extra  
+                    extras: req.body.notiData[i].extras  
                 }  
                 const sendNoti = await Notifications.create(notiData)
                 if(!notiData){

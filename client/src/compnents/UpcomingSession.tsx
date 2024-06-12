@@ -1,9 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// def prolly going to have to pass props through here to get the message data maybe
-function MessagesLi() {
+function UpcomingSession(props:any) {
+    const [upcomingSessions, setUpcomingSessions] = React.useState<any[]>([])
+    const [userData, setUserData] = React.useState(props.userData)
+    React.useEffect(() => {
+        const getUpcomignSessions = async () =>  {
+            const getSessions = await fetch(`http://localhost:2020/getcomfirmedsessions/${userData._id}`, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+            })
+
+            const turnToSessionsToJson = await getSessions.json()
+            console.log(turnToSessionsToJson)
+        }
+
+        getUpcomignSessions()
+    }, [])
+    console.log(userData)
   return (
-                <div className="max-w-lg mx-auto items-center">
+                    <div className="max-w-lg mx-auto items-center">
                 <div className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">
                     <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
@@ -29,4 +44,4 @@ function MessagesLi() {
   )
 }
 
-export default MessagesLi
+export default UpcomingSession

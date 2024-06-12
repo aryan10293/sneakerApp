@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from './Header'
 import NavMenu from './NavMenu'
-import MessagesLi from './MessagesLi'
+import UpcomingSession from './UpcomingSession'
 import TutorLi from './TutorLi'
 import FeedbackLi from './FeedbackLi'
 import { Fragment } from 'react'
@@ -9,6 +9,7 @@ function Notifcation(props:any) {
     const [display, setDisplay] = React.useState<string>('All Notifications')
     const [user,setUser] = React.useState<any>('')
     const[userId, setUserId] = React.useState<string>('')
+    const [userData, setUserData] = React.useState({})
     const [notification, setNotifactions] = React.useState<any[]>([])
     const fetchData = async() => {
         try {
@@ -20,6 +21,7 @@ function Notifcation(props:any) {
             if(data.success){
             setUser(data.userinfo[0].tutor)
             setUserId(data.userinfo[0]._id)
+            setUserData(data.userinfo[0])
             }
             } catch(err) {
                 console.error(err)
@@ -56,7 +58,7 @@ function Notifcation(props:any) {
                     <div className="flex">
                         {/* Navigation Links */}
                         <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All Notifications</a>
-                        <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Messages</a>
+                        <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Upcoming Sessions</a>
                         <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
                         <a href="#" onClick={displayNoti} className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{user? 'Session Request' : 'Pending Sessions'}</a>
                     </div>
@@ -88,8 +90,8 @@ function Notifcation(props:any) {
                     </div>
                 </div>
             </div>
-            ) : display === 'Messages' ? (
-                <MessagesLi/>
+            ) : display === 'Upcoming Sessions' ? (
+                <UpcomingSession userData={userData}/>
             ): display === "Feedback" ? (
                 <FeedbackLi/>
             ): display === 'Session Request' || display === 'Pending Sessions' ? (

@@ -158,7 +158,21 @@ let students = {
         } catch (error) {
             return res.status(500).json({ status: '500', message: 'An unexpected error occurred.', error: error.message });
         }
-    }
+    },
+    getConfirmedSessions: async (req,res) => {
+        console.log(`time to cook`)
+        try {
+            const userNotications = await Notifications.find({userId: req.params.id})
+            if(userNotications.length === 0){
+                throw new Error('User has no upcomign sessions')
+            }
+            console.log(userNotications, req.params.id, req.params)
+        } catch (error) {
+            console.log(error)
+            return res.status(400).send(error.message)
+        }
+
+    },
 
 }
 export default students

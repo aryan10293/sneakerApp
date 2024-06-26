@@ -3,16 +3,13 @@ import Header from './Header'
 import NavMenu from './NavMenu'
 import Swal from 'sweetalert2';
 import { Params, Link, useParams } from 'react-router-dom'
-import { Session } from 'inspector'
-import Confirm from './Confirm'
-import { isTryStatement } from 'typescript';
-import { json } from 'stream/consumers';
-import { stringify } from 'querystring';
 function TutorSession() {
     const {id} = useParams()
     const [user, setUser] = React.useState<string>('')
     const [idkWhatToCallThis, setIdk] = React.useState<boolean>(false)
     const [message, setMessage] = React.useState<string>('')
+    const [loginUserTutor, setloginUserTutor] = React.useState<boolean>()
+    const [loginUserData, setLoginUserData] = React.useState<any>()
     const [session, sessionDetails] = React.useState<Notification>({
         appointmentTimeDetails: {
             date: "",
@@ -21,7 +18,8 @@ function TutorSession() {
         },
         date: "",
         email: "",
-        name: "",
+        studentName: "",
+        tutorName:"",
         seen: false,
         text: "",
         tutorId: "",
@@ -87,7 +85,8 @@ function TutorSession() {
         },
         date: string,
         email: string,
-        name: string,
+        studentName: string,
+        tutorName: string,
         seen: boolean,
         text: string,
         tutorId: string,
@@ -134,6 +133,7 @@ function TutorSession() {
                     headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
                 })
                 const data = await reg.json()
+                console.log(data.user[0])
                 setUserInfo(data.user[0])
                 } catch(err) {
                     console.error(err)
@@ -141,6 +141,25 @@ function TutorSession() {
         }
         fetchData()
     }, [user])
+
+    const getLoginUser = async() => {
+        try {
+            const reg = await fetch(`http://localhost:2020/getuser/${localStorage.getItem('token')}`,{
+                method: 'GET',
+                headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
+            })
+            const data = await reg.json()
+            if(data.success){
+                setLoginUserData(data.userinfo[0])
+                console.log()
+                setloginUserTutor(data.userinfo[0].tutor)
+            }
+            } catch(err) {
+                console.error(err)
+            }
+        }
+      React.useEffect(() => {getLoginUser()}, [])
+
     function formatDateString(dateString: string): string {
         const dateParts = dateString.split('-');
         const year = parseInt(dateParts[0]);
@@ -257,8 +276,7 @@ function TutorSession() {
         }
          deleteTutorSessionFromDatabase('decline')
     }
-
-
+    console.log(session)
   return (
     <>
         <Header/>
@@ -270,10 +288,10 @@ function TutorSession() {
                             <div className="col-span-4 sm:col-span-3 ">
                                 <div className="bg-white shadow rounded-lg p-6">
                                     <div className="flex flex-col items-center">
-                                        <img src={userInfo.img} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                                        <img src={loginUserTutor ?  loginUserData.img : userInfo.img} className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
 
                                         </img>
-                                        <h1 className="text-xl font-bold">{userInfo.firstName} {userInfo.lastName}</h1>
+                                        <h1 className="text-xl font-bold">{loginUserData !== undefined ?  loginUserTutor ?  userInfo.firstName + ' ' + userInfo.lastName : session.tutorName + ' ' + session.tutorName : null}</h1>
                                         <p className="text-gray-700">{userInfo.major}</p>
                                         <p className="text-gray-700">{userInfo.school}</p>
                                         <div className="mt-6 flex flex-wrap gap-4 justify-center">
@@ -318,7 +336,7 @@ function TutorSession() {
                                     </div> 
 
 
-                                    <h2 className="text-xl font-bold mb-4">About {userInfo.firstName}</h2>
+                                    <h2 className="text-xl font-bold mb-4">{loginUserTutor ? `About ${session.studentName}` : `About ${session.tutorName}`}</h2>
                                     <p className="text-gray-700">{userInfo.bio}</p>
 
                                     <h2 className="text-xl font-bold mt-6 mb-4">Reviews</h2>

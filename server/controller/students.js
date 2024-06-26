@@ -73,7 +73,8 @@ let students = {
             try{
                 const sessionData = {
                     text:req.body.text,
-                    name:req.body.name,
+                    studentName:req.body.studentName,
+                    tutorName:req.body.tutorName,
                     email:req.body.email,
                     appointmentTimeDetails: {
                         date:req.body.appointmentTimeDetails.date,

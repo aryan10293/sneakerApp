@@ -50,7 +50,6 @@ function TutorLi(props:any) {
         }
         fetchData()
     }, [sessions])
-    console.log(sessions)
 function formatTimestamp(timestamp:string) {
         const date = new Date(timestamp);
         const hours = date.getHours();
@@ -77,6 +76,7 @@ function formatTimestamp(timestamp:string) {
 
         return dateString;
     }
+    console.log(sessions)
   return (
             <div>
                 {sessions.map((x:any, i:number) => {
@@ -89,7 +89,7 @@ function formatTimestamp(timestamp:string) {
                                 </div>
                             </div>
                             <div>
-                                <span className="font-mono">{x.name} has requested a tutor session!</span>
+                                <span className="font-mono">{props.tutor ? `${x.studentName} has requested a tutor session!` : `You've requested a session with ${x.tutorName}`}</span>
                                 <div className="font-mono">{formatTimestamp(x.date)}</div>
                             </div>
                             <div className="flex gap-2">

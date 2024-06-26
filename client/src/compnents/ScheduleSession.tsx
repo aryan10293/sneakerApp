@@ -21,7 +21,8 @@ function ScheduleSession() {
     const today = new Date().toISOString().split('T')[0];
     const sessionData = {
         text:text,
-        name:name,
+        studentName:name,
+        tutorName: tutorName,
         email:email,
         appointmentTimeDetails: {
             date:date,
@@ -59,7 +60,7 @@ function ScheduleSession() {
             console.log(data)
             setTutor(data.user)
             setCourse(data.user[0].courses)
-            setTutorName(data.userinfo[0].firstName)
+            setTutorName(data.user[0].firstName)
             } catch(err) {
                 console.error(err)
             }

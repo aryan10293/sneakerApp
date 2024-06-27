@@ -295,8 +295,15 @@ function TutorSession() {
                                         <p className="text-gray-700">{userInfo.major}</p>
                                         <p className="text-gray-700">{userInfo.school}</p>
                                         <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                                            <button onClick={handleAccept} className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Accept</button>
-                                            <button onClick={handleDecline} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Decline</button>
+                                            {loginUserData !== undefined ?  loginUserTutor ? (
+                                                <>
+                                                    <button onClick={handleAccept} className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Accept</button>
+                                                    <button onClick={handleDecline} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Decline</button>
+                                                </>
+                                            ) : (
+                                                 <button onClick={() => alert('add a cancel button')} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Cancel</button>
+                                            ) : null}
+                                            
                                         </div>
                                     </div>
                                     <hr className="my-6 border-t border-gray-300"/>
@@ -329,10 +336,24 @@ function TutorSession() {
                                                 </p>
                                             </div>
                                         </div>
-                                        <h4 className=" mt-2 text-gray-700 text-base font-bold">Student notes</h4>
-                                        <p className="">
-                                            {session.text}
-                                        </p>
+                                        {loginUserData !== undefined ?  loginUserTutor ? (
+                                                <>
+                                                    <h4 className=" mt-2 text-gray-700 text-base font-bold">Student notes</h4>
+                                                    <p className="">
+                                                        {session.text}
+                                                    </p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <h4 className=" mt-2 text-gray-700 text-base font-bold">Student notes</h4>
+                                                    <p className="">
+                                                        {session.text}
+                                                    </p>
+                                                    <button onClick={() => alert('make this a edit notes button')} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Edit notes</button>
+                                                </>
+                                                 
+                                            ) : null}
+                                        
                                     </div> 
 
 
@@ -362,4 +383,3 @@ function TutorSession() {
 }
 
 export default TutorSession
-

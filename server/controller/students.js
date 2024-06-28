@@ -167,7 +167,9 @@ let students = {
             if(userNotications.length === 0){
                 throw new Error('User has no upcomign sessions')
             }
-            console.log(userNotications, req.params.id, req.params)
+            // for the fucks sakes of me being lost asf ima send this bitch to the fornt end hoping eveything is smooth
+            res.status(200).send(userNotications)
+            // console.log(userNotications, req.params.id, req.params)
         } catch (error) {
             console.log(error)
             return res.status(400).send(error.message)

@@ -345,11 +345,11 @@ function TutorSession() {
                                                 </>
                                             ) : (
                                                 <>
-                                                    <h4 className=" mt-2 text-gray-700 text-base font-bold">Student notes</h4>
+                                                    <h4 className=" mt-2 text-gray-700 text-base font-bold">Your notes</h4>
                                                     <p className="">
                                                         {session.text}
                                                     </p>
-                                                    <button onClick={() => alert('make this a edit notes button')} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Edit notes</button>
+                                                    <button onClick={() => alert('make this a edit notes button')} className="bg-indigo-700 hover:bg-indigo-400 text-white py-2 px-4 rounded">Edit notes</button>
                                                 </>
                                                  
                                             ) : null}
@@ -369,7 +369,7 @@ function TutorSession() {
                                             </p>
                                         </div>
                                         <p className="mt-2">
-                                            {'review stuff and stuff'}
+                                            {'the above will be a display for reviews but fuck i forgot'}
                                         </p>
                                     </div>
                                 </div>

@@ -16,9 +16,17 @@ function UpcomingSession(props:any) {
 
         getUpcomignSessions()
     }, [])
+
     console.log(userData)
   return (
-                    <div className="max-w-lg mx-auto items-center">
+            <>
+            
+            </>
+  )
+}
+
+export default UpcomingSession
+{/* <div className="max-w-lg mx-auto items-center">
                 <div className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">
                     <div className="relative w-16 h-16 rounded-full hover:bg-red-700 bg-gradient-to-r from-purple-400 via-blue-500 to-red-400 ">
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-gray-200 rounded-full border-2 border-white">
@@ -40,8 +48,4 @@ function UpcomingSession(props:any) {
                         </button>
                     </div>
                 </div>
-            </div>
-  )
-}
-
-export default UpcomingSession
+            </div> */}

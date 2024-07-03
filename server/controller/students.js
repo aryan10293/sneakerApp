@@ -163,6 +163,10 @@ let students = {
     getConfirmedSessions: async (req,res) => {
         console.log(`time to cook`)
         try {
+            // const lmao = await Notifications.find(
+            //     { userId: req.params.id },
+            //     { typeOfNoti: 1, _id: 0, message: 0 }
+            // )
             const userNotications = await Notifications.find({userId: req.params.id})
             if(userNotications.length === 0){
                 throw new Error('User has no upcomign sessions')

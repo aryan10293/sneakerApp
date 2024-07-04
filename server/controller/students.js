@@ -113,6 +113,7 @@ let students = {
         }
     },
     addNoti: async (req,res) => {
+        console.log(req.body)
         try {
             let didSendToDataBase = true
             for(let i = 0; i<req.body.notiData.length; i++){
@@ -167,13 +168,14 @@ let students = {
             //     { userId: req.params.id },
             //     { typeOfNoti: 1, _id: 0, message: 0 }
             // )
+
             const userNotications = await Notifications.find({userId: req.params.id})
+            console.log(req.params, userNotications)
             if(userNotications.length === 0){
-                throw new Error('User has no upcomign sessions')
-            }
-            // for the fucks sakes of me being lost asf ima send this bitch to the fornt end hoping eveything is smooth
-            res.status(200).send(userNotications)
-            // console.log(userNotications, req.params.id, req.params)
+               return  res.status(200).send({status:'404', detail:'User has no upcoming sessions'})
+                // throw new Error('User has no upcoming sessions')
+            } 
+            res.status(200).send({status:'200', details: userNotications})
         } catch (error) {
             console.log(error)
             return res.status(400).send(error.message)

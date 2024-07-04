@@ -95,7 +95,14 @@ function TutorSession() {
         __v: number,
         _id: string
     }
-    const acceptNotiData = {
+    const acceptTutorNotiData = {
+        date: Date.now(),
+        message: 'Tutor session with xyz is confirmed',
+        userId: session.tutorId,
+        typeOfNoti: 'confirmed session',
+        extras:[session]
+    }
+    const acceptStudentNotiData = {
         date: Date.now(),
         message: 'Tutor session with xyz is confirmed',
         userId: session.userId,
@@ -247,7 +254,7 @@ function TutorSession() {
             const sendNoti = await fetch(`http://localhost:2020/notification`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-            body: JSON.stringify({notiData: [acceptNotiData]})
+            body: JSON.stringify({notiData: [acceptStudentNotiData, acceptTutorNotiData]})
         })
 
         const notiSendData = await sendNoti.json()

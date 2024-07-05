@@ -118,6 +118,7 @@ let students = {
         try {
             let didSendToDataBase = true
             for(let i = 0; i<req.body.notiData.length; i++){
+                req.body.notiData[i]
                 const notiData = {
                     date: req.body.notiData[i].date,
                     message: req.body.notiData[i].message,
@@ -127,6 +128,7 @@ let students = {
                     extras: req.body.notiData[i].extras  
                 }  
                 const sendNoti = await Notifications.create(notiData)
+                console.log(sendNoti)
                 if(!notiData){
                     didSendToDataBase = false
                     break

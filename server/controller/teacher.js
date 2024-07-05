@@ -120,7 +120,9 @@ let teachers = {
             return res.status(200).json('your session was succesfully booked')
         } else if(req.body.howItisGettingDeleted === 'decline'){
             return res.status(200).json('you declined this session')
-        } 
+        } else if(req.body.howItisGettingDeleted === 'cancel'){
+            return res.status(200).json('you declined this session')
+        }
 
     },
     getPendingSessions: async (req,res) => {

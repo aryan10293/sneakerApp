@@ -195,6 +195,11 @@ function TutorSession() {
             return false;
         }
     }
+    const handleCancel = (e:any) => {
+        e.preventDefault()
+        alert('adsvrt')
+        deleteTutorSessionFromDatabase('cancel')
+    } 
     const deleteTutorSessionFromDatabase = async (howItisGettingDeleted:string) => {
             try {
                 const reg = await fetch(`http://localhost:2020/deletetutorrequest/`,{
@@ -284,7 +289,6 @@ function TutorSession() {
         }
          deleteTutorSessionFromDatabase('decline')
     }
-    console.log(session)
   return (
     <>
         <Header/>
@@ -309,7 +313,7 @@ function TutorSession() {
                                                     <button onClick={handleDecline} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Decline</button>
                                                 </>
                                             ) : (
-                                                 <button onClick={() => alert('add a cancel button')} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Cancel</button>
+                                                 <button onClick={handleCancel} className="bg-red-300 hover:bg-red-400 text-white-700 py-2 px-4 rounded">Cancel</button>
                                             ) : null}
                                             
                                         </div>

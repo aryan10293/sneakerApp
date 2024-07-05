@@ -11,13 +11,13 @@ function UpcomingSession(props:any) {
             })
 
             const turnToSessionsToJson = await getSessions.json()
-            console.log(turnToSessionsToJson)
-            // if(turnToSessionsToJson.status === '404'){
-            //     console.log('no upcoming sessions')
-            // } else if(turnToSessionsToJson.status === '200'){
-            //     const upcomingTutorSession = turnToSessionsToJson.details.filter((x:any) => x.typeOfNoti === 'confirmed session')
-            //     setUpcomingSessions(upcomingTutorSession)
-            // }
+            if(turnToSessionsToJson.status === '404'){
+                return <div>you have no upcoming sessions</div>
+                console.log('no upcoming sessions')
+            } else if(turnToSessionsToJson.status === '200'){
+                const upcomingTutorSession = turnToSessionsToJson.details.filter((x:any) => x.typeOfNoti === 'confirmed session')
+                setUpcomingSessions(upcomingTutorSession)
+            }
 
         }
 
@@ -26,8 +26,9 @@ function UpcomingSession(props:any) {
 
     console.log(upcomingSessions)
   return (
-            <>  lol
+            <>  
                 {upcomingSessions.map((x:any) => {
+                    
                     return (
                         <div className="max-w-lg mx-auto items-center">
                             <div className="flex justify-between px-3 py-1 bg-white items-center gap-1 rounded-lg border border-gray-100 my-3">

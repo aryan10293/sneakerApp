@@ -50,6 +50,7 @@ let teachers = {
     }, 
     getStudentImages: async (req,res) => {
         const imgArray =[]
+        console.log(req.body)
         try {
             await Promise.all(req.body.stuff.map(async (x, i) => {
                 const userImg = await User.find({ _id: x });
@@ -62,6 +63,7 @@ let teachers = {
         }
     },
      getTutorSession: async (req,res) => {
+        //k
         try {
             const yourSessionRequest = await TutorSession.find({_id: req.params.id})
             return res.status(200).json(yourSessionRequest)

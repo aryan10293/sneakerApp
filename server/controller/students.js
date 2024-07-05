@@ -81,7 +81,7 @@ let students = {
                         time:req.body.appointmentTimeDetails.time,
                         subject: req.body.appointmentTimeDetails.subject
                     },
-                    userId:req.body.userId,
+                    studentId:req.body.studentId,
                     tutorId: req.body.tutorId,
                     date: Date.now(),
                     typeOfNoti: 'tutor session',
@@ -104,8 +104,9 @@ let students = {
         }
     },
     getRequestedSessions: async (req,res) => {
+        
         try {
-            const yourSessionRequest = await TutorSession.find({userId: req.params.id})
+            const yourSessionRequest = await TutorSession.find({studentId: req.params.id})
             console.log(yourSessionRequest)
             return res.status(200).json(yourSessionRequest)
         } catch (error) {

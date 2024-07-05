@@ -10,7 +10,7 @@ const TutorSchema = new mongoose.Schema({
         time:{ type: String, required: true},
         subject: { type: String, required: false}
     },
-    userId:{ type: String, required: true},
+    studentId:{ type: String, required: true},
     tutorId: { type: String, required: true},
     date: { type: Date, required: true},
 });

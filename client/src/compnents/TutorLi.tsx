@@ -40,7 +40,7 @@ function TutorLi(props:any) {
                 const reg = await fetch(`http://localhost:2020/getimages`,{
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
-                    body: JSON.stringify({stuff: sessions.map((x:any) => {return x.userId })}),
+                    body: JSON.stringify({stuff: sessions.map((x:any) => {return x.studentId })}),
                 })
                 const data = await reg.json()
                 setImgUrl(data)
@@ -50,6 +50,7 @@ function TutorLi(props:any) {
         }
         fetchData()
     }, [sessions])
+    console.log(sessions)
 function formatTimestamp(timestamp:string) {
         const date = new Date(timestamp);
         const hours = date.getHours();
@@ -76,7 +77,6 @@ function formatTimestamp(timestamp:string) {
 
         return dateString;
     }
-    console.log(sessions)
   return (
             <div>
                 {sessions.map((x:any, i:number) => {

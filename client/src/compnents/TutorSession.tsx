@@ -24,7 +24,7 @@ function TutorSession() {
         text: "",
         tutorId: "",
         typeOfNoti: "",
-        userId: "",
+        studentId: "",
         __v: 0,
         _id: ""
     })
@@ -91,7 +91,7 @@ function TutorSession() {
         text: string,
         tutorId: string,
         typeOfNoti: string,
-        userId: string,
+        studentId: string,
         __v: number,
         _id: string
     }
@@ -105,7 +105,7 @@ function TutorSession() {
     const acceptStudentNotiData = {
         date: Date.now(),
         message: 'Tutor session with xyz is confirmed',
-        userId: session.userId,
+        userId: session.studentId,
         typeOfNoti: 'confirmed session',
         extras:[session]
     }
@@ -113,7 +113,7 @@ function TutorSession() {
     const deleteNotiData = {
         date: Date.now(),
         message: 'Tutor session with xyz has been declined',
-        userId: session.userId,
+        userId: session.studentId,
         typeOfNoti: 'declined session',
     }
     React.useEffect(() => {
@@ -124,8 +124,9 @@ function TutorSession() {
                     headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
                 })
                 const data = await reg.json()
+                console.log(data)
                 sessionDetails(data[0])
-                setUser(data[0].userId)
+                setUser(data[0].studentId)
                 } catch(err) {
                     console.error(err)
                 }
@@ -201,7 +202,7 @@ function TutorSession() {
                     headers: {'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('token')}`},
                     body: JSON.stringify({
                         tutor:session.tutorId,
-                        student:session.userId,
+                        student:session.studentId,
                         session: session._id,
                         howItisGettingDeleted: howItisGettingDeleted
                     })
@@ -229,7 +230,7 @@ function TutorSession() {
         const sessionDettails = {
             hasSessionPassed:hasTimePassed(sessionDate, session.appointmentTimeDetails.time),
             tutor:session.tutorId,
-            student:session.userId,
+            student:session.studentId,
             date:session.appointmentTimeDetails.date,
             time:session.appointmentTimeDetails.time
         }

@@ -29,7 +29,7 @@ function ScheduleSession() {
             time:time,
             subject:subject
         },
-        userId:userId,
+        studentId:userId,
         tutorId: id,
         date: Date.now(),
     }

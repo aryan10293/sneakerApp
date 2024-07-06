@@ -32,7 +32,7 @@ function StudentSchedule() {
         <div className='m-10 w-screen'>
             <div>
                 <form onSubmit={findTeacher}>
-                    <label htmlFor="idkyet">search for course course teachers</label>
+                    <label htmlFor="idkyet">search for course teachers</label>
                     <input type="text" className='border-gray-300 ' value={course} onChange={(e)=> {setCourse(e.target.value)}}/>
                     <button className='bg-blue '>Find a teacher</button>
                 </form>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 function UpcomingSession(props:any) {
     const [upcomingSessions, setUpcomingSessions] = React.useState<any[]>([])
     const [userData, setUserData] = React.useState(props.userData)
+    const [upcomingSessionsUsers, setUpcomingSessionsUsers] = React.useState<any>()
     React.useEffect(() => {
         const getUpcomignSessions = async () =>  {
             const getSessions = await fetch(`http://localhost:2020/getcomfirmedsessions/${userData._id}`, {
@@ -23,8 +24,28 @@ function UpcomingSession(props:any) {
 
         getUpcomignSessions()
     }, [])
+    React.useEffect(() => {
+       const getUsersId = async () => {
+            if(props.userData.tutor){
+                const usersIds = upcomingSessions.map((x:any) => x.extras[0].studentId)
+                setUpcomingSessionsUsers(usersIds)
+            } else {
+                const usersIds = upcomingSessions.map((x:any) => x.extras[0].tutorId)
+                setUpcomingSessionsUsers(usersIds)
+            }
 
-    console.log(upcomingSessions)
+            const getUserData = await fetch(`http://localhost:2020/getmultipleusers`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(upcomingSessionsUsers)
+            })
+            const recievedUserData = await getUserData.json()
+            console.log(recievedUserData)
+
+       }
+       getUsersId()
+    }, [upcomingSessions])
+
   return (
             <>  
                 {upcomingSessions.map((x:any) => {

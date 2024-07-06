@@ -151,6 +151,21 @@ let teachers = {
         console.log(idkWhatToCallThis)
         // this shit will prolly break again - drej june 2nd at 1:37pm at cherry street coffee house
         return res.status(200).json(idkWhatToCallThis)
+    },
+    getmultipleusers: async (req,res) => {
+        console.log(req.body)
+        const userInfo = []
+        try {
+            await Promise.all(req.body.map(async (x, i) => {
+                const user = await User.find({ _id: x });
+                userInfo.push(user);
+        }));
+            return res.status(200).json(userInfo);
+        } catch (error) {
+            console.error('Error fetching images:', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+
     }
 
 

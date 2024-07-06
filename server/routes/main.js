@@ -23,6 +23,7 @@ router.put('/editprofileT', teachers.editProfile)
 
 router.post('/studentsessionrequest', students.yooo)
 router.post('/getimages', teachers.getStudentImages)
+router.post('/getmultipleusers', teachers.getmultipleusers)
 router.post('/comfirmsession', teachers.confirmSession)
 router.post('/notification', students.addNoti)
 

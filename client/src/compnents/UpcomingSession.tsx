@@ -60,7 +60,7 @@ function UpcomingSession(props:any) {
                                 </div>
                                 <div>
                                     <span className="font-mono">(user10239) has messaged you!</span>
-                                    <div className="font-mono">10:32 PM Today</div>
+                                    <div className="font-mono">10:32  Today</div>
                                 </div>
                                 <div className="flex gap-2">
                                     <button className='hover:bg-gray-700 hover:text-white'>
